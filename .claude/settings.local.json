@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run build:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(timeout 10s npm run dev)",
+      "Bash(true)",
+      "Bash(mkdir:*)",
+      "Bash(timeout 5s npm run dev)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(sed:*)",
+      "Bash(fg)",
+      "Bash(find /mnt/c/Users/CRAFT/Desktop/future MEST projects/Frontend/telekiosk/src -type f -name \"*.jsx\" -o -name \"*.js\")",
+      "Bash(grep -r -i \"confirm\\|submit\" /mnt/c/Users/CRAFT/Desktop/future MEST projects/Frontend/telekiosk/src --include=\"*.js\" --include=\"*.jsx\")",
+      "Bash(echo)",
+      "Bash(grep:*)"
+    ],
+    "deny": []
+  }
+}
