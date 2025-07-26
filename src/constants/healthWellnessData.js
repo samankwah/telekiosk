@@ -539,26 +539,28 @@ export const HEALTH_WELLNESS_TIPS = [
   }
 ];
 
+// Health categories with translation keys
 export const HEALTH_CATEGORIES = [
-  { id: "all", name: "All Topics", color: "bg-blue-600" },
-  { id: "nutrition", name: "Nutrition", color: "bg-green-600" },
-  { id: "neurology", name: "Neurology", color: "bg-purple-600" },
-  { id: "emergency-care", name: "Emergency Care", color: "bg-red-600" },
-  { id: "womens-health", name: "Women's Health", color: "bg-pink-600" },
-  { id: "natural-remedies", name: "Natural Remedies", color: "bg-yellow-600" },
-  { id: "public-health", name: "Public Health", color: "bg-indigo-600" },
-  { id: "mental-health", name: "Mental Health", color: "bg-teal-600" },
-  { id: "fitness", name: "Fitness", color: "bg-orange-600" }
+  { id: "all", nameKey: "allTopics", color: "bg-blue-600" },
+  { id: "nutrition", nameKey: "nutrition", color: "bg-green-600" },
+  { id: "neurology", nameKey: "neurology", color: "bg-purple-600" },
+  { id: "emergency-care", nameKey: "emergencyCare", color: "bg-red-600" },
+  { id: "womens-health", nameKey: "womensHealth", color: "bg-pink-600" },
+  { id: "natural-remedies", nameKey: "naturalRemedies", color: "bg-yellow-600" },
+  { id: "public-health", nameKey: "publicHealth", color: "bg-indigo-600" },
+  { id: "mental-health", nameKey: "mentalHealth", color: "bg-teal-600" },
+  { id: "fitness", nameKey: "fitness", color: "bg-orange-600" }
 ];
 
+// Sidebar categories with translation keys
 export const SIDEBAR_CATEGORIES = [
-  "Awards",
-  "COVID-19",
-  "Doctors Spotlight",
-  "Events",
-  "Health Articles",
-  "News",
-  "Press Releases"
+  { nameKey: "awards" },
+  { nameKey: "covid19" },
+  { nameKey: "doctorsSpotlight" },
+  { nameKey: "events" },
+  { nameKey: "healthArticles" },
+  { nameKey: "news" },
+  { nameKey: "pressReleases" }
 ];
 
 export const RECENT_POSTS = [

@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 function MapModal({ isOpen, onClose }) {
+  const { t } = useLanguage();
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
@@ -33,7 +35,7 @@ function MapModal({ isOpen, onClose }) {
       <div className="relative bg-white rounded-lg shadow-xl w-11/12 max-w-4xl h-5/6 max-h-[600px] mx-4">
         {/* Modal header */}
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-xl font-semibold text-gray-900">Hospital Location</h2>
+          <h2 className="text-xl font-semibold text-gray-900">{t('hospitalLocation')}</h2>
           <button
             onClick={onClose}
             className="w-8 h-8 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors"
@@ -58,9 +60,9 @@ function MapModal({ isOpen, onClose }) {
               allowFullScreen=""
               loading="eager" 
               referrerPolicy="no-referrer-when-downgrade"
-              title="Hospital Location Map"
+              title={t('hospitalLocationMap')}
             >
-              <p>Your browser does not support iframes. Please visit Google Maps directly.</p>
+              <p>{t('browserNotSupport')}</p>
             </iframe>
           </div>
         </div>
@@ -70,7 +72,7 @@ function MapModal({ isOpen, onClose }) {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <div>
               <p className="text-sm text-gray-600">
-                <strong>Address:</strong> Ghana Meteorological Agency Area, Accra
+                <strong>{t('address')}:</strong> {t('hospitalAddress')}
               </p>
             </div>
             <a
@@ -79,7 +81,7 @@ function MapModal({ isOpen, onClose }) {
               rel="noopener noreferrer"
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm"
             >
-              Open in Google Maps
+              {t('openInGoogleMaps')}
             </a>
           </div>
         </div>

@@ -7,6 +7,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isCorporateInfoOpen, setIsCorporateInfoOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   
   const { currentLanguage, changeLanguage, t, languages, getCurrentLanguage } = useLanguage();
   const navigate = useNavigate();
@@ -57,11 +58,28 @@ function Header() {
     setIsCorporateInfoOpen(!isCorporateInfoOpen);
   };
 
+  const toggleServicesDropdown = () => {
+    setIsServicesDropdownOpen(!isServicesDropdownOpen);
+  };
+
   const navigateAndClose = (path) => {
     navigate(path);
     closeMenu();
     setIsCorporateInfoOpen(false);
+    setIsServicesDropdownOpen(false);
   };
+
+  // Define available services
+  const services = [
+    { id: 'cardiology', name: t('cardiology'), icon: '❤️' },
+    { id: 'neurology', name: t('neurology'), icon: '🧠' },
+    { id: 'pediatrics', name: t('pediatrics'), icon: '👶' },
+    { id: 'dermatology', name: t('dermatology'), icon: '✨' },
+    { id: 'orthopedics', name: t('orthopedics'), icon: '🦴' },
+    { id: 'emergency', name: t('emergencyMedicine'), icon: '🚨' },
+    { id: 'general', name: t('generalMedicine'), icon: '🏥' },
+    { id: 'surgery', name: t('surgery'), icon: '🔬' }
+  ];
 
   return (
     <>
@@ -304,12 +322,49 @@ function Header() {
                   )}
                 </div>
 
-                {/* Our Services */}
-                <div 
-                  className="py-3 sm:py-4 border-b border-gray-100 touch-manipulation cursor-pointer hover:bg-gray-50 transition-colors"
-                  onClick={() => navigateAndClose('/services')}
-                >
-                  <span className="text-gray-800 font-medium text-sm sm:text-base">{t('ourServices')}</span>
+                {/* Our Services - Dropdown */}
+                <div>
+                  <div 
+                    className="flex items-center justify-between py-3 sm:py-4 border-b border-gray-100 touch-manipulation cursor-pointer hover:bg-gray-50 transition-colors"
+                    onClick={toggleServicesDropdown}
+                  >
+                    <span className="text-gray-800 font-medium text-sm sm:text-base">
+                      {t('ourServices')}
+                    </span>
+                    <svg
+                      className={`w-4 h-4 text-blue-600 transition-transform ${
+                        isServicesDropdownOpen ? "rotate-180" : ""
+                      }`}
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M7,10L12,15L17,10H7Z" />
+                    </svg>
+                  </div>
+                  
+                  {/* Services Submenu */}
+                  {isServicesDropdownOpen && (
+                    <div className="ml-4 mt-2 space-y-2 border-l-2 border-blue-100 pl-4">
+                      <div 
+                        className="py-2 cursor-pointer hover:bg-gray-50 transition-colors rounded"
+                        onClick={() => navigateAndClose('/services')}
+                      >
+                        <span className="text-gray-700 text-sm">All Services</span>
+                      </div>
+                      {services.map((service) => (
+                        <div 
+                          key={service.id}
+                          className="py-2 cursor-pointer hover:bg-gray-50 transition-colors rounded"
+                          onClick={() => navigateAndClose(`/services/${service.id}`)}
+                        >
+                          <span className="text-gray-700 text-sm flex items-center space-x-2">
+                            <span>{service.icon}</span>
+                            <span>{service.name}</span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Our Doctors */}

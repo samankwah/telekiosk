@@ -24,79 +24,79 @@ function DoctorsSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
         {/* Left Side - Background Image */}
         <div className="relative min-h-[300px] sm:min-h-[400px] lg:min-h-[600px]">
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-r-[30px] sm:rounded-r-[45px] lg:rounded-r-[60px]"
-              style={{
-                backgroundImage: "url('/src/assets/images/doctors-bg.jpg')",
-              }}
-            >
-              {/* Blue overlay */}
-              <div className="absolute inset-0 bg-blue-900/60 rounded-tr-[30px] sm:rounded-tr-[45px] lg:rounded-tr-[60px]"></div>
-            </div>
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-r-[30px] sm:rounded-r-[45px] lg:rounded-r-[60px]"
+            style={{
+              backgroundImage: "url('/src/assets/images/doctors-bg.jpg')",
+            }}
+          >
+            {/* Blue overlay */}
+            <div className="absolute inset-0 bg-blue-900/60 rounded-tr-[30px] sm:rounded-tr-[45px] lg:rounded-tr-[60px]"></div>
           </div>
+        </div>
 
-          {/* Right Side - Content */}
-          <div className="flex items-center px-4 sm:px-6 lg:px-16 py-8 sm:py-10 lg:py-12">
-            <div className="w-full">
-              {/* Header */}
-              <div className="mb-6 sm:mb-8 text-center lg:text-left">
-                <p className="text-orange-500 font-semibold text-sm uppercase tracking-wide mb-3">
-                  {t("ourDoctors")}
-                </p>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                  {t("doctorsTitle")}
-                </h2>
-                <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                  {t("doctorsSubtitle")}
-                </p>
-              </div>
+        {/* Right Side - Content */}
+        <div className="flex items-center px-4 sm:px-6 lg:px-16 py-8 sm:py-10 lg:py-12">
+          <div className="w-full">
+            {/* Header */}
+            <div className="mb-6 sm:mb-8 text-center lg:text-left">
+              <p className="text-orange-500 font-semibold text-sm uppercase tracking-wide mb-3">
+                {t("ourDoctors")}
+              </p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                {t("doctorsTitle")}
+              </h2>
+              <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                {t("doctorsSubtitle")}
+              </p>
+            </div>
 
-              {/* Doctors Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                {doctors.map((doctor, index) => (
-                  <div
-                    key={index}
-                    className="bg-white rounded-tr-2xl rounded-bl-2xl sm:rounded-tr-3xl sm:rounded-bl-3xl p-3 sm:p-4 shadow-sm border border-gray-100 text-center"
-                  >
-                    <div className="relative w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-3">
-                      <img
-                        src={doctor.image}
-                        alt={t(doctor.nameKey)}
-                        className="w-full h-full rounded-full object-cover border-2 border-orange-200"
-                      />
-                    </div>
-                    <h3 className="font-semibold text-gray-900 text-xs sm:text-sm leading-tight">
-                      {t(doctor.nameKey)}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-
-              {/* View All Button */}
-              <div className="flex justify-center">
-                <button
-                  onClick={() => navigate("/doctors")}
-                  className="bg-white border-2 border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-500 px-6 py-3 rounded-lg font-semibold flex items-center transition-all duration-200"
+            {/* Doctors Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
+              {doctors.map((doctor, index) => (
+                <div
+                  key={index}
+                  className="min-w-4xl bg-white rounded-bl-3xl rounded-tr-3xl shadow-lg p-4 sm:p-6 text-center flex flex-col items-center justify-center"
                 >
-                  {t("viewAll")}
-                  <svg
-                    className="w-4 h-4 ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto mb-2 sm:mb-3">
+                    <img
+                      src={doctor.image}
+                      alt={t(doctor.nameKey)}
+                      className="w-full h-full rounded-full object-cover border-2 border-orange-200"
                     />
-                  </svg>
-                </button>
-              </div>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 text-xs sm:text-sm lg:text-base leading-tight">
+                    {t(doctor.nameKey)}
+                  </h3>
+                </div>
+              ))}
+            </div>
+
+            {/* View All Button */}
+            <div className="flex justify-center">
+              <button
+                onClick={() => navigate("/doctors")}
+                className="bg-white border-2 border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-500 px-6 py-3 rounded-lg font-semibold flex items-center transition-all duration-200"
+              >
+                {t("viewAll")}
+                <svg
+                  className="w-4 h-4 ml-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
+      </div>
     </section>
   );
 }

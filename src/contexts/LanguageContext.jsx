@@ -47,7 +47,7 @@ const translations = {
     heroTitle: "PROVIDING THE BEST MEDICAL CARE",
     heroSubtitle:
       "Our team of first-class medical professionals focus on individual care and quality treatment for all",
-    findDoctor: "Find a doctor",
+    findDoctor: "Find doctor or service...",
 
     // Footer
     openingHours: "Opening Hours",
@@ -180,8 +180,6 @@ const translations = {
     viewAll: "View All",
 
     // Common
-    learnMore: "Learn More",
-    readMore: "Read More",
     bookNow: "Book Now",
     callNow: "Call Now",
     getStarted: "Get Started",
@@ -377,7 +375,6 @@ const translations = {
     // Booking Page
     websiteUrl: "www.telekiosk.com",
     developBy: "Develop by Technofy™",
-    findDoctorSearch: "🔍 findDoctor...",
     browserNoSupport: "Your browser does not support iframes. Please visit Google Maps directly.",
 
     // Map Modal
@@ -397,8 +394,6 @@ const translations = {
     visitingTimesMenu: "Visiting Times",
     contactUsMenu: "Contact Us",
 
-    // Hero Section
-    search: "Search",
 
     // Time ranges for visiting times
     vvipMorning: "6:30 AM – 7:30 AM",
@@ -428,6 +423,110 @@ const translations = {
     // About Section specific
     openingHoursTime: "7 AM – 7 PM",
     videoTimestamp: "0:02 / 5:15",
+
+    // Health & Wellness Page
+    healthWellnessSubtitle: "Up to date information related to our services and your health",
+    articleNotFound: "Article Not Found",
+    backToHealthWellness: "Back to Health & Wellness",
+    backToHealthWellnessTips: "Back to Health & Wellness Tips",
+    categories: "Categories",
+    recentPosts: "Recent Posts",
+
+    // Map Modal
+    hospitalLocationMap: "Hospital Location Map",
+    browserNotSupport: "Your browser does not support iframes. Please visit Google Maps directly.",
+    address: "Address",
+
+    // Scroll to Top
+    scrollToTop: "Scroll to top",
+
+    // Medical Services
+    emergencyMedicine: "Emergency Medicine",
+    generalMedicine: "General Medicine",
+    surgery: "Surgery",
+
+    // All Pages
+    facilitiesHeroText: "Up-to-date and well equipped, our facilities are tailored to provide the best possible medical care for our patients",
+    healthServices: "Health Services",
+
+    // News Categories
+    technology: "Technology", 
+    events: "Events",
+    wellness: "Wellness",
+    community: "Community",
+    accreditation: "Accreditation",
+
+    // News Titles (removing duplicates - these are already defined earlier)
+
+    // Health & Wellness Categories
+    allTopics: "All Topics",
+    nutrition: "Nutrition",
+    mentalHealth: "Mental Health", 
+    fitness: "Fitness",
+    emergencyCare: "Emergency Care",
+    womensHealth: "Women's Health",
+    naturalRemedies: "Natural Remedies",
+    publicHealth: "Public Health",
+    preventiveCare: "Preventive Care",
+    chronicDisease: "Chronic Disease Management",
+    childHealth: "Child Health",
+    seniorHealth: "Senior Health",
+
+    // Error Messages
+    errorOccurred: "An error occurred",
+    pageNotFound: "Page not found",
+    tryAgainLater: "Please try again later",
+    connectionError: "Connection error",
+
+    // Form Labels
+    required: "Required",
+    optional: "Optional",
+    pleaseSelect: "Please select",
+    chooseOption: "Choose an option",
+
+    // Time Related
+    today: "Today",
+    yesterday: "Yesterday", 
+    tomorrow: "Tomorrow",
+    thisWeek: "This week",
+    thisMonth: "This month",
+    thisYear: "This year",
+
+    // Sidebar Categories
+    covid19: "COVID-19",
+    doctorsSpotlight: "Doctors Spotlight",
+    healthArticles: "Health Articles",
+    news: "News", 
+    pressReleases: "Press Releases",
+
+    // Services Page - Missing translations
+    medicalProfessional: "Medical Professional",
+    medicalResearchCare: "Medical research and care",
+    hospitalCorridor: "Hospital Corridor",
+    cleanModernFacility: "Clean modern facility",
+    department: "DEPARTMENT",
+    aim: "AIM",
+    objectives: "OBJECTIVES",
+    services: "SERVICES",
+    support: "SUPPORT",
+    expected: "EXPECTED",
+    outcome: "OUTCOME",
+    professionalStethoscope: "Professional Stethoscope",
+    cardiacAssessmentTool: "Cardiac assessment tool",
+
+    // Search placeholders (UI only)
+    searchServices: "Search services...",
+    searchArticles: "Search articles...",
+    searchNews: "Search news and events...",
+
+
+    // Cardiology Service Content
+    cardiologyName: "CARDIOLOGY",
+    cardiologyDescription: "Cardiovascular diseases are the leading cause of death globally, taking an estimated 17.9 million lives each year. 9 of of the world's death from cardiovascular diseases occur in low- and middle-income countries of which Ghana is inclusive. People in low-middle income countries often do not have the benefit of integrated primary health care programmes for early detection and treatment of people with cardiovascular disease risk factors.",
+    cardiologyExtendedDescription: "As a result, people in these countries die early from cardiovascular diseases often in their most productive years.",
+    cardiologyAim: "Improve cardiovascular care and save lives of Ghanaians with Atherosclerotic cardiovascular diseases such as coronary artery disease.",
+    cardiologyOutcome: "Save and improve the lives of patients with cardiovascular diseases.",
+    cardiologyImageDescription: "CT Scanner Room - Advanced cardiac imaging equipment",
   },
 
   tw: {
@@ -462,7 +561,7 @@ const translations = {
     heroTitle: "YƐDE AYARESABEA PA REMA",
     heroSubtitle:
       "Yɛn nnuruyɛfoɔ a wɔyɛ adwuma pa de wɔn adwene si ankorankoro hwɛ ne ayaresa pa so ma obiara",
-    findDoctor: "Hwehwɛ ɔdɔkota",
+    findDoctor: "Hwehwɛ ɔdɔkota anaa adwuma...",
 
     // Footer
     openingHours: "Bueɛ Mmerɛ",
@@ -552,8 +651,6 @@ const translations = {
     viewAll: "Hwɛ Nyinaa",
 
     // Common
-    learnMore: "Sua Pii",
-    readMore: "Kenkan Pii",
     bookNow: "Hyɛ Seesei",
     callNow: "Frɛ Seesei",
     getStarted: "Firi Aseɛ",
@@ -754,7 +851,6 @@ const translations = {
     // Booking Page
     websiteUrl: "www.telekiosk.com",
     developBy: "Technofy™ na ɛyɛeɛ",
-    findDoctorSearch: "🔍 hwehwɛ ɔdɔkota...",
     browserNoSupport: "Wo browser nnyae iframe. Yɛsrɛ wo kɔ Google Maps ncua so.",
 
     // Map Modal
@@ -774,8 +870,6 @@ const translations = {
     visitingTimesMenu: "Nsrahwɛ Mmerɛ",
     contactUsMenu: "Frɛ Yɛn",
 
-    // Hero Section
-    search: "Hwehwɛ",
 
     // Time ranges for visiting times
     vvipMorning: "6:30 AM – 7:30 AM",
@@ -805,6 +899,116 @@ const translations = {
     // About Section specific
     openingHoursTime: "7 AM – 7 PM",
     videoTimestamp: "0:02 / 5:15",
+
+    // Health & Wellness Page (Twi)
+    healthWellnessSubtitle: "Nsɛm foforo a ɛfa yɛn nnwuma ne wo akwahosan ho",
+    articleNotFound: "Wonhunuu Krataa no",
+    backToHealthWellness: "San Kɔ Akwahosan ne Asomdwoeɛ",
+    backToHealthWellnessTips: "San Kɔ Akwahosan ne Asomdwoeɛ Akwankyerɛ",
+    categories: "Akwankyerɛ Ahodoɔ",
+    recentPosts: "Krataa Foforo",
+
+    // Map Modal (Twi)
+    hospitalLocationMap: "Ayaresabea Beaeɛ Map",
+    browserNotSupport: "Wo browser nnyae iframe. Yɛsrɛ wo kɔ Google Maps ncua so.",
+    address: "Beaeɛ",
+
+    // Scroll to Top (Twi)
+    scrollToTop: "Kɔ soro",
+
+    // Medical Services (Twi)
+    emergencyMedicine: "Amanehunu Ayaresa",
+    generalMedicine: "Ayaresa Soronko",
+    surgery: "Oprehyɛn",
+
+    // All Pages (Twi)
+    facilitiesHeroText: "Mfiri foforo ne beaeɛ a ɛyɛ fɛ a wɔasiesie ama yɛn amanfoɔ anya ayaresa pa",
+    healthServices: "Akwahosan Nnwuma",
+
+    // News Categories (Twi)
+    technology: "Mfiri Foforɔ", 
+    events: "Dwumadie",
+    wellness: "Asomdwoeɛ",
+    community: "Mpɔtam",
+    accreditation: "Abasobɔdeɛ",
+
+    // News Titles (Twi)
+    news1Title: "The Bank Ayaresabea Nhwehwɛmu Bɛɛ ayɛ Ghana Soronko Nhwehwɛmu a Ɛdi Kan a Ɔnyaa ISO Abasobɔdeɛ",
+    news2Title: "The Bank Ayaresabea de Frɛfrɛ Bɛɛ Foforɔ Reba: Ɔsom Pa Foforɔ", 
+    news3Title: "The Bank Ayaresabea Di Amanfoɔ Som Nnawɔtwe 2024 Afahyɛ",
+    news4Title: "The Bank Ayaresabea Asomdwoeɛ Bɛɛ a Wɔde Baeɛ no Afahyɛ",
+    news5Title: "Makola Nsrahwɛ Amanebɔ",
+    news6Title: "ISO ABASOBƆDEƐ – Nhwehwɛmu Som a Ɛyɛ Pa ho Bɔhyɛ",
+
+    // Health & Wellness Categories (Twi)
+    allTopics: "Nsɛm Nyinaa",
+    nutrition: "Aduane",
+    mentalHealth: "Adwene Akwahosan", 
+    fitness: "Apɔmuden",
+    emergencyCare: "Amanehunu Ayaresa",
+    womensHealth: "Mmaa Akwahosan",
+    naturalRemedies: "Abɔdeɛ Nnua",
+    publicHealth: "Ɔman Akwahosan",
+    preventiveCare: "Yare Anodwɔ",
+    chronicDisease: "Yare a Ɛkyɛre",
+    childHealth: "Mmofra Akwahosan",
+    seniorHealth: "Mpanin Akwahosan",
+
+    // Error Messages (Twi)
+    errorOccurred: "Mfomsoɔ aba",
+    pageNotFound: "Wonhunuu kratafa no",
+    tryAgainLater: "Yɛsrɛ wo san sɔ hwɛ akyire yi",
+    connectionError: "Nkitahoadze mfomsoɔ",
+
+    // Form Labels (Twi)
+    required: "Ɛho Hia",
+    optional: "Ɛho Nhia",
+    pleaseSelect: "Yɛsrɛ wo paw",
+    chooseOption: "Paw kwan bi",
+
+    // Time Related (Twi)
+    today: "Ɛnnɛ",
+    yesterday: "Nnɛra", 
+    tomorrow: "Ɔkyena",
+    thisWeek: "Saa dapɛn yi",
+    thisMonth: "Saa ɔsram yi",
+    thisYear: "Saa afe yi",
+
+    // Sidebar Categories (Twi)
+    covid19: "COVID-19",
+    doctorsSpotlight: "Nnuruyɛfoɔ Kanea",
+    healthArticles: "Akwahosan Krataa",
+    news: "Nsɛm", 
+    pressReleases: "Nsɛm Krataa",
+
+    // Services Page - Twi translations
+    medicalProfessional: "Ayaresa Nnipa",
+    medicalResearchCare: "Ayaresa nhwehwɛmu ne hwɛ",
+    hospitalCorridor: "Ayaresabea Kwan",
+    cleanModernFacility: "Beaeɛ a ɛyɛ fɛ na ɛyɛ foforo",
+    department: "DWUMADIBEA",
+    aim: "BOTAEƐ",
+    objectives: "NHYEHYƐEƐ",
+    services: "NNWUMA",
+    support: "MMOA",
+    expected: "ANIDASOƆ",
+    outcome: "ABATOƆ",
+    professionalStethoscope: "Nnuruyɛfoɔ Stethoscope",
+    cardiacAssessmentTool: "Akoma nhwehwɛmu adwinnadeɛ",
+
+    // Search placeholders (UI only)
+    searchServices: "Hwehwɛ nnwuma...",
+    searchArticles: "Hwehwɛ krataa...",
+    searchNews: "Hwehwɛ nsɛm ne amammere...",
+
+
+    // Cardiology Service Content - Twi
+    cardiologyName: "AKOMA AYARESA",
+    cardiologyDescription: "Akoma yadeɛ na ɛkum nkurɔfoɔ pii wɔ wiase nyinaa, na ɛkum nkurɔfoɔ bɛyɛ ɔpepem 17.9 afeɛ biara. Wiase amaneɛ 9 mu 9 firi akoma yadeɛ ba aman a wɔnyɛ adefoɔ mu te sɛ Ghana. Nkurɔfoɔ a wɔwɔ aman a wɔnyɛ adefoɔ mu no ntaa nnya akwahosan nhyehyɛeɛ pa a ɛbɛboa wɔn ahu akoma yadeɛ ntɛm.",
+    cardiologyExtendedDescription: "Eyi nti, nkurɔfoɔ a wɔwɔ aman yi mu no wu ntɛm firi akoma yadeɛ mu wɔ wɔn mfeɛ a wɔyɛ adwuma pa mu.",
+    cardiologyAim: "Yɛn botaeɛ ne sɛ yɛbɛma Ghanaman akoma ayaresa atu mpɔn na yɛagye wɔn a wɔwɔ akoma yadeɛ no nkwa.",
+    cardiologyOutcome: "Gye akoma yadeɛfoɔ nkwa na ma wɔn asetena nyɛ yie.",
+    cardiologyImageDescription: "CT Scanner Dan - Akoma nhwehwɛmu mfiri foforo",
   },
 
   ga: {
@@ -838,7 +1042,7 @@ const translations = {
     // Hero Section
     heroTitle: "NI FƐƐ AYƆƆLƆ NAAMƐƐ PA",
     heroSubtitle: "Ni ayɔɔlɔ nuu lɛ fɛɛ kɛ fɛɛ ni mi kɛɛ ayɔɔlɔ pa ma kɛɛ nii",
-    findDoctor: "Nyɛ ayɔɔlɔ nuu",
+    findDoctor: "Kpɛɛ ayɔɔlɔ nuu bee adwuma...",
 
     // Footer
     openingHours: "Jei Mli",
@@ -928,8 +1132,7 @@ const translations = {
     viewAll: "Kpɛ Kɛɛ Lɛ",
 
     // Common
-    learnMore: "Sua Pii",
-    readMore: "Kalan Pii", 
+ 
     bookNow: "Wɔ Fɛɛ",
     callNow: "Frɛ Fɛɛ",
     getStarted: "Shishi",
@@ -1130,7 +1333,6 @@ const translations = {
     // Booking Page
     websiteUrl: "www.telekiosk.com",
     developBy: "Technofy™ na ɛ yɛ eɛ",
-    findDoctorSearch: "🔍 nyɛ ayɔɔlɔ nuu...",
     browserNoSupport: "A browser nnyae iframe. Yɛ srɛ a kɔ Google Maps ncua so.",
 
     // Map Modal
@@ -1150,8 +1352,6 @@ const translations = {
     visitingTimesMenu: "Nlɛɛ Mli",
     contactUsMenu: "Frɛ Ni",
 
-    // Hero Section
-    search: "Nyɛ",
 
     // Time ranges for visiting times
     vvipMorning: "6:30 AM – 7:30 AM",
@@ -1181,6 +1381,116 @@ const translations = {
     // About Section specific
     openingHoursTime: "7 AM – 7 PM",
     videoTimestamp: "0:02 / 5:15",
+
+    // Health & Wellness Page (Ga)
+    healthWellnessSubtitle: "Shisemi foforɔ lɛ ɛ fa ni ŋmami lɛ kɛ a ayɔɔlɔ ho",
+    articleNotFound: "Wo nhu uu Krataa no",
+    backToHealthWellness: "San Kɔ Ayɔɔlɔ Kɛ Asomdwoeɛ",
+    backToHealthWellnessTips: "San Kɔ Ayɔɔlɔ Kɛ Asomdwoeɛ Akwɛɛ",
+    categories: "Akwɛɛ Ahodoɔ",
+    recentPosts: "Krataa Foforɔ Lɛ",
+
+    // Map Modal (Ga)
+    hospitalLocationMap: "Ayɔɔlɔ Jɛɛ Bɛɛ Map",
+    browserNotSupport: "A browser nnyae iframe. Yɛ srɛ a kɔ Google Maps ncua so.",
+    address: "Bɛɛ",
+
+    // Scroll to Top (Ga)
+    scrollToTop: "Kɔ gbɔŋ",
+
+    // Medical Services (Ga)
+    emergencyMedicine: "Gbejɛ Kɛɛ Ayɔɔlɔ",
+    generalMedicine: "Ayɔɔlɔ Sɔrɔɔŋkɔ",
+    surgery: "Oprehyɛn",
+
+    // All Pages (Ga)
+    facilitiesHeroText: "Mɛɛni foforɔ lɛ kɛ bɛɛ a ɛ yɛ fɛ a wɔ siesie ama ni mi lɛ anya ayɔɔlɔ pa",
+    healthServices: "Ayɔɔlɔ Ŋmami",
+
+    // News Categories (Ga)
+    technology: "Mɛɛni Foforɔ", 
+    events: "Amami",
+    wellness: "Asomdwoeɛ",
+    community: "Mantsɛmi",
+    accreditation: "Akɔɔnɔ",
+
+    // News Titles (Ga)
+    news1Title: "The Bank Ayɔɔlɔ Jɛɛ Nhwehwɛmu Bɛɛ ayɛ Ghana Sɔrɔɔŋkɔ Nhwehwɛmu a Ɛdi Kan a Ɔnyaa ISO Akɔɔnɔ",
+    news2Title: "The Bank Ayɔɔlɔ Jɛɛ de Frɛfrɛ Bɛɛ Foforɔ Reba: Ɔsom Pa Foforɔ", 
+    news3Title: "The Bank Ayɔɔlɔ Jɛɛ Di Mi lɛ Som Tsɛɛ 2024 Afahyɛ",
+    news4Title: "The Bank Ayɔɔlɔ Jɛɛ Asomdwoeɛ Bɛɛ a Wɔde Baeɛ no Afahyɛ",
+    news5Title: "Makola Nlɛɛ Amanebɔ",
+    news6Title: "ISO AKƆƆNƆ – Nhwehwɛmu Som a Ɛyɛ Pa ho Bɔhyɛ",
+
+    // Health & Wellness Categories (Ga)
+    allTopics: "Shisemi Kɛɛ Lɛ",
+    nutrition: "Amami",
+    mentalHealth: "Ni Ayɔɔlɔ", 
+    fitness: "Apɔmuden",
+    emergencyCare: "Gbejɛ Kɛɛ Ayɔɔlɔ",
+    womensHealth: "Nyɔnmɔ lɛ Ayɔɔlɔ",
+    naturalRemedies: "Abɔdeɛ Nnua",
+    publicHealth: "Mantsɛmi Ayɔɔlɔ",
+    preventiveCare: "Yare Anodwɔ",
+    chronicDisease: "Yare a Ɛkyɛre",
+    childHealth: "Vi lɛ Ayɔɔlɔ",
+    seniorHealth: "Panin lɛ Ayɔɔlɔ",
+
+    // Error Messages (Ga)
+    errorOccurred: "Mfomsoɔ aba",
+    pageNotFound: "Wo nhu uu kratafa no",
+    tryAgainLater: "Yɛ srɛ a san sɔ kpɛ akyire yi",
+    connectionError: "Nkitaho mfomsoɔ",
+
+    // Form Labels (Ga)
+    required: "Ɛ ho Hia",
+    optional: "Ɛ ho Nhia",
+    pleaseSelect: "Yɛ srɛ a paw",
+    chooseOption: "Paw kwan bi",
+
+    // Time Related (Ga)
+    today: "Lɛɛ",
+    yesterday: "Lɛba", 
+    tomorrow: "Ɔkyena",
+    thisWeek: "Saa tsɛɛ yi",
+    thisMonth: "Saa ɔfaŋ yi",
+    thisYear: "Saa afe yi",
+
+    // Sidebar Categories (Ga)
+    covid19: "COVID-19",
+    doctorsSpotlight: "Ayɔɔlɔ Nuu lɛ Kanea",
+    healthArticles: "Ayɔɔlɔ Krataa",
+    news: "Shisemi", 
+    pressReleases: "Shisemi Krataa",
+
+    // Services Page - Ga translations
+    medicalProfessional: "Ayɔɔlɔ Nuu",
+    medicalResearchCare: "Ayɔɔlɔ nhwehwɛmu ne hwɛ",
+    hospitalCorridor: "Ayɔɔlɔ Jɛɛ Kwan",
+    cleanModernFacility: "Bɛɛ a ɛ yɛ fɛ na ɛ yɛ foforo",
+    department: "DWUMADIBEA",
+    aim: "BOTAEƐ",
+    objectives: "NHYEHYƐEƐ",
+    services: "ŊMAMI LƐ",
+    support: "MMOA",
+    expected: "ANIDASOƆ",
+    outcome: "ABATOƆ",
+    professionalStethoscope: "Ayɔɔlɔ Nuu Stethoscope",
+    cardiacAssessmentTool: "Akoma nhwehwɛmu adwinnadeɛ",
+
+    // Search placeholders (UI only)
+    searchServices: "Kpɛɛ ŋmami lɛ...",
+    searchArticles: "Kpɛɛ krataa...",
+    searchNews: "Kpɛɛ shisemi ni amami...",
+
+
+    // Cardiology Service Content - Ga
+    cardiologyName: "AKOMA AYƆƆLƆ",
+    cardiologyDescription: "Akoma yawo na ɛ kum nuu pii wɔ wiase nyinaa, na ɛ kum nuu bɛyɛ ɔpepem 17.9 afeɛ biara. Wiase amaneɛ 9 mu 9 firi akoma yawo ba aman a wɔ nyɛ adefoɔ mu te sɛ Ghana. Nuu a wɔ wɔ aman a wɔ nyɛ adefoɔ mu no ntaa nnya ayɔɔlɔ nhyehyɛeɛ pa a ɛ bɛ boa wɔn ahu akoma yawo ntɛm.",
+    cardiologyExtendedDescription: "Eyi nti, nuu a wɔ wɔ aman yi mu no wu ntɛm firi akoma yawo mu wɔ wɔn mfeɛ a wɔ yɛ adwuma pa mu.",
+    cardiologyAim: "Ni botaeɛ ne sɛ ni bɛ ma Ghanaman akoma ayɔɔlɔ atu mpɔn na ni agye wɔn a wɔ wɔ akoma yawo no nkwa.",
+    cardiologyOutcome: "Gye akoma yawo foɔ nkwa na ma wɔn asetena nyɛ yie.",
+    cardiologyImageDescription: "CT Scanner Dan - Akoma nhwehwɛmu mfiri foforo",
   },
 };
 

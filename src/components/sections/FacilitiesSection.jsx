@@ -1,7 +1,9 @@
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 function FacilitiesSection() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const facilities = [
     // Column 1
     {
@@ -225,10 +227,10 @@ function FacilitiesSection() {
   ];
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-white">
+    <section className="py-6 sm:py-8 lg:py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="mb-8 sm:mb-10 lg:mb-12 text-center lg:text-left">
+        <div className="mb-6 sm:mb-8 lg:mb-10 text-center lg:text-left">
           <p className="text-orange-500 font-semibold text-sm uppercase tracking-wide mb-3">
             {t("ourFacilities")}
           </p>
@@ -241,7 +243,7 @@ function FacilitiesSection() {
         </div>
 
         {/* Facilities Container */}
-        <div className="relative rounded-tr-[30px] rounded-bl-[30px] sm:rounded-tr-[45px] sm:rounded-bl-[45px] lg:rounded-tr-[60px] lg:rounded-bl-[60px] p-6 sm:p-8 lg:p-12 overflow-hidden">
+        <div className="relative rounded-tr-[30px] rounded-bl-[30px] sm:rounded-tr-[45px] sm:rounded-bl-[45px] lg:rounded-tr-[60px] lg:rounded-bl-[60px] p-4 sm:p-6 lg:p-8 overflow-hidden">
           {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -256,7 +258,7 @@ function FacilitiesSection() {
           {/* Content */}
           <div className="relative z-10">
             {/* Facilities Grid - Responsive */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 sm:gap-x-12 lg:gap-x-16 gap-y-6 sm:gap-y-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-8 lg:gap-x-12 gap-y-4 sm:gap-y-6">
               {facilities.map((facility, index) => (
                 <div
                   key={index}
@@ -275,8 +277,11 @@ function FacilitiesSection() {
             </div>
 
             {/* View All Button */}
-            <div className="flex justify-center sm:justify-end mt-6 sm:mt-8">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold flex items-center transition-colors text-sm sm:text-base min-h-10 touch-manipulation">
+            <div className="flex justify-center sm:justify-end mt-4 sm:mt-6">
+              <button 
+                onClick={() => navigate('/all-facilities')}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold flex items-center transition-colors text-sm sm:text-base min-h-10 touch-manipulation"
+              >
                 {t("viewAll")}
                 <svg
                   className="w-4 h-4 ml-2"

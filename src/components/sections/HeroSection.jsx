@@ -4,6 +4,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 
 function HeroSection() {
   const { t } = useLanguage();
+
   return (
     <div className="relative min-h-[400px] sm:min-h-[450px] lg:h-[450px] bg-white overflow-hidden">
       {/* Mobile: Full Background Carousel */}
@@ -38,29 +39,22 @@ function HeroSection() {
                 {t("heroSubtitle")}
               </p>
 
-              {/* Search Bar - Hidden on Mobile, Visible on Desktop */}
-              <div className="hidden lg:flex flex-col sm:flex-row max-w-lg mx-auto lg:mx-0 gap-2 sm:gap-0">
-                <input
-                  type="text"
-                  placeholder={t("findDoctor")}
-                  className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border border-gray-300 rounded-lg sm:rounded-l-lg sm:rounded-r-none focus:outline-none focus:border-orange-500 text-base sm:text-lg"
-                />
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-l-none sm:rounded-r-lg flex items-center justify-center min-h-12 touch-manipulation">
-                  <svg
-                    className="w-5 h-5 sm:w-6 sm:h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                  <span className="ml-2 sm:hidden">{t("search")}</span>
-                </button>
+              {/* Search Bar Placeholder - Hidden on Mobile, Visible on Desktop */}
+              <div className="hidden lg:block max-w-lg mx-auto lg:mx-0">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder={t("findDoctor")}
+                    className="w-full px-4 py-3 pr-12 text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    readOnly
+                    onFocus={(e) => e.target.blur()}
+                  />
+                  <button className="absolute right-0 top-0 h-full px-4 bg-orange-500 text-white rounded-r-lg hover:bg-orange-600 transition-colors" onClick={(e) => e.preventDefault()}>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

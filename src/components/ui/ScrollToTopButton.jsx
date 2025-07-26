@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 function ScrollToTopButton() {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   // Show button when page is scrolled down
@@ -34,7 +36,7 @@ function ScrollToTopButton() {
         <button
           onClick={scrollToTop}
           className="fixed bottom-8 right-8 z-50 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-110"
-          aria-label="Scroll to top"
+          aria-label={t('scrollToTop')}
         >
           <svg
             className="w-6 h-6"

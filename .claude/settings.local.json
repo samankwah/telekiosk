@@ -20,7 +20,9 @@
       "Bash(find /mnt/c/Users/CRAFT/Desktop/future MEST projects/Frontend/telekiosk/src -type f -name \"*.jsx\" -o -name \"*.js\")",
       "Bash(grep -r -i \"confirm\\|submit\" /mnt/c/Users/CRAFT/Desktop/future MEST projects/Frontend/telekiosk/src --include=\"*.js\" --include=\"*.jsx\")",
       "Bash(echo)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebFetch(domain:resend.com)",
+      "Bash(lsof:*)"
     ],
     "deny": []
   }

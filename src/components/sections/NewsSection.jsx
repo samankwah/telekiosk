@@ -1,7 +1,9 @@
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useNavigate } from 'react-router-dom';
 
 function NewsSection() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const newsItems = [
     {
       dateKey: "news1Date",
@@ -64,8 +66,10 @@ function NewsSection() {
 
         {/* View All Button */}
         <div className="flex justify-center">
-          <button className="bg-white border-2 border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-500 px-8 py-3 rounded-lg font-semibold flex items-center transition-all duration-200">
-{t('viewAll')}
+          <button 
+            onClick={() => navigate('/all-news-events')}
+            className="bg-white border-2 border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-500 px-8 py-3 rounded-lg font-semibold flex items-center transition-all duration-200">
+            {t('viewAll')}
             <svg
               className="w-4 h-4 ml-2"
               fill="none"

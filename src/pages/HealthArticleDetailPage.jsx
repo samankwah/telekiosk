@@ -4,6 +4,7 @@ import Footer from '../components/layout/Footer';
 import InfoBar from '../components/sections/InfoBar';
 import ScrollToTopButton from '../components/ui/ScrollToTopButton';
 import { HEALTH_WELLNESS_TIPS, SIDEBAR_CATEGORIES, RECENT_POSTS } from '../constants/healthWellnessData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Helper function to get the correct image for each article
 function getArticleImage(articleId) {
@@ -23,6 +24,7 @@ function getArticleImage(articleId) {
 }
 
 function HealthArticleDetailPage() {
+  const { t } = useLanguage();
   const { articleId } = useParams();
   const article = HEALTH_WELLNESS_TIPS.find(tip => tip.id === articleId);
 
@@ -31,9 +33,9 @@ function HealthArticleDetailPage() {
       <div className="min-h-screen bg-gray-50">
         <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Article Not Found</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('articleNotFound')}</h1>
           <Link to="/health-wellness" className="text-blue-600 hover:text-blue-800">
-            Back to Health & Wellness
+            {t('backToHealthWellness')}
           </Link>
         </div>
         <InfoBar />
@@ -66,7 +68,7 @@ function HealthArticleDetailPage() {
                 d="M10 19l-7-7m0 0l7-7m-7 7h18" 
               />
             </svg>
-            Back to Health & Wellness Tips
+            {t('backToHealthWellnessTips')}
           </Link>
         </div>
 
@@ -169,7 +171,7 @@ function HealthArticleDetailPage() {
             {/* Categories Widget */}
             <div className="bg-gray-100 p-4 mb-6">
               <h3 className="text-base font-bold text-gray-900 mb-3 pb-2 border-b border-gray-400">
-                Categories
+                {t('categories')}
               </h3>
               <ul className="space-y-1">
                 {SIDEBAR_CATEGORIES.map((category, index) => (
@@ -178,7 +180,7 @@ function HealthArticleDetailPage() {
                       to="#"
                       className="text-blue-600 hover:text-blue-800 hover:underline text-xs block py-1"
                     >
-                      {category}
+                      {t(category.nameKey)}
                     </Link>
                   </li>
                 ))}
@@ -188,7 +190,7 @@ function HealthArticleDetailPage() {
             {/* Recent Posts Widget */}
             <div className="bg-gray-100 p-4">
               <h3 className="text-base font-bold text-gray-900 mb-3 pb-2 border-b border-gray-400">
-                Recent Posts
+                {t('recentPosts')}
               </h3>
               <div className="space-y-3">
                 {RECENT_POSTS.map((post, index) => (

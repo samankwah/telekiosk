@@ -13,6 +13,9 @@ import VisitingTimesPage from './pages/VisitingTimesPage';
 import HealthWellnessPage from './pages/HealthWellnessPage';
 import HealthArticleDetailPage from './pages/HealthArticleDetailPage';
 import ServicesPage from './pages/ServicesPage';
+import AllServicesPage from './pages/AllServicesPage';
+import AllFacilitiesPage from './pages/AllFacilitiesPage';
+import AllNewsEventsPage from './pages/AllNewsEventsPage';
 import ScrollToTop from './components/ui/ScrollToTop';
 import { LanguageProvider } from './contexts/LanguageContext';
 import './App.css';
@@ -36,7 +39,11 @@ function App() {
           <Route path="/team" element={<AboutUsPage />} /> {/* Placeholder - create TeamPage */}
           
           {/* Other Menu Routes */}
+          <Route path="/all-services" element={<AllServicesPage />} />
+          <Route path="/all-facilities" element={<AllFacilitiesPage />} />
+          <Route path="/all-news-events" element={<AllNewsEventsPage />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:serviceId" element={<ServicesPage />} />
           <Route path="/health-tips" element={<HealthWellnessPage />} />
           <Route path="/health-wellness" element={<HealthWellnessPage />} />
           <Route path="/health-article/:articleId" element={<HealthArticleDetailPage />} />

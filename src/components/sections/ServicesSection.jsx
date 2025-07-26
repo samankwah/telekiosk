@@ -211,7 +211,7 @@ function ServicesSection() {
               {/* View All Button */}
               <div 
                 className="text-center group touch-manipulation cursor-pointer"
-                onClick={() => navigate('/services')}
+                onClick={() => navigate('/all-services')}
               >
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-gray-50 transition-colors">
                   <svg
