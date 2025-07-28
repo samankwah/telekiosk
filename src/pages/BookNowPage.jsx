@@ -117,16 +117,35 @@ function BookNowPage() {
         // Move to success state
         setCurrentStep(5);
       } else {
-        // Show error message
-        alert(`❌ ${t('bookingFailed')}: ${result.message}`);
+        // Show detailed error message
+        const errorMessage = result.message || 'Booking failed. Please try again.';
+        alert(`❌ Booking Failed: ${errorMessage}`);
+        
+        // If it's a server connection error, provide helpful guidance
+        if (errorMessage.includes('Failed to fetch') || errorMessage.includes('Server error')) {
+          alert('🔧 Server Connection Issue: The email server appears to be unavailable. Please try again in a moment or contact hospital support.');
+        }
       }
       
     } catch (error) {
       console.error('Booking error:', error);
-      alert(`❌ ${t('unexpectedError')}`);
+      
+      let userFriendlyMessage = 'An unexpected error occurred. Please try again.';
+      
+      // Handle specific error types
+      if (error.message.includes('Failed to fetch')) {
+        userFriendlyMessage = 'Unable to connect to booking system. Please check your internet connection and try again.';
+      } else if (error.message.includes('500')) {
+        userFriendlyMessage = 'Server error occurred. Please try again or contact support.';
+      } else if (error.message.includes('timeout')) {
+        userFriendlyMessage = 'Request timed out. Please try again.';
+      }
+      
+      alert(`❌ ${userFriendlyMessage}`);
+      
       setBookingResult({
         success: false,
-        message: t('unexpectedError'),
+        message: userFriendlyMessage,
         error: error.message
       });
     } finally {
@@ -430,45 +449,176 @@ function BookNowPage() {
       {bookingResult?.success && (
         <div className="max-w-lg mx-auto">
           <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-6 border border-green-200">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('meetingInviteSent')}</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              {bookingResult.results?.patient?.simulation ? 
+                '✅ Booking Confirmed (Demo Mode)' : 
+                bookingResult.emailStatus?.patientEmailSent ? 
+                  t('meetingInviteSent') : 
+                  '📱 Meeting Ready - Join Below!'}
+            </h3>
+            
+            {bookingResult.results?.patient?.simulation && (
+              <div className="mb-4 p-3 bg-yellow-100 border border-yellow-300 rounded-lg">
+                <p className="text-sm text-yellow-800">
+                  <strong>📧 Demo Mode:</strong> Email notifications are simulated. In production, confirmation emails would be sent to both patient and hospital admin.
+                </p>
+              </div>
+            )}
             
             <div className="space-y-3">
+              {/* Email Status */}
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  bookingResult.emailStatus?.patientEmailSent 
+                    ? 'bg-green-100' 
+                    : 'bg-yellow-100'
+                }`}>
+                  <svg className={`w-4 h-4 ${
+                    bookingResult.emailStatus?.patientEmailSent 
+                      ? 'text-green-600' 
+                      : 'text-yellow-600'
+                  }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-800">{t('emailSentTo')}</p>
+                  <p className="font-medium text-gray-800">
+                    {bookingResult.emailStatus?.patientEmailSent ? 'Email sent to:' : 'Email delivery issue:'}
+                  </p>
                   <p className="text-gray-600">{bookingData.patientEmail}</p>
+                  {!bookingResult.emailStatus?.patientEmailSent && (
+                    <p className="text-yellow-600 text-xs">Use the meeting link below to join your consultation</p>
+                  )}
                 </div>
               </div>
 
               {bookingResult.meetingInfo && (
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
+                <>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-800">{t('googleMeetLink')}</p>
+                      <p className="text-sm text-gray-600">Meeting ID: {bookingResult.meetingInfo.meetingId}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium text-gray-800">{t('googleMeetLink')}</p>
+                  
+                  {/* Prominent Join Meeting Button */}
+                  <div className="mt-4 p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl">
                     <a 
                       href={bookingResult.meetingInfo.meetingLink} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 text-sm break-all"
+                      className="block w-full text-center bg-white text-blue-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
                     >
-                      {bookingResult.meetingInfo.meetingLink}
+                      🎥 Join Video Consultation Now
                     </a>
+                    <p className="text-white text-xs text-center mt-2 opacity-90">
+                      Click here to join your video meeting with the doctor
+                    </p>
                   </div>
-                </div>
+                  
+                  {/* Calendar Button */}
+                  {bookingResult.meetingInfo.calendarUrl && (
+                    <div className="mt-2">
+                      <a 
+                        href={bookingResult.meetingInfo.calendarUrl}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="block w-full text-center bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                      >
+                        📅 Add to Calendar
+                      </a>
+                    </div>
+                  )}
+                  
+                  {/* Alternative Contact Method */}
+                  {!bookingResult.emailStatus?.patientEmailSent ? (
+                    <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-sm text-red-800 font-medium mb-2">⚠️ Email delivery failed - Get your meeting link:</p>
+                      <div className="space-y-2">
+                        <div className="flex space-x-2">
+                          <a 
+                            href={`https://wa.me/233599211311?text=Hi! I just booked a video consultation. My name is ${bookingData.patientName}. My email is ${bookingData.patientEmail}. Please send me the meeting link: ${bookingResult.meetingInfo.meetingLink}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 bg-green-600 text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-xs"
+                          >
+                            📱 Get via WhatsApp
+                          </a>
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(`Meeting Link: ${bookingResult.meetingInfo.meetingLink}\nMeeting ID: ${bookingResult.meetingInfo.meetingId}`);
+                              alert('Meeting details copied to clipboard!');
+                            }}
+                            className="flex-1 bg-blue-600 text-white text-center py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-xs"
+                          >
+                            📋 Copy Details
+                          </button>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const subject = encodeURIComponent('TeleKiosk Meeting Link');
+                            const body = encodeURIComponent(`Hi,\n\nHere are your TeleKiosk video consultation details:\n\nMeeting Link: ${bookingResult.meetingInfo.meetingLink}\nMeeting ID: ${bookingResult.meetingInfo.meetingId}\n\nBest regards,\nTeleKiosk Team`);
+                            window.open(`mailto:${bookingData.patientEmail}?subject=${subject}&body=${body}`);
+                          }}
+                          className="w-full bg-gray-600 text-white text-center py-2 px-3 rounded-lg hover:bg-gray-700 transition-colors text-xs"
+                        >
+                          📧 Send to Email (Manual)
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                      <p className="text-sm text-green-800 font-medium mb-2">✅ Email sent! Also available via:</p>
+                      <div className="flex space-x-2">
+                        <a 
+                          href={`https://wa.me/233599211311?text=Hi! I just booked a video consultation. My name is ${bookingData.patientName}. Can you please send me the meeting link: ${bookingResult.meetingInfo.meetingLink}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 bg-green-600 text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-xs"
+                        >
+                          📱 WhatsApp Backup
+                        </a>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(bookingResult.meetingInfo.meetingLink);
+                            alert('Meeting link copied to clipboard!');
+                          }}
+                          className="flex-1 bg-blue-600 text-white text-center py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-xs"
+                        >
+                          📋 Copy Link
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
+            {/* Important Notice */}
             <div className="mt-6 p-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg">
               <div className="flex items-start space-x-2 text-blue-700">
+                <svg className="w-5 h-5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <p className="font-semibold text-sm">Important:</p>
+                  <ul className="text-xs space-y-1 mt-1">
+                    <li>• Your meeting link is available above - no email required!</li>
+                    <li>• Save this page or bookmark the meeting link</li>
+                    <li>• Join the meeting 5 minutes before your appointment</li>
+                    <li>• Test your camera and microphone beforehand</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-4 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg">
+              <div className="flex items-start space-x-2 text-green-700">
                 <svg className="w-5 h-5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>

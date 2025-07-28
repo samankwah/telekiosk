@@ -22,7 +22,13 @@
       "Bash(echo)",
       "Bash(grep:*)",
       "WebFetch(domain:resend.com)",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(npm run server:*)",
+      "Bash(curl:*)",
+      "Bash(find:*)",
+      "Bash(pkill:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

@@ -2,12 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    
+    <!-- PWA and Basic Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="TeleKiosk - The Bank Hospital's modern interactive kiosk and web application with AI chatbot, voice recognition, and comprehensive healthcare services." />
+    <meta name="keywords" content="hospital, healthcare, kiosk, AI chatbot, appointments, medical services, Ghana" />
+    <meta name="author" content="TeleKiosk Hospital" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Icons and Theme -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TeleKiosk</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-192x192.png" />
+    
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#f97316" />
+    <meta name="msapplication-TileColor" content="#f97316" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="TeleKiosk" />
+    <link rel="apple-touch-startup-image" href="/icons/icon-512x512.png" />
+    
+    <!-- Android PWA Support -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="TeleKiosk" />
+    
+    <!-- Windows PWA Support -->
+    <meta name="msapplication-starturl" content="/" />
+    <meta name="msapplication-navbutton-color" content="#f97316" />
+    
+    <!-- Performance and Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="index, follow" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TeleKiosk - The Bank Hospital" />
+    <meta property="og:description" content="Modern hospital kiosk with AI chatbot and voice recognition for seamless healthcare experience." />
+    <meta property="og:image" content="/icons/icon-512x512.png" />
+    <meta property="og:url" content="https://telekiosk-hospital.app" />
+    <meta property="og:site_name" content="TeleKiosk Hospital" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TeleKiosk - The Bank Hospital" />
+    <meta name="twitter:description" content="Modern hospital kiosk with AI chatbot and voice recognition." />
+    <meta name="twitter:image" content="/icons/icon-512x512.png" />
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <title>TeleKiosk - The Bank Hospital | AI-Powered Healthcare Kiosk</title>
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- PWA Install Button (Hidden by default) -->
+    <button 
+      id="pwa-install-button" 
+      style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #f97316; color: white; border: none; padding: 12px 20px; border-radius: 25px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);"
+    >
+      📱 Install App
+    </button>
+    
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

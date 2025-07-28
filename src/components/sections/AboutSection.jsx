@@ -79,7 +79,7 @@ function AboutSection() {
     {
       key: "medical",
       targetNumber: null,
-      displayText: t("medicalAssistance"),
+      displayText: t("Medical"),
       label: t("assistanceLabel"),
       icon: (
         <svg
@@ -152,46 +152,46 @@ function AboutSection() {
   return (
     <>
       {/* Opening Hours Section */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-200">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-8">
+      <section className="py-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4">
+          <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-200">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
               <div className="flex items-center">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mr-4 sm:mr-8">
+                <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mr-2 sm:mr-3">
                   {t("openingHours")}
                 </h3>
-                <div className="w-1 h-6 sm:h-8 bg-blue-600 mr-4 sm:mr-8"></div>
+                <div className="w-1 h-5 sm:h-6 lg:h-8 bg-blue-600"></div>
               </div>
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-sm">
-                <div className="flex-shrink-0">
-                  <span className="font-semibold text-gray-900 block sm:inline">
-                    {t("mondayFriday")}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm flex-1">
+                <div className="whitespace-nowrap">
+                  <span className="font-semibold text-gray-900 mr-1">
+                    {t("mondayFriday")}:
                   </span>
-                  <span className="text-gray-600 ml-0 sm:ml-2 block sm:inline">
+                  <span className="text-gray-600">
                     {t("openingHoursTime") || "7 AM – 7 PM"}
                   </span>
                 </div>
-                <div className="flex-shrink-0">
-                  <span className="font-semibold text-gray-900 block sm:inline">
-                    {t("saturday")}
+                <div className="whitespace-nowrap">
+                  <span className="font-semibold text-gray-900 mr-1">
+                    {t("saturday")}:
                   </span>
-                  <span className="text-gray-600 ml-0 sm:ml-2 block sm:inline">
+                  <span className="text-gray-600">
                     {t("openingHoursTime") || "7 AM – 7 PM"}
                   </span>
                 </div>
-                <div className="flex-shrink-0">
-                  <span className="font-semibold text-gray-900 block sm:inline">
-                    {t("sunday")}
+                <div className="whitespace-nowrap">
+                  <span className="font-semibold text-gray-900 mr-1">
+                    {t("sunday")}:
                   </span>
-                  <span className="text-gray-600 ml-0 sm:ml-2 block sm:inline">
+                  <span className="text-gray-600">
                     {t("openingHoursTime") || "7 AM – 7 PM"}
                   </span>
                 </div>
-                <div className="flex-shrink-0">
-                  <span className="font-semibold text-red-600 block sm:inline">
+                <div className="whitespace-nowrap">
+                  <span className="font-semibold text-red-600 mr-1">
                     {t("emergency24")}:
                   </span>
-                  <span className="text-gray-900 ml-0 sm:ml-2 font-semibold block sm:inline">
+                  <span className="text-gray-900 font-semibold">
                     {t("hours24")}
                   </span>
                 </div>
@@ -202,36 +202,36 @@ function AboutSection() {
       </section>
 
       {/* About Us Section */}
-      <section className="py-16 bg-white">
+      <section className="py-8 sm:py-12 lg:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             {/* Left Side - Video Tour */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <div className="relative bg-gray-900 rounded-lg overflow-hidden aspect-video">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-purple-900/80 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="text-center text-white px-4">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                       <svg
-                        className="w-8 h-8"
+                        className="w-6 h-6 sm:w-8 sm:h-8"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
-                    <p className="text-gray-200">{t("videoTourSoon")}</p>
+                    <p className="text-gray-200 text-sm sm:text-base">{t("videoTourSoon")}</p>
                   </div>
                 </div>
-                <div className="absolute bottom-4 left-4 text-white text-sm">
+                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 text-white text-xs sm:text-sm">
                   {t("videoTimestamp") || "0:02 / 5:15"}
                 </div>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-6 border-l-4 border-orange-400">
+              <div className="bg-blue-50 rounded-lg p-4 sm:p-6 border-l-4 border-orange-400">
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
                     <svg
-                      className="w-14 h-14 text-blue-600"
+                      className="w-6 h-6 sm:w-7 sm:h-7 text-blue-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -245,10 +245,10 @@ function AboutSection() {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">
                       {t("takeTour")}
                     </h4>
-                    <p className="text-gray-700 font-medium">
+                    <p className="text-sm sm:text-base text-gray-700 font-medium">
                       {t("facilities")}
                     </p>
                   </div>
@@ -257,15 +257,15 @@ function AboutSection() {
             </div>
 
             {/* Right Side - About Content */}
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               <div>
-                <p className="text-orange-500 font-semibold text-sm uppercase tracking-wide mb-3">
+                <p className="text-orange-500 font-semibold text-xs sm:text-sm uppercase tracking-wide mb-2 sm:mb-3">
                   {t("aboutUs")}
                 </p>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6 leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
                   {t("aboutMainTitle")}
                 </h2>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                   {t("aboutDescription")}
                 </p>
               </div>
@@ -273,18 +273,18 @@ function AboutSection() {
               {/* Stats Grid */}
               <div
                 ref={sectionRef}
-                className="grid grid-cols-2 sm:grid-cols-2 gap-6 sm:gap-8"
+                className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8"
               >
                 {stats.map((stat, index) => (
                   <div
                     key={index}
-                    className="flex items-center space-x-3 sm:space-x-4"
+                    className="flex items-start space-x-2 sm:space-x-3"
                   >
-                    <div className="flex-shrink-0 scale-90 sm:scale-100">
+                    <div className="flex-shrink-0 scale-75 sm:scale-90 lg:scale-100">
                       {stat.icon}
                     </div>
-                    <div className="flex-1">
-                      <div className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-1">
                         {stat.key === "years"
                           ? `${counters.years}${stat.suffix}`
                           : stat.key === "specialists"
@@ -293,7 +293,7 @@ function AboutSection() {
                           ? `${formatNumber(counters.patients)}${stat.suffix}`
                           : stat.displayText}
                       </div>
-                      <div className="text-gray-600 text-sm leading-tight whitespace-pre-line">
+                      <div className="text-gray-600 text-xs sm:text-sm leading-tight">
                         {typeof stat.label === "function"
                           ? stat.label()
                           : stat.label}
@@ -304,14 +304,14 @@ function AboutSection() {
               </div>
 
               {/* View All Button */}
-              <div className="pt-4">
-                <button 
-                  onClick={() => navigate('/about')}
-                  className="border border-gray-300 text-gray-900 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors font-medium flex items-center"
+              <div className="pt-2 sm:pt-4">
+                <button
+                  onClick={() => navigate("/about")}
+                  className="border border-gray-300 text-gray-900 px-4 sm:px-6 py-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors font-medium flex items-center text-sm sm:text-base touch-manipulation"
                 >
                   {t("viewAll")}
                   <svg
-                    className="w-4 h-4 ml-2"
+                    className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

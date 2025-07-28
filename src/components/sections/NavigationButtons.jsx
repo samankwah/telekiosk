@@ -1,9 +1,11 @@
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { useStaggeredAnimation } from "../../hooks/useScrollAnimation";
 
 function NavigationButtons() {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const [setNavRef, visibleNavItems] = useStaggeredAnimation(3, 150);
 
   const navigationItems = [
     {
@@ -78,22 +80,25 @@ function NavigationButtons() {
   ];
 
   return (
-    <div className="bg-white py-8 sm:py-10 lg:py-12">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="bg-white py-6 sm:py-8 md:py-10 lg:py-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4">
         <div className="grid grid-cols-3 gap-0 divide-x divide-blue-400">
           {navigationItems.map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-center py-4 sm:py-6 lg:py-8 hover:bg-gray-50 cursor-pointer transition-colors touch-manipulation"
+              ref={setNavRef(index)}
+              className={`flex items-center justify-center py-3 sm:py-4 md:py-6 lg:py-8 hover:bg-gray-50 cursor-pointer transition-all duration-300 touch-manipulation hover:scale-105 active:scale-95 ${
+                visibleNavItems.has(index) ? 'animate-fadeInUp opacity-100' : 'opacity-0 translate-y-4'
+              }`}
               onClick={item.action}
             >
-              <div className="flex flex-col items-center text-center">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 bg-blue-50 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
-                  <div className="scale-75 sm:scale-90 lg:scale-100">
+              <div className="flex flex-col items-center text-center space-y-1 sm:space-y-2">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 bg-blue-50 rounded-lg flex items-center justify-center transition-all duration-300 hover:bg-blue-100 hover:shadow-lg group-hover:scale-110">
+                  <div className="scale-50 sm:scale-75 md:scale-90 lg:scale-100 transition-transform duration-300">
                     {item.icon}
                   </div>
                 </div>
-                <span className="text-xs sm:text-sm lg:text-base xl:text-lg font-semibold text-gray-900 leading-tight px-1">
+                <span className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-900 leading-tight px-1 max-w-[90px] sm:max-w-none transition-colors duration-300 hover:text-orange-600">
                   {t(item.titleKey)}
                 </span>
               </div>

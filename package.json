@@ -6,10 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:analyze": "vite build && npx vite-bundle-analyzer dist/stats.html",
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "node server.js",
-    "dev:full": "concurrently \"npm run server\" \"npm run dev\""
+    "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
+    "start": "npm run dev:full",
+    "typecheck": "echo 'TypeScript checking skipped (JavaScript project)'",
+    "test": "echo 'No tests specified yet'",
+    "performance": "npm run build && npm run preview"
   },
   "dependencies": {
     "react": "^19.1.0",

@@ -1,9 +1,12 @@
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import { useScrollAnimation, useStaggeredAnimation } from '../../hooks/useScrollAnimation';
 
 function ServicesSection() {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const [titleRef, isTitleVisible] = useScrollAnimation(0.2);
+  const [setServiceRef, visibleServices] = useStaggeredAnimation(8, 100);
   const services = [
     {
       titleKey: "specialists",
@@ -178,31 +181,48 @@ function ServicesSection() {
   ];
 
   return (
-    <section className="py-8 sm:py-12 lg:py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+    <section className="py-6 sm:py-8 md:py-12 lg:py-16 bg-gray-50">
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12 items-start">
           {/* Left Side - Services Content */}
           <div className="lg:col-span-3">
-            <div className="mb-8 sm:mb-10 lg:mb-12 text-center lg:text-left">
-              <p className="text-orange-500 font-semibold text-sm uppercase tracking-wide mb-3">
+            <div 
+              ref={titleRef}
+              className={`mb-6 sm:mb-8 md:mb-10 lg:mb-12 text-center lg:text-left transition-all duration-700 ${
+                isTitleVisible ? 'animate-fadeInLeft opacity-100' : 'opacity-0 -translate-x-4'
+              }`}
+            >
+              <p className={`text-orange-500 font-semibold text-xs sm:text-sm uppercase tracking-wide mb-2 sm:mb-3 transition-all duration-500 delay-200 ${
+                isTitleVisible ? 'animate-fadeInUp opacity-100' : 'opacity-0 translate-y-2'
+              }`}>
                 {t('ourServices')}
               </p>
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
+              <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 leading-tight transition-all duration-700 delay-300 ${
+                isTitleVisible ? 'animate-fadeInUp opacity-100' : 'opacity-0 translate-y-4'
+              }`}>
                 {t('servicesTitle')}
               </h2>
-              <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className={`text-gray-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0 transition-all duration-700 delay-500 ${
+                isTitleVisible ? 'animate-fadeInUp opacity-100' : 'opacity-0 translate-y-4'
+              }`}>
                 {t('servicesSubtitle')}
               </p>
             </div>
 
             {/* Services Grid - Responsive */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8 mb-6 sm:mb-8">
               {services.map((service, index) => (
-                <div key={index} className="text-center group">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-blue-100 transition-colors">
-                    <div className="scale-75 sm:scale-100">{service.icon}</div>
+                <div 
+                  key={index} 
+                  ref={setServiceRef(index)}
+                  className={`text-center group cursor-pointer transition-all duration-300 hover:scale-105 ${
+                    visibleServices.has(index) ? 'animate-scaleIn opacity-100' : 'opacity-0 scale-95'
+                  }`}
+                >
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4 group-hover:bg-blue-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div className="scale-50 sm:scale-75 md:scale-100 transition-transform duration-300 group-hover:scale-110">{service.icon}</div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 text-xs sm:text-sm leading-tight px-1">
+                  <h3 className="font-semibold text-gray-900 text-xs sm:text-sm leading-tight px-1 max-w-[80px] sm:max-w-none mx-auto transition-colors duration-300 group-hover:text-orange-600">
                     {t(service.titleKey)}
                   </h3>
                 </div>
@@ -210,12 +230,15 @@ function ServicesSection() {
 
               {/* View All Button */}
               <div 
-                className="text-center group touch-manipulation cursor-pointer"
+                ref={setServiceRef(7)}
+                className={`text-center group touch-manipulation cursor-pointer transition-all duration-300 hover:scale-105 ${
+                  visibleServices.has(7) ? 'animate-scaleIn opacity-100' : 'opacity-0 scale-95'
+                }`}
                 onClick={() => navigate('/all-services')}
               >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-gray-50 transition-colors">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 md:mb-4 group-hover:bg-orange-50 group-hover:border-orange-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                   <svg
-                    className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600"
+                    className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-600 group-hover:text-orange-600 transition-colors duration-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -228,7 +251,7 @@ function ServicesSection() {
                     />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-gray-900 text-xs sm:text-sm leading-tight">
+                <h3 className="font-semibold text-gray-900 text-xs sm:text-sm leading-tight max-w-[80px] sm:max-w-none mx-auto transition-colors duration-300 group-hover:text-orange-600">
                   {t('viewAll')}
                 </h3>
               </div>
@@ -236,9 +259,9 @@ function ServicesSection() {
           </div>
 
           {/* Right Side - Medical Professional Image */}
-          <div className="lg:col-span-2 mt-8 lg:mt-0">
-            <div className="bg-gray-300 h-64 sm:h-80 lg:h-96 xl:h-[500px] min-h-[250px] rounded-lg flex items-center justify-center">
-              <span className="text-gray-500 text-sm sm:text-base lg:text-lg text-center px-4">
+          <div className="lg:col-span-2 mt-6 sm:mt-8 lg:mt-0">
+            <div className="bg-gray-300 h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[500px] min-h-[200px] rounded-lg flex items-center justify-center">
+              <span className="text-gray-500 text-xs sm:text-sm md:text-base lg:text-lg text-center px-3 sm:px-4">
                 {t('medicalProfessionalImage')}
               </span>
             </div>

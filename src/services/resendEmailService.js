@@ -67,8 +67,11 @@ const sendEmailWithResend = async (emailData) => {
  */
 export const sendBookingConfirmationEmails = async (bookingData, meetingInfo) => {
   try {
+    // Debug log
+    console.log('🔧 Attempting to send emails via port 3002...');
+    
     // Call our backend server to send emails
-    const response = await fetch('http://localhost:3001/api/send-booking-emails', {
+    const response = await fetch('http://localhost:3002/api/send-booking-emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,13 +97,28 @@ export const sendBookingConfirmationEmails = async (bookingData, meetingInfo) =>
 
   } catch (error) {
     console.error('Email service error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    
+    // Check if it's a connection error
+    const isConnectionError = error.message.includes('Failed to fetch') || 
+                             error.message.includes('ECONNREFUSED') ||
+                             error.message.includes('fetch');
     
     // Return a more user-friendly error message
     return {
       success: false,
-      message: 'Unable to send confirmation emails. Please ensure the email server is running.',
+      message: isConnectionError 
+        ? 'UPDATED: Email server connection failed. Trying port 3002 - please try again in a moment.'
+        : `UPDATED: Email sending failed: ${error.message}`,
       error: error.message,
-      instructions: 'Please run "npm run server" in a separate terminal to start the email service.'
+      serverPort: '3002',
+      instructions: isConnectionError 
+        ? 'The email server should be running on port 3002. Please check if it\'s started.'
+        : 'Please check the email service configuration.'
     };
   }
 };

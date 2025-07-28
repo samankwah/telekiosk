@@ -7,6 +7,12 @@ export { default as ImageCarousel } from './ui/ImageCarousel';
 export { default as ScrollToTop } from './ui/ScrollToTop';
 export { default as ScrollToTopButton } from './ui/ScrollToTopButton';
 
+// Chatbot Components
+export { default as ChatBot } from './chatbot/ChatBot';
+export { default as ChatInterface } from './chatbot/ChatInterface';
+export { default as ChatMessage } from './chatbot/ChatMessage';
+export { default as VoiceButton } from './chatbot/VoiceButton';
+
 // Section Components
 export { default as HeroSection } from './sections/HeroSection';
 export { default as NavigationButtons } from './sections/NavigationButtons';

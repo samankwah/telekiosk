@@ -5,6 +5,35 @@
 
 import { sendBookingConfirmationEmails } from './resendEmailService.js';
 
+// Doctor and specialty data
+const DOCTORS = [
+  { id: 1, name: 'Dr. Sarah Johnson', specialty: 'cardiology', rating: 4.9, experience: '15+ years' },
+  { id: 2, name: 'Dr. Michael Chen', specialty: 'neurology', rating: 4.8, experience: '12+ years' },
+  { id: 3, name: 'Dr. Emily Brown', specialty: 'pediatrics', rating: 4.9, experience: '10+ years' },
+  { id: 4, name: 'Dr. James Wilson', specialty: 'dermatology', rating: 4.7, experience: '8+ years' },
+  { id: 5, name: 'Dr. Lisa Davis', specialty: 'orthopedics', rating: 4.8, experience: '14+ years' }
+];
+
+const SPECIALTIES = [
+  { id: 'cardiology', name: 'Cardiology', icon: '❤️' },
+  { id: 'neurology', name: 'Neurology', icon: '🧠' },
+  { id: 'pediatrics', name: 'Pediatrics', icon: '👶' },
+  { id: 'dermatology', name: 'Dermatology', icon: '✨' },
+  { id: 'orthopedics', name: 'Orthopedics', icon: '🦴' },
+  { id: 'emergency', name: 'Emergency', icon: '🚨' }
+];
+
+// Helper functions
+const getDoctorInfo = (doctorId) => {
+  const doctor = DOCTORS.find(d => d.id === parseInt(doctorId));
+  return doctor || { name: 'Dr. Unknown', specialty: 'general' };
+};
+
+const getSpecialtyInfo = (specialtyId) => {
+  const specialty = SPECIALTIES.find(s => s.id === specialtyId);
+  return specialty || { name: 'General Medicine', icon: '🏥' };
+};
+
 // Generate a unique meeting ID for Google Meet
 const generateMeetingId = () => {
   const chars = 'abcdefghijklmnopqrstuvwxyz';
