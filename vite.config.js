@@ -51,7 +51,14 @@ export default defineConfig({
     host: true,
     // Enable HMR for better development experience
     hmr: {
-      overlay: false
+      overlay: false,
+      port: 3000,
+      clientPort: 3000
+    },
+    // Fix WebSocket connection issues
+    strictPort: false,
+    fs: {
+      allow: ['..']
     }
   },
   // Preview configuration
