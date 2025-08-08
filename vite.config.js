@@ -18,14 +18,6 @@ export default defineConfig({
             './src/components/ui/ScrollToTopButton.jsx',
             './src/components/ui/SkeletonLoader.jsx'
           ],
-          // Chatbot chunk for AI features
-          chatbot: [
-            './src/components/chatbot/ChatBot.jsx',
-            './src/components/chatbot/ChatInterface.jsx',
-            './src/components/chatbot/VoiceButton.jsx',
-            './src/services/chatbotService.js',
-            './src/services/voiceService.js'
-          ],
           // Services chunk for service-related components
           services: [
             './src/services/resendEmailService.js',

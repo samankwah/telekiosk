@@ -3,10 +3,8 @@ import { Suspense, lazy } from 'react';
 import ScrollToTop from './components/ui/ScrollToTop';
 import ScrollToTopButton from './components/ui/ScrollToTopButton';
 import { LanguageProvider } from './contexts/LanguageContext';
-import { ChatbotProvider } from './contexts/ChatbotContext';
-import { EnhancedChatbotProvider } from './contexts/EnhancedChatbotContext';
 import { LoadingSpinner } from './components/ui/AnimationComponents.jsx';
-import { getEnvVar } from './utils/envUtils.js';
+import { ChatAssistant } from './components/chatbot/ChatAssistant';
 import './App.css';
 
 // Lazy load page components for better performance
@@ -28,9 +26,6 @@ const AllServicesPage = lazy(() => import('./pages/AllServicesPage'));
 const AllFacilitiesPage = lazy(() => import('./pages/AllFacilitiesPage'));
 const AllNewsEventsPage = lazy(() => import('./pages/AllNewsEventsPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-const ChatBot = lazy(() => import('./components/chatbot/ChatBot'));
-const EnhancedChatBot = lazy(() => import('./components/chatbot/EnhancedChatBot'));
-const Phase3EnhancedChatBot = lazy(() => import('./components/chatbot/Phase3EnhancedChatBot'));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -43,13 +38,8 @@ const PageLoader = () => (
 );
 
 function App() {
-  // Check if Phase 3 features are enabled
-  const enablePhase3 = getEnvVar('ENABLE_PHASE3') !== 'false';
-  
   return (
     <LanguageProvider>
-      <ChatbotProvider>
-        <EnhancedChatbotProvider>
           <Router>
             <ScrollToTop />
             <Suspense fallback={<PageLoader />}>
@@ -87,12 +77,8 @@ function App() {
             </Suspense>
             
             <ScrollToTopButton />
-            <Suspense fallback={<div className="fixed bottom-4 right-4 z-50"><LoadingSpinner size="md" color="orange" /></div>}>
-              {enablePhase3 ? <Phase3EnhancedChatBot /> : <EnhancedChatBot />}
-            </Suspense>
+            <ChatAssistant />
           </Router>
-        </EnhancedChatbotProvider>
-      </ChatbotProvider>
     </LanguageProvider>
   );
 }

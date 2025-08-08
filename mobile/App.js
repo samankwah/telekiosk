@@ -29,12 +29,10 @@ import { Provider as PaperProvider } from 'react-native-paper';
 // Context providers
 import { LanguageProvider } from './src/contexts/LanguageContext';
 import { HealthDataProvider } from './src/contexts/HealthDataContext';
-import { OfflineAIProvider } from './src/contexts/OfflineAIContext';
 import { LocationProvider } from './src/contexts/LocationContext';
 
 // Screens
 import HomeScreen from './src/screens/HomeScreen';
-import AIHealthAssistantScreen from './src/screens/AIHealthAssistantScreen';
 import SymptomCheckerScreen from './src/screens/SymptomCheckerScreen';
 import AppointmentBookingScreen from './src/screens/AppointmentBookingScreen';
 import MedicalRecordsScreen from './src/screens/MedicalRecordsScreen';
@@ -47,7 +45,6 @@ import OnboardingScreen from './src/screens/OnboardingScreen';
 import LoginScreen from './src/screens/LoginScreen';
 
 // Services
-import { offlineAIService } from './src/services/offlineAI';
 import { healthDataService } from './src/services/healthDataService';
 import { notificationService } from './src/services/notificationService';
 import { syncService } from './src/services/syncService';
@@ -71,9 +68,6 @@ function MainTabNavigator() {
           switch (route.name) {
             case 'Home':
               iconName = 'home';
-              break;
-            case 'AIAssistant':
-              iconName = 'smart-toy';
               break;
             case 'Symptoms':
               iconName = 'healing';
@@ -108,11 +102,6 @@ function MainTabNavigator() {
         name="Home" 
         component={HomeScreen}
         options={{ tabBarLabel: 'Home' }}
-      />
-      <Tab.Screen 
-        name="AIAssistant" 
-        component={AIHealthAssistantScreen}
-        options={{ tabBarLabel: 'AI Assistant' }}
       />
       <Tab.Screen 
         name="Symptoms" 
@@ -171,8 +160,6 @@ export default function App() {
       const userToken = await AsyncStorage.getItem(storageKeys.USER_TOKEN);
       setIsLoggedIn(!!userToken);
 
-      // Initialize offline AI service
-      await offlineAIService.initialize();
 
       // Initialize health data service
       await healthDataService.initialize();
@@ -321,8 +308,6 @@ export default function App() {
       // Start sync process
       await syncService.syncAll();
       
-      // Update offline AI models if needed
-      await offlineAIService.checkForUpdates();
       
       analyticsService.trackEvent('network_online');
     } catch (error) {
@@ -374,7 +359,7 @@ export default function App() {
         <View style={styles.loadingContainer}>
           <Icon name="local-hospital" size={60} color={theme.colors.primary} />
           <Text style={styles.loadingText}>TeleKiosk</Text>
-          <Text style={styles.loadingSubtext}>Initializing Ghana Healthcare AI...</Text>
+          <Text style={styles.loadingSubtext}>Initializing Ghana Healthcare...</Text>
         </View>
       </SafeAreaProvider>
     );
@@ -385,7 +370,6 @@ export default function App() {
       <PaperProvider theme={theme}>
         <LanguageProvider>
           <HealthDataProvider>
-            <OfflineAIProvider>
               <LocationProvider>
                 <StatusBar
                   barStyle="dark-content"
@@ -479,7 +463,6 @@ export default function App() {
                   </View>
                 )}
               </LocationProvider>
-            </OfflineAIProvider>
           </HealthDataProvider>
         </LanguageProvider>
       </PaperProvider>

@@ -5,6 +5,10 @@
 
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -30,6 +34,47 @@ app.get('/api/health', (req, res) => {
     service: 'TeleKiosk Email API',
     timestamp: new Date().toISOString()
   });
+});
+
+// Chat API endpoint for AI chatbot
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { messages, ...options } = req.body;
+
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ 
+        error: 'Invalid request: messages array is required' 
+      });
+    }
+
+    // Import OpenAI service dynamically
+    const { generateChatCompletion } = await import('./src/services/openaiService.js');
+
+    // Generate response using OpenAI service
+    const result = await generateChatCompletion(messages, {
+      allowFunctions: true,
+      ...options
+    });
+
+    if (result.success) {
+      return res.status(200).json({
+        message: result.message,
+        usage: result.usage,
+        responseTime: result.responseTime,
+        functionResult: result.functionResult
+      });
+    } else {
+      return res.status(500).json({
+        error: result.error || 'Failed to generate response'
+      });
+    }
+
+  } catch (error) {
+    console.error('Chat API error:', error);
+    return res.status(500).json({
+      error: 'Internal server error: ' + error.message
+    });
+  }
 });
 
 // Send booking confirmation emails

@@ -31,7 +31,11 @@
       "Bash(node:*)",
       "Bash(cd:*)",
       "Bash(npm ls:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.assistant-ui.com)",
+      "WebFetch(domain:www.assistant-ui.com)",
+      "Bash(timeout:*)"
     ],
     "deny": []
   }

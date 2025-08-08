@@ -1,4 +1,4 @@
-// Voice utility functions for the chatbot
+// Voice utility functions for voice interactions
 
 export const VOICE_COMMANDS = {
   // Greeting commands
@@ -48,7 +48,7 @@ export const VOICE_COMMANDS = {
     'home',
     'start over',
     'reset',
-    'clear chat'
+    'clear conversation'
   ]
 };
 

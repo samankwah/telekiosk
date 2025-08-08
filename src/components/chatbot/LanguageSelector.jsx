@@ -1,203 +1,216 @@
-import { useState } from 'react';
-import { useEnhancedChatbot } from '../../contexts/EnhancedChatbotContext';
+// Language Selector Component for TeleKiosk AI Assistant
+// Allows users to select their preferred language
 
-function LanguageSelector() {
-  const { 
-    state, 
-    switchLanguage, 
-    toggleLanguageDetection,
-    ghanaLanguageService 
-  } = useEnhancedChatbot();
-  
-  const [showLanguages, setShowLanguages] = useState(false);
+import React, { useState, useEffect } from 'react';
+import { Globe, ChevronDown, Check } from 'lucide-react';
+import { multilingualService } from '../../services/multilingualService';
+import { analyticsService } from '../../services/analyticsService';
 
-  const handleLanguageSwitch = async (languageCode) => {
-    const success = await switchLanguage(languageCode);
+export const LanguageSelector = ({ onLanguageChange, className = '' }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('en');
+  const [supportedLanguages, setSupportedLanguages] = useState([]);
+  const [autoDetected, setAutoDetected] = useState(null);
+
+  useEffect(() => {
+    // Initialize component
+    const initializeLanguageSelector = () => {
+      const currentLang = multilingualService.getCurrentLanguage();
+      const languages = multilingualService.getSupportedLanguages();
+      
+      setCurrentLanguage(currentLang);
+      setSupportedLanguages(languages);
+    };
+
+    initializeLanguageSelector();
+  }, []);
+
+  /**
+   * Handle language selection
+   */
+  const handleLanguageSelect = (languageCode) => {
+    const success = multilingualService.setLanguage(languageCode);
+    
     if (success) {
-      setShowLanguages(false);
+      setCurrentLanguage(languageCode);
+      setIsOpen(false);
+      
+      // Notify parent component
+      onLanguageChange?.(languageCode);
+      
+      // Track language change
+      analyticsService.trackEvent('language_selector_change', {
+        selectedLanguage: languageCode,
+        previousLanguage: currentLanguage,
+        method: 'manual_selection'
+      });
     }
   };
 
-  const getLanguageInfo = (code) => {
-    const languages = ghanaLanguageService.getAvailableGhanaLanguages();
-    return languages.find(lang => lang.code === code) || { name: 'Unknown', native: 'Unknown', flag: '🇬🇭' };
+  /**
+   * Auto-detect language from text input
+   */
+  const handleAutoDetection = (text) => {
+    if (!text || text.length < 5) return;
+
+    const detection = multilingualService.detectLanguage(text);
+    
+    if (detection.confidence > 0.6 && detection.language !== currentLanguage) {
+      setAutoDetected({
+        language: detection.language,
+        confidence: detection.confidence,
+        detectedWords: detection.detectedWords
+      });
+    }
   };
 
-  const currentLangInfo = getLanguageInfo(state.currentLanguage);
-  const availableLanguages = ghanaLanguageService.getAvailableGhanaLanguages();
+  /**
+   * Accept auto-detected language
+   */
+  const acceptAutoDetection = () => {
+    if (autoDetected) {
+      handleLanguageSelect(autoDetected.language);
+      setAutoDetected(null);
+      
+      analyticsService.trackEvent('language_auto_detection_accepted', {
+        detectedLanguage: autoDetected.language,
+        confidence: autoDetected.confidence
+      });
+    }
+  };
+
+  /**
+   * Dismiss auto-detection suggestion
+   */
+  const dismissAutoDetection = () => {
+    setAutoDetected(null);
+    analyticsService.trackEvent('language_auto_detection_dismissed', {
+      detectedLanguage: autoDetected?.language,
+      confidence: autoDetected?.confidence
+    });
+  };
+
+  // Get current language info
+  const currentLangInfo = supportedLanguages.find(lang => lang.code === currentLanguage) || 
+    { code: 'en', name: 'English', nativeName: 'English', flag: '🇬🇧' };
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       {/* Language Selector Button */}
       <button
-        onClick={() => setShowLanguages(!showLanguages)}
-        className="flex items-center space-x-1 text-blue-100 hover:text-white transition-colors p-1 rounded"
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center space-x-2 px-3 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
         aria-label="Select language"
-        title={`Current: ${currentLangInfo.name} - Click to change`}
       >
-        <span className="text-sm">{currentLangInfo.flag}</span>
-        <span className="text-xs font-medium hidden sm:block">
-          {currentLangInfo.code === 'en-GH' ? 'EN' :
-           currentLangInfo.code === 'tw-GH' ? 'TW' :
-           currentLangInfo.code === 'ee-GH' ? 'EE' :
-           currentLangInfo.code === 'ga-GH' ? 'GA' : 'GH'}
+        <Globe size={16} className="text-gray-600" />
+        <span className="text-sm font-medium text-gray-700">
+          {currentLangInfo.flag} {currentLangInfo.nativeName}
         </span>
-        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <ChevronDown 
+          size={14} 
+          className={`text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} 
+        />
       </button>
 
-      {/* Language Dropdown */}
-      {showLanguages && (
-        <div className="absolute top-full right-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 z-20 overflow-hidden">
-          <div className="p-3 bg-gray-50 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <h4 className="font-semibold text-sm text-gray-800 flex items-center space-x-1">
-                <span>🇬🇭</span>
-                <span>Ghana Languages</span>
-              </h4>
-              <button
-                onClick={() => setShowLanguages(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+          <div className="py-2">
+            {/* Header */}
+            <div className="px-4 py-2 border-b border-gray-100">
+              <h3 className="text-sm font-semibold text-gray-700">Select Language</h3>
+              <p className="text-xs text-gray-500 mt-1">Choose your preferred language</p>
             </div>
-            <p className="text-xs text-gray-600 mt-1">Select your preferred language</p>
-          </div>
 
-          {/* Language Detection Toggle */}
-          <div className="p-3 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <label className="text-sm font-medium text-gray-700">Auto-Detect Language</label>
-                <p className="text-xs text-gray-500">Automatically detect language from speech</p>
-              </div>
-              <button
-                onClick={toggleLanguageDetection}
-                className={`relative inline-flex h-5 w-9 rounded-full transition-colors focus:outline-none ${
-                  state.languageDetectionEnabled ? 'bg-green-600' : 'bg-gray-300'
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    state.languageDetectionEnabled ? 'translate-x-4' : 'translate-x-0.5'
-                  } mt-0.5`}
-                />
-              </button>
-            </div>
-          </div>
-
-          {/* Language List */}
-          <div className="max-h-64 overflow-y-auto">
-            {availableLanguages.map((language) => (
-              <button
-                key={language.code}
-                onClick={() => handleLanguageSwitch(language.code)}
-                className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 ${
-                  language.code === state.currentLanguage ? 'bg-blue-50 border-l-4 border-l-blue-500' : ''
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="text-lg">{language.flag}</span>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="font-medium text-gray-900 text-sm">
+            {/* Language Options */}
+            <div className="py-1">
+              {supportedLanguages.map((language) => (
+                <button
+                  key={language.code}
+                  onClick={() => handleLanguageSelect(language.code)}
+                  className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors ${
+                    currentLanguage === language.code ? 'bg-blue-50' : ''
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <span className="text-lg">{language.flag}</span>
+                    <div>
+                      <div className="text-sm font-medium text-gray-900">
+                        {language.nativeName}
+                      </div>
+                      <div className="text-xs text-gray-500">
                         {language.name}
-                      </span>
-                      {language.code === state.currentLanguage && (
-                        <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded-full">
-                          Current
-                        </span>
-                      )}
-                      {language.code === state.detectedLanguage && language.code !== state.currentLanguage && (
-                        <span className="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">
-                          Detected
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center space-x-2 mt-1">
-                      <span className="text-xs text-gray-600">
-                        {language.native}
-                      </span>
-                      
-                      {/* Priority indicator */}
-                      {language.priority <= 4 && (
-                        <span className="text-xs text-blue-600">
-                          • Popular
-                        </span>
-                      )}
-                      
-                      {/* Voice support indicator */}
-                      {language.hasVoiceSupport && (
-                        <span className="text-xs text-green-600" title="Voice recognition supported">
-                          🎤
-                        </span>
-                      )}
+                      </div>
                     </div>
                   </div>
-
-                  {/* Quick action icon */}
-                  <div className="text-gray-400">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-
-          {/* Language Info Footer */}
-          <div className="p-3 bg-gray-50 border-t border-gray-200">
-            <div className="text-xs text-gray-600 space-y-1">
-              <div className="flex justify-between">
-                <span>Total Languages:</span>
-                <span className="font-medium">{availableLanguages.length}</span>
-              </div>
-              
-              <div className="flex justify-between">
-                <span>Voice Supported:</span>
-                <span className="font-medium text-green-600">
-                  {availableLanguages.filter(lang => lang.hasVoiceSupport).length}
-                </span>
-              </div>
-
-              <div className="flex justify-between">
-                <span>Current Selection:</span>
-                <span className="font-medium text-blue-600">
-                  {currentLangInfo.native}
-                </span>
-              </div>
+                  {currentLanguage === language.code && (
+                    <Check size={16} className="text-blue-600" />
+                  )}
+                </button>
+              ))}
             </div>
 
-            {/* Sample greetings */}
-            <div className="mt-3 pt-2 border-t border-gray-200">
-              <p className="text-xs font-medium text-gray-700 mb-1">Sample greetings:</p>
-              <div className="text-xs text-gray-600 space-y-1">
-                <div>🇬🇭 <strong>English:</strong> Hello, how can I help you?</div>
-                <div>🇬🇭 <strong>Twi:</strong> Akwaaba, sɛn na metumi aboa wo?</div>
-                <div>🇬🇭 <strong>Ewe:</strong> Woezɔ, aleke mate ŋu akpe ɖe ŋuwò?</div>
-                <div>🇬🇭 <strong>Ga:</strong> Bawo, ke mi shi boa wò?</div>
+            {/* Footer */}
+            <div className="px-4 py-2 border-t border-gray-100">
+              <p className="text-xs text-gray-500">
+                💡 The assistant will automatically detect your language
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Auto-Detection Suggestion */}
+      {autoDetected && (
+        <div className="absolute top-full left-0 mt-2 w-72 bg-yellow-50 border border-yellow-200 rounded-lg shadow-lg z-50 p-4">
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0">
+              <Globe size={20} className="text-yellow-600" />
+            </div>
+            <div className="flex-1">
+              <h4 className="text-sm font-semibold text-yellow-800 mb-1">
+                Language Detected
+              </h4>
+              <p className="text-sm text-yellow-700 mb-3">
+                It looks like you're writing in{' '}
+                <strong>
+                  {supportedLanguages.find(l => l.code === autoDetected.language)?.nativeName}
+                </strong>
+                . Would you like to switch?
+              </p>
+              <div className="flex space-x-2">
+                <button
+                  onClick={acceptAutoDetection}
+                  className="px-3 py-1 bg-yellow-600 text-white text-xs rounded hover:bg-yellow-700 transition-colors"
+                >
+                  Yes, Switch
+                </button>
+                <button
+                  onClick={dismissAutoDetection}
+                  className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded hover:bg-yellow-200 transition-colors"
+                >
+                  Keep Current
+                </button>
               </div>
+              {autoDetected.detectedWords.length > 0 && (
+                <p className="text-xs text-yellow-600 mt-2">
+                  Detected words: {autoDetected.detectedWords.slice(0, 3).join(', ')}
+                </p>
+              )}
             </div>
           </div>
         </div>
       )}
 
       {/* Click outside to close */}
-      {showLanguages && (
+      {isOpen && (
         <div 
-          className="fixed inset-0 z-10" 
-          onClick={() => setShowLanguages(false)}
+          className="fixed inset-0 z-40" 
+          onClick={() => setIsOpen(false)}
         />
       )}
     </div>
   );
-}
+};
 
 export default LanguageSelector;

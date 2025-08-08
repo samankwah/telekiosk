@@ -100,21 +100,6 @@ class AnalyticsService {
     }
   }
 
-  /**
-   * Track chatbot interaction
-   */
-  trackChatbotInteraction(interactionType, data = {}) {
-    return this.trackEvent('chatbot_interaction', {
-      type: interactionType,
-      language: data.language || 'en-GH',
-      messageLength: data.messageLength || 0,
-      responseTime: data.responseTime || 0,
-      aiModel: data.aiModel || 'unknown',
-      hasMultimodal: data.hasMultimodal || false,
-      hasVoice: data.hasVoice || false,
-      ...data
-    });
-  }
 
   /**
    * Track voice usage
@@ -241,11 +226,6 @@ class AnalyticsService {
           this.metrics.bookingAttempts++;
           break;
           
-        case 'chatbot_interaction':
-          if (eventData.language && eventData.language !== 'en-GH') {
-            this.metrics.languageSwitches++;
-          }
-          break;
           
         case 'ai_model_usage':
           const model = eventData.model || 'unknown';
@@ -337,12 +317,11 @@ class AnalyticsService {
     // Usage patterns
     const voiceEvents = events.filter(e => e.name === 'voice_usage');
     const multimodalEvents = events.filter(e => e.name === 'multimodal_usage');
-    const chatEvents = events.filter(e => e.name === 'chatbot_interaction');
     
-    if (voiceEvents.length > chatEvents.length * 0.5) {
+    if (voiceEvents.length > 0) {
       insights.push({
         type: 'usage_pattern',
-        message: 'High voice interaction usage detected - users prefer voice interface',
+        message: 'Voice interaction features are being used',
         confidence: 'high',
         impact: 'positive'
       });
