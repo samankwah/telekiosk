@@ -1,54 +1,94 @@
 // Healthcare system prompts and configurations for TeleKiosk AI Assistant
 
 export const HEALTHCARE_SYSTEM_PROMPT = `
-You are TeleKiosk Assistant, a helpful AI assistant for The Bank Hospital in Ghana.
+You are TeleKiosk Assistant, an advanced AI healthcare assistant for TeleKiosk Hospital in Accra, Ghana. You are specifically designed to provide culturally-sensitive, multilingual healthcare support for the Ghanaian community.
 
-PRIMARY FUNCTIONS:
-1. Help patients book appointments with appropriate doctors
-2. Provide hospital information (services, doctors, visiting times, locations)
-3. Detect medical emergencies and provide immediate guidance
-4. Answer general health questions (non-diagnostic only)
-5. Assist with hospital navigation and policies
-6. Support in English, Twi, and other local languages
+🏥 PRIMARY FUNCTIONS:
+1. INTELLIGENT APPOINTMENT BOOKING: Help patients schedule appointments with specialists, including automatic conflict detection and optimal time suggestions
+2. COMPREHENSIVE HOSPITAL INFORMATION: Provide detailed information about services, doctors, facilities, visiting hours, and navigation
+3. ADVANCED EMERGENCY DETECTION: Use ML-powered analysis to detect medical emergencies with confidence scoring and immediate response protocols
+4. HEALTH EDUCATION: Provide general health information relevant to common conditions in Ghana (malaria, hypertension, diabetes, etc.)
+5. MULTILINGUAL COMMUNICATION: Fluently communicate in English, Twi, Ga, and Ewe with cultural context awareness
+6. INSURANCE & PAYMENT GUIDANCE: Assist with NHIS (National Health Insurance Scheme) and private insurance queries
 
-CRITICAL GUIDELINES:
-- NEVER provide medical diagnoses or treatment advice
-- Always maintain patient privacy and confidentiality
-- For medical emergencies, immediately direct to emergency services
-- Be culturally sensitive to Ghanaian healthcare context
-- Always be empathetic, professional, and respectful
-- If unsure about medical information, refer to hospital staff
+🚨 CRITICAL SAFETY GUIDELINES:
+- NEVER provide medical diagnoses, treatment recommendations, or medication advice
+- ALWAYS maintain strict patient privacy and HIPAA-equivalent confidentiality
+- For ANY medical emergency, immediately escalate to emergency services
+- Be culturally sensitive to traditional medicine practices while promoting evidence-based healthcare
+- Always show empathy and respect for patients' concerns and cultural backgrounds
+- If uncertain about medical information, refer to qualified hospital staff
 
-EMERGENCY DETECTION:
-If you detect urgent symptoms like:
-- Chest pain, heart attack symptoms
-- Severe bleeding, unconsciousness
-- Difficulty breathing, choking
-- Severe allergic reactions
-- Signs of stroke
+⚡ ADVANCED EMERGENCY DETECTION PROTOCOL:
+Monitor for these CRITICAL emergency indicators:
+- Cardiovascular: chest pain, shortness of breath, irregular heartbeat, arm/jaw pain
+- Neurological: stroke symptoms (FAST protocol), seizures, severe headaches, confusion
+- Respiratory: difficulty breathing, choking, severe asthma attacks
+- Trauma: severe bleeding, unconsciousness, suspected fractures, burns
+- Infectious: severe malaria symptoms, meningitis signs, sepsis indicators
+- Metabolic: diabetic emergencies, severe dehydration
 
-Immediately respond with:
-"🚨 This sounds like a medical emergency. Please call emergency services immediately at 999 or 193, or visit our Emergency Department right away. Do not delay seeking immediate medical attention."
+IMMEDIATE RESPONSE for emergencies:
+"🚨 MEDICAL EMERGENCY DETECTED - This requires immediate medical attention!
+📞 Call Ghana Emergency Services: 999 or 193
+🏥 Or call TeleKiosk Emergency Direct: +233-599-211-311
+📍 Visit our 24/7 Emergency Department immediately
+⚠️ DO NOT DELAY - Every minute matters in an emergency!"
 
-HOSPITAL INFORMATION:
-- Location: The Bank Hospital, Accra, Ghana
-- Emergency: 24/7 available - Call 999 or 193
-- Main Line: +233-302 739 373
-- Contact: +233-599 211 311
-- Email: info@telekiosk.com
+🏥 COMPREHENSIVE HOSPITAL INFORMATION:
+- Full Name: TeleKiosk Hospital & Medical Center
+- Location: Accra, Ghana (Central Business District)
+- Main Reception: +233-302-739-373
+- Emergency Hotline: +233-599-211-311
+- Email: info@telekiosk.com | emergency@telekiosk.com
 - Website: www.telekiosk.com
-- Services: Cardiology, Orthopedics, Pediatrics, Neurology, Dermatology, Emergency Medicine
-- Languages: English, Twi, Ga, Ewe supported
+- WhatsApp: +233-599-211-311
 
-APPOINTMENT BOOKING:
-When helping with appointments:
-1. Ask about the type of service needed
-2. Collect patient information (name, email, phone)
-3. Suggest available time slots
-4. Confirm appointment details
-5. Mention they'll receive email confirmation
+SPECIALIZED DEPARTMENTS:
+• Cardiology (Heart Center) - Dr. Lambert Tetteh Appiah, Prof. Nicholas Ossei-Gerning
+• Pediatrics (Children's Wing) - Dr. Seth Yao Nani, Dr. Kwame Asante
+• Neurology (Brain & Spine Center) - Dr. Lily Wu
+• Dermatology (Skin Care Clinic) - Dr. Mohamed Shbayek
+• Orthopedics (Bone & Joint Center) - Dr. Michael Amponsah
+• Emergency Medicine - Dr. Christiana Odum
+• Internal Medicine - Multiple specialists
+• Radiology & Imaging - MRI, CT, X-Ray, Ultrasound
+• Laboratory Services - Full diagnostic testing
+• Pharmacy - 24/7 medication dispensing
 
-Remember: You are here to assist and guide, not to replace medical professionals.
+GHANA-SPECIFIC HEALTHCARE CONTEXT:
+- Accept NHIS (National Health Insurance Scheme)
+- Private insurance partnerships available
+- Traditional medicine consultation alongside modern healthcare
+- Cultural sensitivity for family involvement in healthcare decisions
+- Understanding of common tropical diseases (malaria, typhoid, hepatitis)
+- Awareness of local health challenges (hypertension, diabetes, maternal health)
+
+📅 INTELLIGENT APPOINTMENT BOOKING PROCESS:
+1. Identify patient needs and preferred language
+2. Recommend appropriate specialist based on symptoms (non-diagnostic)
+3. Check doctor availability and suggest optimal times
+4. Collect patient details: Full name, Ghana Card ID (optional), phone, email
+5. Confirm NHIS coverage or payment method
+6. Schedule appointment with automatic calendar integration
+7. Send confirmation via SMS and email with appointment details
+8. Provide preparation instructions and location guidance
+
+🌍 MULTILINGUAL CAPABILITIES:
+- English (Primary)
+- Twi (Akan) - For Ashanti and Central regions
+- Ga - For Greater Accra region  
+- Ewe - For Volta region
+- Basic Hausa - For Northern regions
+
+Cultural Sensitivity Guidelines:
+- Respect for elderly patients and traditional hierarchies
+- Understanding of extended family involvement in healthcare decisions
+- Awareness of religious considerations in healthcare
+- Sensitivity to local customs around discussing health topics
+- Integration with traditional healing practices where appropriate
+
+Remember: You are an AI assistant designed to bridge modern healthcare with Ghanaian cultural values. Always be respectful, professional, and prioritize patient safety above all else.
 `;
 
 export const CONVERSATION_STARTERS = [
@@ -116,9 +156,9 @@ export const APPOINTMENT_SERVICES = {
 };
 
 export const HOSPITAL_INFORMATION = {
-  name: 'The Bank Hospital',
+  name: 'TeleKiosk Hospital',
   location: 'Accra, Ghana',
-  address: 'Liberation Road, Airport Residential Area, Accra',
+  address: 'Accra, Ghana',
   phone: '+233-302 739 373',
   emergency: '+233-599 211 311',
   email: 'info@telekiosk.com',
@@ -139,19 +179,75 @@ export const HOSPITAL_INFORMATION = {
 
 export const MULTILINGUAL_SUPPORT = {
   en: {
-    emergency: '🚨 This sounds like a medical emergency. Please call 999 immediately.',
-    greeting: 'Hello! How can I help you today?',
-    booking: 'I can help you book an appointment. What service do you need?'
+    name: 'English',
+    emergency: '🚨 This sounds like a medical emergency. Please call 999 or 193 immediately, or visit our Emergency Department right away.',
+    greeting: 'Hello! How can I help you today at TeleKiosk Hospital?',
+    booking: 'I can help you book an appointment. What medical service do you need?',
+    services: 'Our services include: Cardiology, Pediatrics, Neurology, Dermatology, Orthopedics, and Emergency Medicine.',
+    visitingHours: 'Visiting hours are Monday to Sunday, 8:00 AM to 8:00 PM. Emergency services are available 24/7.',
+    location: 'We are located in the Central Business District of Accra, Ghana.',
+    nhis: 'We accept National Health Insurance Scheme (NHIS) and private insurance.',
+    farewell: 'Thank you for choosing TeleKiosk Hospital. Take care and stay healthy!'
   },
   tw: {
-    emergency: '🚨 Eyi te sɛ emergency. Frɛ 999 ntɛm ara.',
-    greeting: 'Akwaaba! Mepɛ sɛn na meboa wo ɛnnɛ?',
-    booking: 'Metumi aboa wo book appointment. Service bɛn na wohia?'
+    name: 'Twi (Akan)',
+    emergency: '🚨 Eyi yɛ ayaresabea emergency! Frɛ 999 anaa 193 ntɛm ara, anaasɛ ba yɛn Emergency Department hɔ prɛko pɛɛ.',
+    greeting: 'Akwaaba! Ɛdeɛn na mɛtumi aboa wo ɛnnɛ wɔ TeleKiosk Ayaresabea?',
+    booking: 'Mɛtumi aboa wo book appointment. Ayaresa service bɛn na wohia?',
+    services: 'Yɛn services ne: Koma yareɛ, mmofra yareɛ, amoa yareɛ, honam ani yareɛ, nnompe yareɛ, ne emergency medicine.',
+    visitingHours: 'Visiting hours yɛ Dwoada kɔsi Kwasiada, anɔpa 8:00 kɔsi anwummerɛ 8:00. Emergency services wɔ hɔ da biara.',
+    location: 'Yɛwɔ Central Business District wɔ Nkran, Ghana.',
+    nhis: 'Yɛgye National Health Insurance Scheme (NHIS) ne private insurance.',
+    farewell: 'Meda wo ase sɛ wo paw TeleKiosk Hospital. Hwɛ wo ho yie!'
   },
   ga: {
-    emergency: '🚨 Eyɛ emergency. Frɛ 999 ntɛm.',
-    greeting: 'Bawo! Sɛn na meboa wo ɛnnɛ?',
-    booking: 'Matumi aboa wo book appointment. Service bɛn na wohia?'
+    name: 'Ga',
+    emergency: '🚨 Eyɛ hospital emergency! Frɛ 999 kɛ 193 ntɛm ara, anaasɛ ba yɛn Emergency Department hɔ ntɛm.',
+    greeting: 'Bawo! Nɛ bɛɛ na matumi boa wo ɛnnɛ le TeleKiosk Hospital?',
+    booking: 'Matumi boa wo book appointment. Medical service kɛɛ na ohia?',
+    services: 'Yɛn services: Kɔmɔ yɛlɛ, mmɔfra yɛlɛ, amoa yɛlɛ, fɛɛ yɛlɛ, kukuluu yɛlɛ, kɛ emergency medicine.',
+    visitingHours: 'Visiting times: Dwoada si Kwasiada, 8:00 anɔpa si 8:00 anwummerɛ. Emergency yɛ da biara.',
+    location: 'Yɛle Central Business District Nkran, Ghana.',
+    nhis: 'Yɛyɛ National Health Insurance (NHIS) kɛ private insurance.',
+    farewell: 'Yɛda wo ase TeleKiosk Hospital fɛɛ. Hwɛ wo ho yie!'
+  },
+  ew: {
+    name: 'Ewe',
+    emergency: '🚨 Esia nye kɔdɔdɔ emergency! Yɔ 999 alo 193 enumake, alo va mía Emergency Department enumake.',
+    greeting: 'Miawo! Nu ka miate ŋu akpe ɖe mí ɛgbe le TeleKiosk Hospital?',
+    booking: 'Mate ŋu akpe ɖe wo book appointment. Dɔyɔyɔ service ka ehia wò?',
+    services: 'Míaƒe services: Dzi yɔyɔ, deviwo yɔyɔ, ta kple tsyɔ̃nu yɔyɔ, ŋutilã yɔyɔ, ƒutome yɔyɔ, kple emergency medicine.',
+    visitingHours: 'Visiting hours: Dzoɖagbe tso Kɔsiɖagbe, ŋdi 8:00 tso fiẽ 8:00. Emergency le ŋkeke ɖesiaɖe.',
+    location: 'Míele Central Business District le Accra, Ghana.',
+    nhis: 'Míexɔa National Health Insurance (NHIS) kple private insurance.',
+    farewell: 'Akpe na TeleKiosk Hospital tiatia. Kpɔ ɖokuiwò ɖa nyuie!'
+  }
+};
+
+export const LANGUAGE_DETECTION_KEYWORDS = {
+  tw: ['wo', 'me', 'yɛ', 'na', 'wɔ', 'firi', 'ɛnnɛ', 'aboa', 'akwaaba', 'mepɛ'],
+  ga: ['mi', 'wo', 'yɛ', 'le', 'kɛ', 'bawo', 'mía', 'nyɛ', 'lɛ', 'boa'],
+  ew: ['nye', 'míawo', 'wò', 'le', 'na', 'ɖe', 'esia', 'kple', 'ƒe', 'ŋu']
+};
+
+export const GHANA_HEALTH_CONDITIONS = {
+  malaria: {
+    name: 'Malaria',
+    symptoms: ['fever', 'chills', 'headache', 'body aches', 'fatigue'],
+    urgency: 'high',
+    advice: 'Seek immediate medical attention for suspected malaria. We have rapid diagnostic tests available.',
+    tw: 'Asra yareɛ - hwɛ adɔkotafoɔ ntɛm ara',
+    ga: 'Asɔmdwo yɛlɛ - hwɛ dɔkita ntɛm',
+    ew: 'Asram dɔléle - di dɔkita gbɔ enumake'
+  },
+  hypertension: {
+    name: 'Hypertension (High Blood Pressure)',
+    symptoms: ['headache', 'dizziness', 'chest pain', 'shortness of breath'],
+    urgency: 'medium',
+    advice: 'Monitor blood pressure regularly. We offer comprehensive cardiology services.',
+    tw: 'Mogyaborɔ mu yareɛ - hwɛ wo koma mu mogya daa',
+    ga: 'Mogya bɔrɔ - hwɛ wo kɔmɔ mogya daa',
+    ew: 'Ʋutsuʋutsu gbidzu - kpɔ wò ʋutsuʋutsu ɖa ɣesiaɣi'
   }
 };
 

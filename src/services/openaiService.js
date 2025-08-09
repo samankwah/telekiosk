@@ -445,7 +445,7 @@ Which service would you like to know more about?`
       return {
         message: `**TeleKiosk Hospital Contact Information**
 
-🏥 **The Bank Hospital**
+🏥 **TeleKiosk Hospital**
 📍 Liberation Road, Airport Residential Area, Accra, Ghana
 
 📞 **Phone Numbers:**
@@ -488,7 +488,7 @@ For special visiting arrangements, please contact our reception.`
       return {
         message: `**TeleKiosk Hospital Location**
 
-🏥 **The Bank Hospital**
+🏥 **TeleKiosk Hospital**
 📍 Liberation Road, Airport Residential Area
 Accra, Ghana
 
@@ -500,7 +500,7 @@ Accra, Ghana
 🅿️ **Parking:** Available on-site
 
 🗺️ **Need Directions?**
-[Get directions on Google Maps](https://maps.google.com/?q=The+Bank+Hospital+Accra+Ghana)
+[Get directions on Google Maps](https://maps.google.com/?q=TeleKiosk+Hospital+Accra+Ghana)
 
 📞 **Call for assistance:** +233-599-211-311`
         };

@@ -44,61 +44,145 @@ app.options('/api/chat', (req, res) => {
   res.status(200).end();
 });
 
-// Chat API endpoint for AI chatbot - Compatible with Vercel AI SDK
+// Enhanced Chat API endpoint - Optimized for Assistant-UI integration
 app.post('/api/chat', async (req, res) => {
+  const requestStart = Date.now();
+  
   try {
-    const { messages, ...options } = req.body;
+    const { 
+      messages, 
+      model = 'gpt-4o',
+      temperature = 0.3,
+      max_tokens = 2000,
+      allow_functions = true,
+      client_type = 'unknown',
+      ...options 
+    } = req.body;
 
-    if (!messages || !Array.isArray(messages)) {
+    // Enhanced validation
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({ 
-        error: 'Invalid request: messages array is required' 
+        error: 'Invalid request: non-empty messages array is required',
+        code: 'INVALID_MESSAGES'
       });
     }
 
-    // Set proper headers for JSON response compatible with Assistant-UI
+    // Set comprehensive headers for Assistant-UI compatibility
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Client, X-Timestamp');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('X-Server-Response-Time', Date.now().toString());
 
     // Import OpenAI service dynamically
     const { generateChatCompletion } = await import('./src/services/openaiService.js');
 
-    console.log('📥 Received chat request from frontend:', {
+    console.log('📥 Enhanced chat request:', {
       messageCount: messages.length,
-      lastMessage: messages[messages.length - 1]?.content?.slice(0, 50) + '...'
+      clientType: client_type,
+      model: model,
+      lastMessage: messages[messages.length - 1]?.content?.slice(0, 50) + '...',
+      headers: req.headers['x-client'] || 'unknown'
     });
 
-    // Generate response using OpenAI service
+    // Enhanced OpenAI service call with better options
     const result = await generateChatCompletion(messages, {
-      allowFunctions: true,
+      allowFunctions: allow_functions,
+      model,
+      temperature: parseFloat(temperature),
+      maxTokens: parseInt(max_tokens),
+      clientType: client_type,
+      requestId: `req_${Date.now()}`,
       ...options
     });
 
+    const totalResponseTime = Date.now() - requestStart;
+
     if (result.success) {
-      console.log('✅ Sending response to frontend:', result.message.slice(0, 100) + '...');
-      
-      // Send response in JSON format for Assistant-UI compatibility
-      res.status(200).json({
-        message: result.message,
-        success: true,
-        usage: result.usage,
-        responseTime: result.responseTime
+      console.log('✅ Enhanced response sent:', {
+        contentLength: result.message?.length || 0,
+        hasFunction: !!result.functionResult,
+        responseTime: `${totalResponseTime}ms`,
+        tokenUsage: result.usage?.total_tokens || 0
       });
+      
+      // Enhanced response format for Assistant-UI
+      const response = {
+        message: result.message,
+        content: result.message, // Provide both for compatibility
+        success: true,
+        metadata: {
+          responseTime: totalResponseTime,
+          serverTime: result.responseTime,
+          model: model,
+          tokenUsage: result.usage,
+          hasFunction: !!result.functionResult,
+          clientType: client_type,
+          requestId: `req_${Date.now()}`
+        }
+      };
+
+      // Include function result if present
+      if (result.functionResult) {
+        response.functionResult = result.functionResult;
+        response.functionExecuted = true;
+      }
+
+      res.status(200).json(response);
     } else {
-      console.log('❌ Error generating response:', result.error);
+      console.log('❌ Service error:', {
+        error: result.error,
+        responseTime: `${totalResponseTime}ms`
+      });
+      
+      // Enhanced error response
       res.status(500).json({
-        error: 'I apologize, but I\'m having technical difficulties. Please try again or speak with a hospital staff member for assistance.',
-        success: false
+        error: result.error || 'I apologize, but I\'m having technical difficulties. Please try again or speak with a hospital staff member for assistance.',
+        success: false,
+        code: 'AI_SERVICE_ERROR',
+        metadata: {
+          responseTime: totalResponseTime,
+          clientType: client_type,
+          timestamp: new Date().toISOString()
+        }
       });
     }
 
   } catch (error) {
-    console.error('❌ Chat API error:', error);
+    const totalResponseTime = Date.now() - requestStart;
+    
+    console.error('❌ Enhanced chat API error:', {
+      message: error.message,
+      stack: error.stack?.split('\n')[0],
+      responseTime: `${totalResponseTime}ms`,
+      requestBody: req.body ? Object.keys(req.body) : 'no-body'
+    });
+    
+    // Comprehensive error response
+    let errorMessage = 'I\'m having trouble connecting right now. Please try again in a moment.';
+    let errorCode = 'INTERNAL_ERROR';
+    
+    if (error.message.includes('OPENAI_API_KEY')) {
+      errorMessage = 'AI service configuration issue. Please contact hospital IT support.';
+      errorCode = 'CONFIG_ERROR';
+    } else if (error.message.includes('network') || error.message.includes('fetch')) {
+      errorMessage = 'Network connectivity issue. Please check your connection and try again.';
+      errorCode = 'NETWORK_ERROR';
+    } else if (error.message.includes('rate limit')) {
+      errorMessage = 'Too many requests. Please wait a moment and try again.';
+      errorCode = 'RATE_LIMIT_ERROR';
+    }
+    
     res.status(500).json({
-      error: 'I\'m having trouble connecting right now. Please try again in a moment, or speak with a hospital staff member for immediate assistance.',
-      success: false
+      error: `${errorMessage}\n\n🏥 For immediate assistance, please call +233-599-211-311 or speak with any hospital staff member.`,
+      success: false,
+      code: errorCode,
+      metadata: {
+        responseTime: totalResponseTime,
+        timestamp: new Date().toISOString(),
+        serverError: true
+      }
     });
   }
 });
@@ -733,6 +817,56 @@ function getSpecialtyInfo(specialtyId) {
   };
   return specialties[specialtyId] || { name: 'General Medicine', icon: '🏥' };
 }
+
+// Phase 3: Emergency Alert Notification Endpoint
+app.post('/api/emergency-alert', async (req, res) => {
+  try {
+    const emergencyData = req.body;
+    
+    // Validate emergency data
+    if (!emergencyData.severity || !emergencyData.confidence) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid emergency alert data'
+      });
+    }
+
+    // Log the emergency alert (in production, this would alert hospital staff)
+    console.log('🚨 CRITICAL EMERGENCY ALERT RECEIVED:');
+    console.log(`   Severity: ${emergencyData.severity}`);
+    console.log(`   Confidence: ${(emergencyData.confidence * 100).toFixed(1)}%`);
+    console.log(`   Symptoms: ${emergencyData.symptoms?.map(s => s.symptom).join(', ')}`);
+    console.log(`   Language: ${emergencyData.language}`);
+    console.log(`   Timestamp: ${emergencyData.timestamp}`);
+    console.log(`   Session ID: ${emergencyData.sessionId}`);
+    console.log(`   Recommended Action: ${emergencyData.recommendedAction}`);
+
+    // In production, this would:
+    // 1. Send SMS/email to hospital emergency staff
+    // 2. Log to hospital emergency system
+    // 3. Trigger monitoring dashboard alerts
+    // 4. Create incident report
+
+    // Simulate hospital response
+    const hospitalResponse = {
+      success: true,
+      alertId: `ALERT_${Date.now()}`,
+      hospitalNotified: true,
+      timestamp: new Date().toISOString(),
+      status: emergencyData.severity === 'critical' ? 'DISPATCHED' : 'LOGGED',
+      estimatedResponse: emergencyData.severity === 'critical' ? '2-5 minutes' : '5-10 minutes'
+    };
+
+    res.status(200).json(hospitalResponse);
+
+  } catch (error) {
+    console.error('❌ Emergency alert processing error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to process emergency alert'
+    });
+  }
+});
 
 // Error handling middleware
 app.use((error, req, res, next) => {

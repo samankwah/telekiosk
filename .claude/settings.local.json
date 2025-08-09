@@ -35,7 +35,8 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:docs.assistant-ui.com)",
       "WebFetch(domain:www.assistant-ui.com)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(touch:*)"
     ],
     "deny": []
   }

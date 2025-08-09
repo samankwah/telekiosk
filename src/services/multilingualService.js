@@ -1,7 +1,8 @@
-// Multilingual Service for TeleKiosk AI Assistant
-// Supports English, Twi, Ga, and Ewe languages for Ghana
+// Phase 3: Enhanced Multilingual Service for TeleKiosk AI Assistant
+// Advanced language detection and support for English, Twi, Ga, and Ewe languages for Ghana
+// Features smart language detection, context awareness, and healthcare-specific translations
 
-import { analyticsService } from './analyticsService';
+import { analyticsService } from './analyticsService.js';
 
 class MultilingualService {
   constructor() {
@@ -9,25 +10,50 @@ class MultilingualService {
     this.supportedLanguages = ['en', 'tw', 'ga', 'ee'];
     this.fallbackLanguage = 'en';
     
-    // Language detection patterns
+    // Phase 3: Enhanced language detection patterns with healthcare terminology
     this.languagePatterns = {
       tw: { // Twi
         keywords: ['wo', 'mi', 'yɛ', 'na', 'firi', 'kasa', 'dɛn', 'ɛhe', 'sɛn', 'wo ho te sɛn'],
-        greetings: ['maakye', 'maaha', 'mema wo akye', 'wo ho te sɛn'],
+        greetings: ['maakye', 'maaha', 'mema wo akye', 'wo ho te sɛn', 'akwaaba'],
         commonWords: ['aane', 'daabi', 'medaase', 'kosɛ', 'ɛyɛ', 'ampa'],
-        weight: 1.0
+        healthcareTerms: ['ayaresa', 'adɔkota', 'yareɛ', 'aduro', 'ayaresabea', 'ho', 'yaw', 'prɛko'],
+        medicalPhrases: ['me ho yare', 'me yareɛ', 'me yaw', 'mehia ayaresa', 'kɔ ayaresabea'],
+        weight: 1.2 // Higher weight for healthcare context
       },
       ga: { // Ga
         keywords: ['mi', 'wo', 'kɛ', 'baa', 'ayɛɛ', 'lɛ', 'kome', 'ehe', 'sɛɛ'],
-        greetings: ['ojekoo', 'ojekoo nakai', 'bawo ni', 'ɛhe lɛ'],
+        greetings: ['ojekoo', 'ojekoo nakai', 'bawo ni', 'ɛhe lɛ', 'akwaaba'],
         commonWords: ['ɛɛ', 'aii', 'oyiwa do', 'ni gbɛjɛ', 'ɛyɛ'],
-        weight: 1.0
+        healthcareTerms: ['ayarɛsa', 'dokita', 'yarɛɛ', 'aduro', 'ayarɛjɔɔ', 'ho', 'yaw', 'prɛko'],
+        medicalPhrases: ['me ho yarɛ', 'me yarɛɛ', 'me yaw', 'mehia ayarɛsa', 'kɔ ayarɛjɔɔ'],
+        weight: 1.2
       },
       ee: { // Ewe
         keywords: ['me', 'wò', 'nye', 'nɛ', 'si', 'va', 'yi', 'aleke', 'ɖe'],
-        greetings: ['ŋdi', 'ŋdi na mi', 'efɔ̃a', 'aleke nèle'],
+        greetings: ['ŋdi', 'ŋdi na mi', 'efɔ̃a', 'aleke nèle', 'woezo', 'nɔ agbe'],
         commonWords: ['ɛ̃', 'ao', 'akpe', 'meɖe kuku', 'enyo'],
-        weight: 1.0
+        healthcareTerms: ['kɔdzi', 'dokita', 'dɔléle', 'atike', 'kɔdzikpɔɖokpɔ', 've', 'gatagbagba'],
+        medicalPhrases: ['melé dɔ lém', 'dɔléle le ŋunye', 'hiã kpekpeɖeŋu', 'yi kɔdzi'],
+        weight: 1.2
+      }
+    };
+
+    // Phase 3: Advanced context patterns for intelligent detection
+    this.contextPatterns = {
+      medical: {
+        tw: ['adɔkota', 'ayaresa', 'yareɛ', 'aduro', 'ho yaw', 'prɛko', 'ayaresabea'],
+        ga: ['dokita', 'ayarɛsa', 'yarɛɛ', 'aduro', 'ho yaw', 'prɛko', 'ayarɛjɔɔ'],
+        ee: ['dokita', 'kɔdzi', 'dɔléle', 'atike', 'dɔ le ŋunye', 'gatagbagba', 'kɔdzikpɔɖokpɔ']
+      },
+      appointment: {
+        tw: ['berɛ', 'da', 'nhyeɛ', 'kɔhwɛ', 'appointment'],
+        ga: ['berɛ', 'da', 'nhyeɛ', 'kɔhwɛ', 'appointment'],
+        ee: ['ɣeyiɣi', 'ŋkeke', 'takpekpe', 'kpɔ', 'ɖoɖo']
+      },
+      emergency: {
+        tw: ['prɛko', 'ntɛm', 'boa me', 'yaw kɛse', 'mmerɛ'],
+        ga: ['prɛko', 'kaba', 'boa mi', 'yaw kɛkɛ', 'berɛ'],
+        ee: ['gatagbagba', 'kabakaba', 'kpe ɖe ŋunye', 'vevesesẽ', 'enumake']
       }
     };
 
@@ -62,28 +88,35 @@ class MultilingualService {
   }
 
   /**
-   * Detect language from text input
+   * Phase 3: Enhanced language detection with healthcare context awareness
    */
-  detectLanguage(text) {
+  detectLanguage(text, context = {}) {
     if (!text || typeof text !== 'string') {
-      return { language: this.fallbackLanguage, confidence: 0 };
+      return { language: this.fallbackLanguage, confidence: 0, context: 'no_text' };
     }
 
     const cleanText = text.toLowerCase().trim();
     const words = cleanText.split(/\s+/);
     const scores = {};
+    const contextInfo = {
+      medical: false,
+      appointment: false,
+      emergency: false,
+      detectedContext: []
+    };
 
     // Initialize scores for all languages
     this.supportedLanguages.forEach(lang => {
       scores[lang] = 0;
     });
 
-    // Score based on language patterns
+    // Phase 3: Score based on enhanced language patterns
     for (const [lang, patterns] of Object.entries(this.languagePatterns)) {
       let langScore = 0;
       let matches = 0;
+      let contextBonus = 0;
 
-      // Check keywords
+      // Check keywords (standard scoring)
       patterns.keywords.forEach(keyword => {
         if (cleanText.includes(keyword)) {
           langScore += 2;
@@ -107,39 +140,144 @@ class MultilingualService {
         }
       });
 
-      // Apply pattern weight and normalize
-      scores[lang] = (langScore * patterns.weight) / Math.max(words.length, 1);
+      // Phase 3: Healthcare-specific terms (bonus scoring)
+      if (patterns.healthcareTerms) {
+        patterns.healthcareTerms.forEach(term => {
+          if (cleanText.includes(term)) {
+            langScore += 2.5; // Higher weight for medical terms
+            contextBonus += 1.0;
+            contextInfo.medical = true;
+            contextInfo.detectedContext.push('medical');
+            matches++;
+          }
+        });
+      }
+
+      // Phase 3: Medical phrases (even higher bonus)
+      if (patterns.medicalPhrases) {
+        patterns.medicalPhrases.forEach(phrase => {
+          if (cleanText.includes(phrase)) {
+            langScore += 4.0; // Very high weight for complete medical phrases
+            contextBonus += 2.0;
+            contextInfo.medical = true;
+            contextInfo.detectedContext.push('medical_phrase');
+            matches++;
+          }
+        });
+      }
+
+      // Apply pattern weight with context bonus
+      const baseScore = (langScore * patterns.weight) / Math.max(words.length, 1);
+      scores[lang] = baseScore + (contextBonus * 0.1); // Context bonus
     }
+
+    // Phase 3: Context-aware scoring for appointment and emergency detection
+    this.detectContextualIntent(cleanText, contextInfo);
 
     // English gets a base score for Latin characters
     if (/^[a-zA-Z\s.,!?'"]+$/.test(cleanText)) {
-      scores['en'] += 0.5;
+      scores['en'] += contextInfo.medical ? 0.3 : 0.5; // Lower base score if medical context detected
     }
+
+    // Phase 3: Multi-language detection (code-switching)
+    const multiLangDetection = this.detectCodeSwitching(cleanText, scores);
 
     // Find the highest scoring language
     const detectedLang = Object.keys(scores).reduce((a, b) => 
       scores[a] > scores[b] ? a : b
     );
 
-    const confidence = scores[detectedLang];
-    const threshold = 0.3; // Minimum confidence threshold
+    const confidence = Math.min(scores[detectedLang], 1.0);
+    const threshold = contextInfo.medical ? 0.2 : 0.3; // Lower threshold for medical context
 
     const result = {
       language: confidence > threshold ? detectedLang : this.fallbackLanguage,
-      confidence: Math.min(confidence, 1.0),
+      confidence: confidence,
       scores: scores,
-      detectedWords: this.getDetectedWords(cleanText, detectedLang)
+      detectedWords: this.getDetectedWords(cleanText, detectedLang),
+      // Phase 3: Enhanced metadata
+      context: contextInfo,
+      multiLanguage: multiLangDetection,
+      healthcareRelevant: contextInfo.medical || contextInfo.appointment || contextInfo.emergency,
+      recommendedResponse: this.getResponseRecommendation(detectedLang, contextInfo)
     };
 
-    // Track language detection
-    analyticsService.trackEvent('language_detection', {
+    // Enhanced analytics tracking with Phase 3 data
+    analyticsService.trackEvent('phase3_language_detection', {
       inputLanguage: result.language,
       confidence: result.confidence,
       textLength: text.length,
-      currentLanguage: this.currentLanguage
+      currentLanguage: this.currentLanguage,
+      healthcareRelevant: result.healthcareRelevant,
+      contextDetected: contextInfo.detectedContext,
+      multiLanguage: multiLangDetection.detected
     });
 
     return result;
+  }
+
+  /**
+   * Phase 3: Detect contextual intent (medical, appointment, emergency)
+   */
+  detectContextualIntent(text, contextInfo) {
+    // Check for appointment context
+    for (const [lang, terms] of Object.entries(this.contextPatterns.appointment)) {
+      if (terms.some(term => text.includes(term))) {
+        contextInfo.appointment = true;
+        contextInfo.detectedContext.push('appointment');
+        break;
+      }
+    }
+
+    // Check for emergency context
+    for (const [lang, terms] of Object.entries(this.contextPatterns.emergency)) {
+      if (terms.some(term => text.includes(term))) {
+        contextInfo.emergency = true;
+        contextInfo.detectedContext.push('emergency');
+        break;
+      }
+    }
+  }
+
+  /**
+   * Phase 3: Detect code-switching (multiple languages in one text)
+   */
+  detectCodeSwitching(text, scores) {
+    const significantLangs = Object.keys(scores).filter(lang => scores[lang] > 0.2);
+    
+    return {
+      detected: significantLangs.length > 1,
+      languages: significantLangs,
+      primaryLanguage: significantLangs.length > 0 ? significantLangs[0] : 'en',
+      confidence: significantLangs.length > 1 ? 0.8 : 1.0
+    };
+  }
+
+  /**
+   * Phase 3: Get response recommendation based on language and context
+   */
+  getResponseRecommendation(language, contextInfo) {
+    const recommendations = {
+      language: language,
+      urgency: 'normal',
+      responseStyle: 'standard',
+      specialInstructions: []
+    };
+
+    if (contextInfo.emergency) {
+      recommendations.urgency = 'high';
+      recommendations.responseStyle = 'urgent';
+      recommendations.specialInstructions.push('immediate_assistance');
+    } else if (contextInfo.medical) {
+      recommendations.urgency = 'medium';
+      recommendations.responseStyle = 'professional';
+      recommendations.specialInstructions.push('medical_accuracy');
+    } else if (contextInfo.appointment) {
+      recommendations.responseStyle = 'helpful';
+      recommendations.specialInstructions.push('booking_assistance');
+    }
+
+    return recommendations;
   }
 
   /**
@@ -253,7 +391,7 @@ class MultilingualService {
    */
   getSystemPrompt(langCode = this.currentLanguage) {
     const prompts = {
-      'en': `You are TeleKiosk Assistant, a helpful AI assistant for The Bank Hospital in Ghana.
+      'en': `You are TeleKiosk Assistant, a helpful AI assistant for TeleKiosk Hospital in Ghana.
 
 PRIMARY FUNCTIONS:
 1. Help patients book appointments with appropriate doctors
@@ -272,7 +410,7 @@ CRITICAL GUIDELINES:
 - If unsure about medical information, refer to hospital staff
 
 HOSPITAL INFORMATION:
-- Location: The Bank Hospital, Accra, Ghana
+- Location: TeleKiosk Hospital, Accra, Ghana
 - Emergency: 24/7 available - Call 999 or 193
 - Contact: +233-599 211 311
 - Email: info@telekiosk.com
@@ -280,7 +418,7 @@ HOSPITAL INFORMATION:
 
 Remember: You are here to assist and guide, not to replace medical professionals.`,
 
-      'tw': `Wo yɛ TeleKiosk Assistant, ɔboafoɔ a ɔboa nnipa wɔ The Bank Hospital wɔ Ghana.
+      'tw': `Wo yɛ TeleKiosk Assistant, ɔboafoɔ a ɔboa nnipa wɔ TeleKiosk Hospital wɔ Ghana.
 
 NE DWUMA TITIRIW:
 1. Boa ayarefoɔ ma wɔbɛtumi akɔhwɛ adɔkotafoɔ
@@ -299,14 +437,14 @@ NNEƐMA A ƐSƐ SƐ WOKAE:
 - Sɛ wonnim ayaresabea ho biribi a, ma wɔnkɔbisa ayaresabea no mu adwumayɛfoɔ
 
 AYARESABEA NO HO NSƐM:
-- Baabi: The Bank Hospital, Accra, Ghana  
+- Baabi: TeleKiosk Hospital, Accra, Ghana  
 - Prɛko: Berɛ biara - Frɛ 999 anaa 193
 - Telefon: +233-599 211 311
 - Email: info@telekiosk.com
 
 Kae sɛ: Wowɔ hɔ sɛ wobɛboa, nanso wonnsesa adɔkotafoɔ ananmu.`,
 
-      'ga': `Emi nye TeleKiosk Assistant, meboafo le The Bank Hospital le Ghana.
+      'ga': `Emi nye TeleKiosk Assistant, meboafo le TeleKiosk Hospital le Ghana.
 
 MI DWUMADI GBEJIALƐ:
 1. Boa ayarɛfɔɔ be baa dokitafoɔ gbɔ
@@ -325,14 +463,14 @@ NUƆƆ MLI E SƐ MIKPOƆ:
 - Sɛ nyɛ ayarɛjɔɔ ŋu bii ko la, ma wɔkɔbisa ayarɛjɔɔ mli yitsoofɔ
 
 AYARƐJƆƆ ŋU NYƆŊƆƆ:
-- Afii: The Bank Hospital, Accra, Ghana
+- Afii: TeleKiosk Hospital, Accra, Ghana
 - Prɛko: Berɛ kome - Frɛ 999 sane 193  
 - Telefon: +233-599 211 311
 - Email: info@telekiosk.com
 
 Kpoɔ je: Ewɔ afii be boa, kɛ nitsɛ dokitafoɔ teŋ ko.`,
 
-      'ee': `Menye TeleKiosk Assistant, kpeɖeŋutɔ si nɔa The Bank Hospital le Ghana.
+      'ee': `Menye TeleKiosk Assistant, kpeɖeŋutɔ si nɔa TeleKiosk Hospital le Ghana.
 
 NYE DƆWƆWƆ VEVEVEAWO:
 1. Kpe ɖe dɔnɔwo ŋu be woado dokitawo
@@ -351,7 +489,7 @@ NUSIWO NYA VE LA:
 - Ne mènya kɔdzi ƒe nya aɖeke o la, na woabia kɔdzinɔlawo
 
 KƆDZI ƒE NYAWO:
-- Nɔƒe: The Bank Hospital, Accra, Ghana
+- Nɔƒe: TeleKiosk Hospital, Accra, Ghana
 - Gatagbagba: Ɣesiaɣi - Yɔ 999 alo 193
 - Telefon: +233-599 211 311  
 - Email: info@telekiosk.com
@@ -463,20 +601,64 @@ KƆDZI ƒE NYAWO:
   }
 
   /**
-   * Get service status
+   * Phase 3: Get comprehensive service status with advanced capabilities
    */
   getStatus() {
     return {
+      // Core language information
       currentLanguage: this.currentLanguage,
       currentLanguageName: this.getLanguageName(),
       supportedLanguages: this.getSupportedLanguages(),
+      
+      // Phase 3: Enhanced detection capabilities
       detectionEnabled: true,
+      phase: 3,
+      version: 'enhanced-multilingual',
+      
+      // Advanced capabilities
       capabilities: {
         detection: true,
         systemPrompts: true,
         emergencyMessages: true,
         voiceSettings: true,
-        commonResponses: true
+        commonResponses: true,
+        // Phase 3 specific features
+        contextualDetection: true,
+        healthcareTerminology: true,
+        medicalPhraseRecognition: true,
+        codeSwitchingDetection: true,
+        appointmentContextDetection: true,
+        emergencyContextDetection: true,
+        responseRecommendations: true,
+        smartLanguageThreshold: true
+      },
+      
+      // Language pattern statistics
+      patternStats: {
+        totalLanguages: this.supportedLanguages.length,
+        totalPatterns: Object.keys(this.languagePatterns).length,
+        healthcareTermsCount: Object.values(this.languagePatterns)
+          .reduce((total, lang) => total + (lang.healthcareTerms?.length || 0), 0),
+        medicalPhrasesCount: Object.values(this.languagePatterns)
+          .reduce((total, lang) => total + (lang.medicalPhrases?.length || 0), 0)
+      },
+      
+      // Context patterns available
+      contextPatterns: {
+        medical: Object.keys(this.contextPatterns.medical).length,
+        appointment: Object.keys(this.contextPatterns.appointment).length,
+        emergency: Object.keys(this.contextPatterns.emergency).length
+      },
+      
+      // Configuration
+      configuration: {
+        fallbackLanguage: this.fallbackLanguage,
+        confidenceThreshold: {
+          standard: 0.3,
+          medical: 0.2 // Lower threshold for medical context
+        },
+        healthcareWeighting: true,
+        multiLanguageSupport: true
       }
     };
   }

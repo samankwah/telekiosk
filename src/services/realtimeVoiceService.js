@@ -1,8 +1,11 @@
-// GPT-4o Realtime API Service for Advanced Voice Integration
-// Provides real-time voice conversation capabilities
+// Phase 3: GPT-4o Realtime API Service for Advanced Voice Integration
+// Provides real-time voice conversation capabilities with enhanced emergency detection
+// and multilingual support for TeleKiosk Hospital
 
-import { analyticsService } from './analyticsService';
-import { HEALTHCARE_SYSTEM_PROMPT } from '../components/chatbot/HealthcarePrompts';
+import { analyticsService } from './analyticsService.js';
+import { multilingualService } from './multilingualService.js';
+import { enhancedEmergencyService } from './enhancedEmergencyService.js';
+// import { HEALTHCARE_SYSTEM_PROMPT } from '../components/chatbot/HealthcarePrompts.js';
 
 class RealtimeVoiceService {
   constructor() {
@@ -23,6 +26,37 @@ class RealtimeVoiceService {
       maxTokens: 2000,
       healthcareMode: true
     };
+
+    // Phase 3: Enhanced voice interaction state
+    this.voiceSession = {
+      sessionId: null,
+      conversationId: null,
+      turnCount: 0,
+      currentLanguage: 'en',
+      emergencyDetected: false,
+      lastTranscript: '',
+      voiceActivityDetected: false,
+      totalSessionTime: 0,
+      startTime: null
+    };
+
+    // Phase 3: Advanced voice metrics
+    this.voiceMetrics = {
+      totalSessions: 0,
+      emergencyDetections: 0,
+      averageSessionDuration: 0,
+      languageDetections: {
+        en: 0,
+        tw: 0,
+        ga: 0,
+        ee: 0
+      },
+      audioQualityMetrics: {
+        dropouts: 0,
+        latencyIssues: 0,
+        transcriptionErrors: 0
+      }
+    };
   }
 
   /**
@@ -40,10 +74,13 @@ class RealtimeVoiceService {
       // Initialize audio context
       await this.initializeAudioContext();
       
-      // Track initialization
-      analyticsService.trackVoiceUsage('realtime_init', {
+      // Track initialization with Phase 3 metrics
+      analyticsService.trackEvent('phase3_voice_service_init', {
         service: 'gpt4o-realtime',
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        supportedLanguages: multilingualService.getSupportedLanguages().map(l => l.code),
+        emergencyDetectionEnabled: true,
+        advancedFeaturesEnabled: true
       });
       
       console.log('✅ Realtime Voice Service initialized');
@@ -136,14 +173,32 @@ class RealtimeVoiceService {
   }
 
   /**
-   * Set up the realtime session
+   * Set up the realtime session with Phase 3 enhancements
    */
   setupSession() {
+    // Initialize session tracking
+    this.voiceSession.sessionId = `voice_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    this.voiceSession.conversationId = `conv_${Date.now()}`;
+    this.voiceSession.startTime = Date.now();
+    this.voiceSession.currentLanguage = multilingualService.getCurrentLanguage();
+    
+    // Get multilingual healthcare instructions
+    const multilingualInstructions = multilingualService.getSystemPrompt(this.voiceSession.currentLanguage);
+    
     const sessionConfig = {
       type: 'session.update',
       session: {
         modalities: ['text', 'audio'],
-        instructions: HEALTHCARE_SYSTEM_PROMPT + `\n\nIMPORTANT: You are now in voice conversation mode. Speak naturally and conversationally. Keep responses concise but helpful. For emergencies, speak clearly and urgently.`,
+        instructions: multilingualInstructions + `\n\nPhase 3 VOICE INTERACTION ENHANCEMENTS:
+- You are now in advanced voice conversation mode for TeleKiosk Hospital
+- Speak naturally and conversationally in ${multilingualService.getLanguageName(this.voiceSession.currentLanguage)}
+- Keep responses concise but helpful, especially for medical consultations
+- For emergencies, speak clearly and urgently, immediately escalate to emergency services
+- Monitor for language switches and adapt accordingly
+- Provide empathetic, professional healthcare guidance
+- If you detect distress or emergency keywords, prioritize immediate help
+- Support appointment booking, hospital information, and emergency detection through voice
+- Always maintain patient confidentiality in voice interactions`,
         voice: this.config.voice,
         input_audio_format: 'pcm16',
         output_audio_format: 'pcm16',
@@ -152,16 +207,26 @@ class RealtimeVoiceService {
         },
         turn_detection: {
           type: 'server_vad',
-          threshold: 0.5,
+          threshold: 0.4, // More sensitive for healthcare
           prefix_padding_ms: 300,
-          silence_duration_ms: 500
+          silence_duration_ms: 400 // Shorter for responsive healthcare interaction
         },
         temperature: this.config.temperature,
-        max_response_output_tokens: this.config.maxTokens
+        max_response_output_tokens: this.config.maxTokens,
+        tools: this.getPhase3VoiceTools()
       }
     };
 
     this.sendMessage(sessionConfig);
+    
+    // Track session start
+    analyticsService.trackEvent('phase3_voice_session_start', {
+      sessionId: this.voiceSession.sessionId,
+      language: this.voiceSession.currentLanguage,
+      timestamp: this.voiceSession.startTime
+    });
+    
+    this.voiceMetrics.totalSessions++;
   }
 
   /**
@@ -204,8 +269,10 @@ class RealtimeVoiceService {
       this.isRecording = true;
       this.emit('recording_started');
 
-      analyticsService.trackVoiceUsage('realtime_recording_start', {
-        timestamp: Date.now()
+      analyticsService.trackEvent('phase3_voice_recording_start', {
+        sessionId: this.voiceSession.sessionId,
+        timestamp: Date.now(),
+        language: this.voiceSession.currentLanguage
       });
 
     } catch (error) {
@@ -240,8 +307,10 @@ class RealtimeVoiceService {
 
     this.emit('recording_stopped');
 
-    analyticsService.trackVoiceUsage('realtime_recording_stop', {
-      timestamp: Date.now()
+    analyticsService.trackEvent('phase3_voice_recording_stop', {
+      sessionId: this.voiceSession.sessionId,
+      timestamp: Date.now(),
+      duration: Date.now() - this.voiceSession.startTime
     });
   }
 
@@ -290,11 +359,17 @@ class RealtimeVoiceService {
       case 'conversation.item.input_audio_transcription.completed':
         const transcript = message.transcript;
         console.log('📝 Transcription:', transcript);
+        
+        // Phase 3: Enhanced transcription processing
+        this.processTranscription(transcript, message.confidence || 0.9);
         this.emit('transcription', transcript);
         
-        analyticsService.trackVoiceUsage('realtime_transcription', {
+        analyticsService.trackEvent('phase3_voice_transcription', {
+          sessionId: this.voiceSession.sessionId,
           transcript: transcript,
-          confidence: message.confidence || 0.9
+          confidence: message.confidence || 0.9,
+          language: this.voiceSession.currentLanguage,
+          turnCount: this.voiceSession.turnCount++
         });
         break;
 
@@ -410,10 +485,249 @@ class RealtimeVoiceService {
   }
 
   /**
+   * Phase 3: Process transcription with emergency detection and language analysis
+   */
+  processTranscription(transcript, confidence) {
+    this.voiceSession.lastTranscript = transcript;
+    
+    try {
+      // Phase 3: Real-time emergency detection on voice transcription
+      const emergencyAnalysis = enhancedEmergencyService.analyzeEmergency(transcript, {
+        source: 'voice_transcription',
+        sessionId: this.voiceSession.sessionId,
+        confidence: confidence,
+        language: this.voiceSession.currentLanguage
+      });
+
+      if (emergencyAnalysis.detected) {
+        console.log('🚨 Emergency detected in voice:', emergencyAnalysis.severity);
+        
+        this.voiceSession.emergencyDetected = true;
+        this.voiceMetrics.emergencyDetections++;
+        
+        // Emit emergency event for immediate handling
+        this.emit('emergency_detected', {
+          analysis: emergencyAnalysis,
+          transcript: transcript,
+          timestamp: Date.now()
+        });
+
+        // Track emergency detection
+        analyticsService.trackEvent('phase3_voice_emergency_detected', {
+          sessionId: this.voiceSession.sessionId,
+          severity: emergencyAnalysis.severity,
+          confidence: emergencyAnalysis.confidence,
+          transcript: transcript,
+          language: this.voiceSession.currentLanguage
+        });
+
+        // For critical emergencies, interrupt and provide immediate guidance
+        if (emergencyAnalysis.severity === 'critical') {
+          this.handleCriticalVoiceEmergency(emergencyAnalysis, transcript);
+        }
+      }
+
+      // Phase 3: Language detection and switching
+      const languageDetection = multilingualService.detectLanguage(transcript);
+      if (languageDetection.language !== this.voiceSession.currentLanguage && languageDetection.confidence > 0.7) {
+        console.log(`🌍 Language switch detected: ${this.voiceSession.currentLanguage} → ${languageDetection.language}`);
+        
+        this.voiceSession.currentLanguage = languageDetection.language;
+        this.voiceMetrics.languageDetections[languageDetection.language]++;
+        
+        // Update session language
+        this.updateSessionLanguage(languageDetection.language);
+      }
+
+    } catch (error) {
+      console.error('❌ Error processing transcription:', error);
+      this.voiceMetrics.audioQualityMetrics.transcriptionErrors++;
+    }
+  }
+
+  /**
+   * Phase 3: Handle critical voice emergency
+   */
+  handleCriticalVoiceEmergency(analysis, transcript) {
+    console.log('🚨 CRITICAL VOICE EMERGENCY - Interrupting conversation');
+    
+    // Send emergency interruption
+    this.sendMessage({
+      type: 'response.cancel'
+    });
+
+    // Send immediate emergency response
+    const emergencyMessage = multilingualService.getEmergencyMessage(this.voiceSession.currentLanguage);
+    
+    this.sendMessage({
+      type: 'conversation.item.create',
+      item: {
+        type: 'message',
+        role: 'assistant',
+        content: [{
+          type: 'text',
+          text: `🚨 CRITICAL MEDICAL EMERGENCY DETECTED! ${emergencyMessage} I am immediately connecting you to emergency services. Please stay on the line.`
+        }]
+      }
+    });
+
+    // Generate emergency response
+    this.sendMessage({ type: 'response.create' });
+
+    // Emit critical emergency event
+    this.emit('critical_emergency', {
+      analysis,
+      transcript,
+      sessionId: this.voiceSession.sessionId
+    });
+  }
+
+  /**
+   * Phase 3: Update session language
+   */
+  updateSessionLanguage(newLanguage) {
+    const instructions = multilingualService.getSystemPrompt(newLanguage);
+    
+    this.sendMessage({
+      type: 'session.update',
+      session: {
+        instructions: instructions + `\n\nYou have switched to ${multilingualService.getLanguageName(newLanguage)}. Please continue the conversation in this language.`
+      }
+    });
+
+    analyticsService.trackEvent('phase3_voice_language_switch', {
+      sessionId: this.voiceSession.sessionId,
+      fromLanguage: this.voiceSession.currentLanguage,
+      toLanguage: newLanguage,
+      timestamp: Date.now()
+    });
+  }
+
+  /**
+   * Phase 3: Get advanced voice tools for function calling
+   */
+  getPhase3VoiceTools() {
+    return [
+      {
+        type: 'function',
+        name: 'book_appointment_voice',
+        description: 'Book a medical appointment through voice interaction at TeleKiosk Hospital',
+        parameters: {
+          type: 'object',
+          properties: {
+            patientName: { 
+              type: 'string', 
+              description: 'Full name of the patient' 
+            },
+            service: { 
+              type: 'string', 
+              description: 'Type of medical service (cardiology, pediatrics, dermatology, neurology, orthopedics, emergency)',
+              enum: ['cardiology', 'pediatrics', 'dermatology', 'neurology', 'orthopedics', 'emergency', 'general']
+            },
+            preferredDate: { 
+              type: 'string', 
+              description: 'Preferred appointment date' 
+            },
+            preferredTime: { 
+              type: 'string', 
+              description: 'Preferred appointment time' 
+            },
+            contactPhone: {
+              type: 'string',
+              description: 'Patient contact phone number'
+            },
+            urgency: {
+              type: 'string',
+              enum: ['routine', 'urgent', 'emergency'],
+              description: 'Urgency level of the appointment'
+            }
+          },
+          required: ['patientName', 'service']
+        }
+      },
+      {
+        type: 'function',
+        name: 'emergency_voice_alert',
+        description: 'Handle emergency situation detected through voice with immediate response',
+        parameters: {
+          type: 'object',
+          properties: {
+            emergencyType: { 
+              type: 'string', 
+              description: 'Type of emergency detected' 
+            },
+            severity: { 
+              type: 'string', 
+              enum: ['critical', 'high', 'medium', 'low'],
+              description: 'Severity level of the emergency' 
+            },
+            symptoms: {
+              type: 'string',
+              description: 'Symptoms or situation described by the patient'
+            },
+            immediateAction: {
+              type: 'string',
+              description: 'Immediate action recommended'
+            }
+          },
+          required: ['emergencyType', 'severity']
+        }
+      },
+      {
+        type: 'function', 
+        name: 'get_hospital_voice_info',
+        description: 'Provide TeleKiosk Hospital information through voice response',
+        parameters: {
+          type: 'object',
+          properties: {
+            infoType: {
+              type: 'string',
+              enum: ['services', 'doctors', 'contact', 'hours', 'location', 'directions', 'emergency_contact'],
+              description: 'Type of hospital information requested'
+            },
+            language: {
+              type: 'string',
+              enum: ['en', 'tw', 'ga', 'ee'],
+              description: 'Preferred language for the response'
+            },
+            specificService: {
+              type: 'string',
+              description: 'Specific service to get information about (optional)'
+            }
+          },
+          required: ['infoType']
+        }
+      }
+    ];
+  }
+
+  /**
    * Disconnect from the realtime API
    */
   disconnect() {
     console.log('🔌 Disconnecting from Realtime API...');
+
+    // Calculate session metrics before disconnect
+    if (this.voiceSession.startTime) {
+      const sessionDuration = Date.now() - this.voiceSession.startTime;
+      this.voiceSession.totalSessionTime = sessionDuration;
+      
+      // Update average session duration
+      this.voiceMetrics.averageSessionDuration = (
+        (this.voiceMetrics.averageSessionDuration * (this.voiceMetrics.totalSessions - 1) + sessionDuration) / 
+        this.voiceMetrics.totalSessions
+      );
+
+      // Track session end
+      analyticsService.trackEvent('phase3_voice_session_end', {
+        sessionId: this.voiceSession.sessionId,
+        duration: sessionDuration,
+        turnCount: this.voiceSession.turnCount,
+        emergencyDetected: this.voiceSession.emergencyDetected,
+        language: this.voiceSession.currentLanguage,
+        completedNormally: true
+      });
+    }
 
     if (this.isRecording) {
       this.stopRecording();
@@ -425,7 +739,28 @@ class RealtimeVoiceService {
     }
 
     this.isConnected = false;
+    
+    // Reset session state
+    this.resetVoiceSession();
+    
     this.emit('disconnected');
+  }
+
+  /**
+   * Phase 3: Reset voice session state
+   */
+  resetVoiceSession() {
+    this.voiceSession = {
+      sessionId: null,
+      conversationId: null,
+      turnCount: 0,
+      currentLanguage: multilingualService.getCurrentLanguage(),
+      emergencyDetected: false,
+      lastTranscript: '',
+      voiceActivityDetected: false,
+      totalSessionTime: 0,
+      startTime: null
+    };
   }
 
   /**
@@ -490,7 +825,7 @@ class RealtimeVoiceService {
   }
 
   /**
-   * Get service status
+   * Phase 3: Get comprehensive service status with advanced metrics
    */
   getStatus() {
     return {
@@ -499,11 +834,42 @@ class RealtimeVoiceService {
       recording: this.isRecording,
       browserSupported: this.checkBrowserSupport(),
       audioContext: this.audioContext?.state,
+      
+      // Phase 3: Current session information
+      currentSession: {
+        sessionId: this.voiceSession.sessionId,
+        language: this.voiceSession.currentLanguage,
+        emergencyDetected: this.voiceSession.emergencyDetected,
+        turnCount: this.voiceSession.turnCount,
+        duration: this.voiceSession.startTime ? Date.now() - this.voiceSession.startTime : 0
+      },
+      
+      // Phase 3: Advanced capabilities
       capabilities: {
         realtimeVoice: true,
         streaming: true,
         functionCalling: true,
-        emergencyDetection: true
+        emergencyDetection: true,
+        multilingualSupport: true,
+        languageDetection: true,
+        voiceInterruption: true,
+        realTimeTranscription: true,
+        advancedAnalytics: true
+      },
+      
+      // Phase 3: Voice metrics
+      metrics: this.voiceMetrics,
+      
+      // Phase 3: Supported languages
+      supportedLanguages: multilingualService.getSupportedLanguages(),
+      
+      // Configuration
+      config: {
+        model: this.config.model,
+        voice: this.config.voice,
+        temperature: this.config.temperature,
+        maxTokens: this.config.maxTokens,
+        healthcareMode: this.config.healthcareMode
       }
     };
   }
