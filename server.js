@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3003;
 
 // Resend configuration
 const RESEND_CONFIG = {
@@ -36,7 +36,15 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Chat API endpoint for AI chatbot
+// Handle CORS preflight requests
+app.options('/api/chat', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.status(200).end();
+});
+
+// Chat API endpoint for AI chatbot - Compatible with Vercel AI SDK
 app.post('/api/chat', async (req, res) => {
   try {
     const { messages, ...options } = req.body;
@@ -47,8 +55,20 @@ app.post('/api/chat', async (req, res) => {
       });
     }
 
+    // Set proper headers for JSON response compatible with Assistant-UI
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Cache-Control', 'no-cache');
+
     // Import OpenAI service dynamically
     const { generateChatCompletion } = await import('./src/services/openaiService.js');
+
+    console.log('📥 Received chat request from frontend:', {
+      messageCount: messages.length,
+      lastMessage: messages[messages.length - 1]?.content?.slice(0, 50) + '...'
+    });
 
     // Generate response using OpenAI service
     const result = await generateChatCompletion(messages, {
@@ -57,22 +77,28 @@ app.post('/api/chat', async (req, res) => {
     });
 
     if (result.success) {
-      return res.status(200).json({
+      console.log('✅ Sending response to frontend:', result.message.slice(0, 100) + '...');
+      
+      // Send response in JSON format for Assistant-UI compatibility
+      res.status(200).json({
         message: result.message,
+        success: true,
         usage: result.usage,
-        responseTime: result.responseTime,
-        functionResult: result.functionResult
+        responseTime: result.responseTime
       });
     } else {
-      return res.status(500).json({
-        error: result.error || 'Failed to generate response'
+      console.log('❌ Error generating response:', result.error);
+      res.status(500).json({
+        error: 'I apologize, but I\'m having technical difficulties. Please try again or speak with a hospital staff member for assistance.',
+        success: false
       });
     }
 
   } catch (error) {
-    console.error('Chat API error:', error);
-    return res.status(500).json({
-      error: 'Internal server error: ' + error.message
+    console.error('❌ Chat API error:', error);
+    res.status(500).json({
+      error: 'I\'m having trouble connecting right now. Please try again in a moment, or speak with a hospital staff member for immediate assistance.',
+      success: false
     });
   }
 });

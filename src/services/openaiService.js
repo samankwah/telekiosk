@@ -57,16 +57,22 @@ export const generateChatCompletion = async (messages, options = {}) => {
       ...messages.filter(msg => msg.role !== 'system')
     ];
 
-    const response = await getOpenAIClient().chat.completions.create({
+    // Build OpenAI API parameters (only valid parameters)
+    const openaiParams = {
       model: CONFIG.model,
       messages: messagesWithSystem,
       temperature: CONFIG.temperature,
       max_tokens: CONFIG.maxTokens,
-      functions: getAvailableFunctions(),
-      function_call: options.allowFunctions ? 'auto' : undefined,
-      stream: options.stream || false,
-      ...options
-    });
+      stream: options.stream || false
+    };
+
+    // Add functions if enabled
+    if (options.allowFunctions) {
+      openaiParams.functions = getAvailableFunctions();
+      openaiParams.function_call = 'auto';
+    }
+
+    const response = await getOpenAIClient().chat.completions.create(openaiParams);
 
     const responseTime = Date.now() - startTime;
     

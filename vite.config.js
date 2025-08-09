@@ -39,13 +39,13 @@ export default defineConfig({
   },
   // Server configuration for development
   server: {
-    port: 3000,
+    port: 5174,
     host: true,
+    open: true,
     // Enable HMR for better development experience
     hmr: {
-      overlay: false,
-      port: 3000,
-      clientPort: 3000
+      overlay: true,
+      port: 24680
     },
     // Fix WebSocket connection issues
     strictPort: false,

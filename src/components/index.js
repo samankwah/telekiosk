@@ -19,4 +19,4 @@ export { default as NewsSection } from './sections/NewsSection';
 export { default as InfoBar } from './sections/InfoBar';
 
 // Chatbot Components
-export { ChatAssistant } from './chatbot/ChatAssistant';
+export { ChatAssistant, ChatInterface, ChatMessage, VoiceIntegration, EmergencyDetection, HealthcarePrompts } from './chatbot';

@@ -5,6 +5,7 @@ import ScrollToTopButton from './components/ui/ScrollToTopButton';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { LoadingSpinner } from './components/ui/AnimationComponents.jsx';
 import { ChatAssistant } from './components/chatbot/ChatAssistant';
+import { ChatAssistantUI } from './components/chatbot/ChatAssistantUI';
 import './App.css';
 
 // Lazy load page components for better performance
@@ -77,7 +78,8 @@ function App() {
             </Suspense>
             
             <ScrollToTopButton />
-            <ChatAssistant />
+            {/* Phase 1 Assistant-UI Implementation */}
+            <ChatAssistantUI />
           </Router>
     </LanguageProvider>
   );
