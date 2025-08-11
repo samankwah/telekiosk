@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Calendar, DollarSign, Search, Phone, HelpCircle, TrendingUp, X, Mic, Minimize2, RotateCcw, Volume2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Send, Calendar, DollarSign, Search, Phone, HelpCircle, TrendingUp, X, Mic, Minimize2, RotateCcw, Volume2, ArrowLeft, ArrowRight, Star, Check, Stethoscope, Heart, Activity } from 'lucide-react';
+import { confirmBooking } from '../../services/meetingService';
+import robotIcon from '../../assets/chat2.png';
 
 const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
-  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,30 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
   const [voiceTranscript, setVoiceTranscript] = useState('');
   const [bookingStep, setBookingStep] = useState(null);
   const [bookingData, setBookingData] = useState({});
+  const [isInBookingFlow, setIsInBookingFlow] = useState(false);
+  const [bookingCurrentStep, setBookingCurrentStep] = useState(1);
+  const [selectedSpecialty, setSelectedSpecialty] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
   const lastMessageRef = useRef(null);
+  const lastProcessedTranscriptRef = useRef(''); // Track last processed transcript
+  
+  // Integrated Booking States
+  const [integratedBookingActive, setIntegratedBookingActive] = useState(false);
+  const [integratedBookingStep, setIntegratedBookingStep] = useState(1);
+  const [integratedBookingData, setIntegratedBookingData] = useState({
+    specialty: '',
+    doctor: '',
+    date: '',
+    time: '',
+    patientName: '',
+    patientEmail: '',
+    patientPhone: '',
+    symptoms: ''
+  });
+  const [isBookingInProgress, setIsBookingInProgress] = useState(false);
+  const [bookingResult, setBookingResult] = useState(null);
 
   // Hospital contact numbers
   const HOSPITAL_CONTACTS = {
@@ -23,6 +46,49 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
     appointments: '+233501234568', // Appointments line
     information: '+233501234569' // Information line
   };
+
+  // Booking data
+  const specialties = [
+    { id: 'cardiology', name: 'Cardiology', icon: '❤️', color: 'from-red-400 to-pink-500', description: 'Heart and cardiovascular care' },
+    { id: 'neurology', name: 'Neurology', icon: '🧠', color: 'from-purple-400 to-indigo-500', description: 'Brain and nervous system' },
+    { id: 'pediatrics', name: 'Pediatrics', icon: '👶', color: 'from-blue-400 to-cyan-500', description: 'Children\'s healthcare' },
+    { id: 'dermatology', name: 'Dermatology', icon: '✨', color: 'from-yellow-400 to-orange-500', description: 'Skin and beauty care' },
+    { id: 'orthopedics', name: 'Orthopedics', icon: '🦴', color: 'from-green-400 to-teal-500', description: 'Bone and joint care' },
+    { id: 'emergency', name: 'Emergency', icon: '🚨', color: 'from-red-500 to-red-600', description: 'Urgent medical care' }
+  ];
+
+  const doctors = [
+    { id: 1, name: 'Dr. Sarah Johnson', specialty: 'cardiology', rating: 4.9, experience: '15+ years', avatar: '👩‍⚕️', description: 'Specialist in heart diseases and interventional cardiology' },
+    { id: 2, name: 'Dr. Michael Chen', specialty: 'neurology', rating: 4.8, experience: '12+ years', avatar: '👨‍⚕️', description: 'Expert in neurological disorders and brain surgery' },
+    { id: 3, name: 'Dr. Emily Brown', specialty: 'pediatrics', rating: 4.9, experience: '10+ years', avatar: '👩‍⚕️', description: 'Dedicated pediatrician specializing in child development' },
+    { id: 4, name: 'Dr. James Wilson', specialty: 'dermatology', rating: 4.7, experience: '8+ years', avatar: '👨‍⚕️', description: 'Dermatologist focusing on skin conditions and cosmetic care' },
+    { id: 5, name: 'Dr. Lisa Davis', specialty: 'orthopedics', rating: 4.8, experience: '14+ years', avatar: '👩‍⚕️', description: 'Orthopedic surgeon specializing in joint replacement' },
+    { id: 6, name: 'Dr. Robert Ghana', specialty: 'emergency', rating: 4.9, experience: '20+ years', avatar: '👨‍⚕️', description: 'Emergency medicine specialist with trauma expertise' }
+  ];
+
+  const timeSlots = [
+    '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+    '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
+    '05:00 PM', '05:30 PM'
+  ];
+
+  // Generate next 14 days for booking
+  const generateDates = () => {
+    const dates = [];
+    for (let i = 1; i <= 14; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() + i);
+      dates.push({
+        date: date.toISOString().split('T')[0],
+        day: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        dayNum: date.getDate(),
+        month: date.toLocaleDateString('en-US', { month: 'short' })
+      });
+    }
+    return dates;
+  };
+
+  const availableDates = generateDates();
 
   // Call functionality
   const makeCall = (number, type = 'general') => {
@@ -64,24 +130,46 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
       // Disable continuous mode
       setShowQuickActions(true);
       stopSpeaking();
+      lastProcessedTranscriptRef.current = ''; // Clear processed transcript history
+      setVoiceTranscript('');
     }
   };
 
 
   // Enhanced voice transcription handler for continuous mode
   const handleContinuousVoiceTranscription = (transcript) => {
-    if (transcript && transcript.trim()) {
-      setVoiceTranscript(transcript);
-      setInput(transcript);
-      
-      // In continuous mode, auto-submit immediately with visual feedback
-      if (isContinuousVoiceMode) {
-        setIsListening(false);
-        setTimeout(() => {
-          handleVoiceSubmit(transcript);
+    if (!transcript || !transcript.trim() || isLoading) {
+      return; // Don't process empty transcripts or when already loading
+    }
+
+    const cleanTranscript = transcript.trim();
+    
+    // Prevent duplicate submissions of the same transcript
+    if (cleanTranscript === voiceTranscript || cleanTranscript === lastProcessedTranscriptRef.current) {
+      console.log('Duplicate transcript ignored:', cleanTranscript);
+      return;
+    }
+    
+    // Prevent submission of very short or incomplete utterances
+    if (cleanTranscript.length < 3) {
+      console.log('Transcript too short, waiting for more:', cleanTranscript);
+      setVoiceTranscript(cleanTranscript);
+      return;
+    }
+
+    setVoiceTranscript(cleanTranscript);
+    setInput(cleanTranscript);
+    
+    // In continuous mode, auto-submit after validation
+    if (isContinuousVoiceMode) {
+      setIsListening(false);
+      lastProcessedTranscriptRef.current = cleanTranscript; // Store the processed transcript
+      setTimeout(() => {
+        if (!isLoading) { // Double-check we're not already processing
+          handleVoiceSubmit(cleanTranscript);
           setVoiceTranscript('');
-        }, 800); // Small delay to show the transcript
-      }
+        }
+      }, 1000); // Longer delay to ensure complete speech
     }
   };
 
@@ -96,9 +184,10 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
         const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
         recognitionRef.current = new SpeechRecognition();
         
-        recognitionRef.current.continuous = true;
+        recognitionRef.current.continuous = false; // Changed to false for better control
         recognitionRef.current.interimResults = true;
         recognitionRef.current.lang = 'en-US';
+        recognitionRef.current.maxAlternatives = 1;
         
         recognitionRef.current.onstart = () => {
           setIsListening(true);
@@ -109,13 +198,22 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
             .map(result => result[0].transcript)
             .join('');
           
+          console.log('Speech recognition result:', transcript, 'Final:', event.results[event.results.length - 1].isFinal);
+          
           // Show interim results
           if (!event.results[event.results.length - 1].isFinal) {
             setVoiceTranscript(transcript);
           } else {
-            handleContinuousVoiceTranscription(transcript);
-            
-            // Restart listening after AI responds (handled in auto-speak effect)
+            // Only process final results that are meaningful
+            if (transcript.trim().length > 2) {
+              handleContinuousVoiceTranscription(transcript);
+            } else {
+              console.log('Ignoring short final transcript:', transcript);
+              // Restart listening for short/meaningless results
+              if (isContinuousVoiceMode) {
+                setTimeout(() => restartListening(), 500);
+              }
+            }
           }
         };
         
@@ -127,17 +225,25 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
         
         recognitionRef.current.onerror = (event) => {
           console.error('Continuous voice error:', event.error);
-          if (event.error !== 'aborted' && isContinuousVoiceMode) {
-            // Restart after error (except if manually aborted)
+          setIsListening(false);
+          
+          // Only restart for specific recoverable errors, not all errors
+          const recoverableErrors = ['network', 'audio-capture', 'not-allowed'];
+          if (recoverableErrors.includes(event.error) && isContinuousVoiceMode && !isListening) {
+            console.log('Attempting recovery from recoverable voice error:', event.error);
             setTimeout(() => {
-              if (isContinuousVoiceMode && recognitionRef.current) {
+              if (isContinuousVoiceMode && recognitionRef.current && !isListening) {
                 try {
                   recognitionRef.current.start();
+                  setIsListening(true);
                 } catch (error) {
-                  console.log('Voice recognition error restart:', error);
+                  console.log('Voice recognition recovery failed:', error);
+                  setIsListening(false);
                 }
               }
-            }, 1000);
+            }, 2000);
+          } else {
+            console.log('Non-recoverable voice error or already listening, not restarting:', event.error);
           }
         };
         
@@ -171,22 +277,25 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
   }, [isContinuousVoiceMode]);
 
   // Text-to-Speech functionality
-  // Restart voice recognition after AI finishes speaking
+  // Restart voice recognition after AI finishes speaking (with safeguards)
   const restartListening = () => {
-    if (isContinuousVoiceMode && recognitionRef.current) {
-      setTimeout(() => {
+    if (!isContinuousVoiceMode || !recognitionRef.current || isListening) {
+      return; // Don't restart if not in continuous mode, no recognition available, or already listening
+    }
+    
+    // Add a delay and safety check before restarting
+    setTimeout(() => {
+      if (isContinuousVoiceMode && recognitionRef.current && !isListening) {
         try {
           setIsListening(true);
           recognitionRef.current.start();
         } catch (error) {
-          console.log('Voice recognition restart after speaking:', error);
-          // If still in continuous mode, try again after a delay
-          if (isContinuousVoiceMode) {
-            setTimeout(restartListening, 1000);
-          }
+          console.log('Voice recognition restart error:', error);
+          setIsListening(false);
+          // Don't auto-retry to prevent infinite loops
         }
-      }, 1000);
-    }
+      }
+    }, 1500); // Increased delay to prevent rapid restarts
   };
 
   const speakText = (text) => {
@@ -282,6 +391,161 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
     }
   ];
 
+  // Individual service booking flows
+  // Integrated Booking Functions
+  const startIntegratedBooking = () => {
+    setIntegratedBookingActive(true);
+    setIntegratedBookingStep(1);
+    setShowQuickActions(false);
+    setIsInBookingFlow(true);
+    
+    const welcomeMessage = {
+      role: 'assistant',
+      content: `🏥 **Let's Book Your Medical Appointment!**\n\nI'll guide you through our easy 5-step booking process. Let's start by selecting the medical specialty you need.`,
+      timestamp: Date.now(),
+      shouldSpeak: isContinuousVoiceMode,
+      integratedBooking: true,
+      bookingStep: 1,
+      showIntegratedBookingStep: true
+    };
+    
+    setMessages([welcomeMessage]);
+  };
+
+  const updateIntegratedBookingData = (field, value) => {
+    setIntegratedBookingData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const proceedToNextBookingStep = () => {
+    if (integratedBookingStep < 5) {
+      const nextStep = integratedBookingStep + 1;
+      setIntegratedBookingStep(nextStep);
+      
+      const stepMessages = {
+        2: "✅ Great choice! Now let's pick the perfect date and time for your appointment.",
+        3: "📅 Perfect! Now I need some basic information about you to complete the booking.",
+        4: "📝 Almost done! Please review your appointment details before we confirm everything.",
+        5: "🎉 Booking in progress..."
+      };
+      
+      const nextStepMessage = {
+        role: 'assistant',
+        content: stepMessages[nextStep] || "Let's continue...",
+        timestamp: Date.now(),
+        shouldSpeak: isContinuousVoiceMode,
+        integratedBooking: true,
+        bookingStep: nextStep,
+        showIntegratedBookingStep: true
+      };
+      
+      setMessages(prev => [...prev, nextStepMessage]);
+    }
+  };
+
+  const handleIntegratedBookingSubmit = async () => {
+    if (integratedBookingStep !== 4) return;
+    
+    setIsBookingInProgress(true);
+    setIntegratedBookingStep(5);
+    
+    try {
+      const result = await confirmBooking(integratedBookingData);
+      setBookingResult(result);
+      
+      const resultMessage = {
+        role: 'assistant',
+        content: result.success 
+          ? "🎉 **Booking Confirmed!** Your appointment has been successfully scheduled."
+          : `❌ **Booking Failed:** ${result.message || 'Please try again.'}`,
+        timestamp: Date.now(),
+        shouldSpeak: isContinuousVoiceMode,
+        integratedBooking: true,
+        bookingStep: 5,
+        showIntegratedBookingStep: true,
+        bookingResult: result
+      };
+      
+      setMessages(prev => [...prev, resultMessage]);
+      
+      if (result.success) {
+        setTimeout(() => {
+          setShowQuickActions(true);
+          setIntegratedBookingActive(false);
+        }, 5000);
+      }
+      
+    } catch (error) {
+      console.error('Integrated booking error:', error);
+      
+      const errorMessage = {
+        role: 'assistant',
+        content: `❌ **Booking Error:** ${error.message || 'An unexpected error occurred. Please try again.'}`,
+        timestamp: Date.now(),
+        shouldSpeak: isContinuousVoiceMode,
+        integratedBooking: true,
+        bookingStep: 5,
+        showIntegratedBookingStep: true,
+        bookingResult: { success: false, message: error.message }
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsBookingInProgress(false);
+    }
+  };
+
+  const startServiceBooking = (serviceType) => {
+    if (serviceType === 'appointment') {
+      startIntegratedBooking();
+      return;
+    }
+    
+    setShowQuickActions(false);
+    setIsInBookingFlow(true);
+    setBookingCurrentStep(1);
+    
+    const serviceConfigs = {
+      appointment: {
+        title: '🏥 **Medical Appointment Booking**',
+        showSpecialtySelection: true
+      },
+      quote: {
+        title: '🩺 **Medical Services & Pricing**',
+        showQuoteSelection: true
+      },
+      search: {
+        title: '🔍 **Find Medical Services**',
+        showSearchCategories: true
+      },
+      call: {
+        title: '📞 **Telemedicine Consultation**',
+        showCallTypes: true
+      },
+      help: {
+        title: '⚕️ **Medical Help & Support**',
+        showHelpCategories: true
+      },
+      trends: {
+        title: '❤️ **Health & Wellness Center**',
+        showTrendCategories: true
+      }
+    };
+    
+    const config = serviceConfigs[serviceType];
+    
+    setMessages([
+      {
+        role: 'assistant',
+        content: `${config.title}\n\nLet's get started:`,
+        timestamp: Date.now(),
+        shouldSpeak: isContinuousVoiceMode,
+        isBookingFlow: true,
+        serviceType: serviceType,
+        ...config
+      }
+    ]);
+  };
+
   const startAppointmentBooking = () => {
     setShowQuickActions(false);
     setBookingStep('department');
@@ -304,46 +568,42 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
       label: 'Book Appointment',
       iconColor: 'text-blue-400',
       bgColor: 'bg-blue-500',
-      action: () => {
-        // Close chat and navigate to booking page with doctor selection
-        if (onClose) onClose();
-        navigate('/book-now');
-      }
+      action: () => startServiceBooking('appointment')
     },
     {
-      icon: DollarSign,
-      label: 'Get Quote',
+      icon: Stethoscope,
+      label: 'Medical Quote',
       iconColor: 'text-green-400',
       bgColor: 'bg-green-500',
-      action: () => handleQuickAction('I need a quote for medical services')
+      action: () => startServiceBooking('quote')
     },
     {
       icon: Search,
-      label: 'Search Content',
+      label: 'Find Services',
       iconColor: 'text-purple-400',
       bgColor: 'bg-purple-500',
-      action: () => handleQuickAction('Help me search for medical information or doctors')
+      action: () => startServiceBooking('search')
     },
     {
       icon: Phone,
-      label: 'Schedule Call',
+      label: 'Telemedicine',
       iconColor: 'text-orange-400',
       bgColor: 'bg-orange-500',
-      action: () => handleQuickAction('I want to schedule a consultation call')
+      action: () => startServiceBooking('call')
     },
     {
       icon: HelpCircle,
-      label: 'Quick Help',
+      label: 'Medical Help',
       iconColor: 'text-cyan-400',
       bgColor: 'bg-cyan-500',
-      action: () => handleQuickAction('I need quick help with hospital services')
+      action: () => startServiceBooking('help')
     },
     {
-      icon: TrendingUp,
-      label: 'AI Trends',
-      iconColor: 'text-yellow-400',
-      bgColor: 'bg-yellow-500',
-      action: () => handleQuickAction('Tell me about health and medical trends')
+      icon: Heart,
+      label: 'Health & Wellness',
+      iconColor: 'text-red-400',
+      bgColor: 'bg-red-500',
+      action: () => startServiceBooking('trends')
     }
   ];
 
@@ -366,7 +626,7 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
         },
         body: JSON.stringify({
           messages: [
-            { role: 'system', content: 'You are TeleKiosk Assistant, an advanced AI assistant for The Bank Hospital in Ghana. You help patients with appointment bookings, hospital information, emergency guidance, and healthcare services. Be empathetic, professional, and culturally sensitive to Ghanaian context.' },
+            { role: 'system', content: 'You are TeleKiosk Assistant, an advanced AI assistant for TeleKiosk Hospital in Ghana. You help patients with appointment bookings, hospital information, emergency guidance, and healthcare services. Be empathetic, professional, and culturally sensitive to Ghanaian context.' },
             userMessage
           ]
         })
@@ -438,7 +698,7 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
         },
         body: JSON.stringify({
           messages: [
-            { role: 'system', content: 'You are TeleKiosk Assistant, an advanced AI assistant for The Bank Hospital in Ghana. You help patients with appointment bookings, hospital information, emergency guidance, and healthcare services. Be empathetic, professional, and culturally sensitive to Ghanaian context.' },
+            { role: 'system', content: 'You are TeleKiosk Assistant, an advanced AI assistant for TeleKiosk Hospital in Ghana. You help patients with appointment bookings, hospital information, emergency guidance, and healthcare services. Be empathetic, professional, and culturally sensitive to Ghanaian context. When users want to book an appointment, ask if they would like to use our integrated booking system by responding with "INTEGRATED_BOOKING_START" to trigger the step-by-step booking process.' },
             ...messages,
             userMessage
           ]
@@ -448,13 +708,34 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
       const result = await response.json();
       
       if (result.success) {
-        const assistantMessage = {
-          role: 'assistant',
-          content: result.message || result.content,
-          timestamp: Date.now(),
-          shouldSpeak: isContinuousVoiceMode
-        };
-        setMessages(prev => [...prev, assistantMessage]);
+        const messageContent = result.message || result.content;
+        
+        // Check if AI wants to trigger integrated booking
+        if (messageContent.includes('INTEGRATED_BOOKING_START')) {
+          const modifiedContent = messageContent.replace('INTEGRATED_BOOKING_START', '').trim();
+          
+          const assistantMessage = {
+            role: 'assistant',
+            content: modifiedContent || '🏥 I can help you book an appointment! Let me start our integrated booking system.',
+            timestamp: Date.now(),
+            shouldSpeak: isContinuousVoiceMode
+          };
+          setMessages(prev => [...prev, assistantMessage]);
+          
+          // Start integrated booking after a short delay
+          setTimeout(() => {
+            startIntegratedBooking();
+          }, 1000);
+          
+        } else {
+          const assistantMessage = {
+            role: 'assistant',
+            content: messageContent,
+            timestamp: Date.now(),
+            shouldSpeak: isContinuousVoiceMode
+          };
+          setMessages(prev => [...prev, assistantMessage]);
+        }
       }
     } catch (error) {
       const errorMessage = {
@@ -475,6 +756,28 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
     setInput('');
     setBookingStep(null);
     setBookingData({});
+    // Reset integrated booking flow
+    setIsInBookingFlow(false);
+    setBookingCurrentStep(1);
+    setSelectedSpecialty(null);
+    setSelectedDoctor(null);
+    setSelectedDate(null);
+    setSelectedTime(null);
+    // Reset integrated booking states
+    setIntegratedBookingActive(false);
+    setIntegratedBookingStep(1);
+    setIntegratedBookingData({
+      specialty: '',
+      doctor: '',
+      date: '',
+      time: '',
+      patientName: '',
+      patientEmail: '',
+      patientPhone: '',
+      symptoms: ''
+    });
+    setIsBookingInProgress(false);
+    setBookingResult(null);
   };
 
   const processNextBookingStep = (userInput) => {
@@ -567,7 +870,7 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
         },
         body: JSON.stringify({
           messages: [
-            { role: 'system', content: 'You are TeleKiosk Assistant, an advanced AI assistant for The Bank Hospital in Ghana. You help patients with appointment bookings, hospital information, emergency guidance, and healthcare services. Be empathetic, professional, and culturally sensitive to Ghanaian context.' },
+            { role: 'system', content: 'You are TeleKiosk Assistant, an advanced AI assistant for TeleKiosk Hospital in Ghana. You help patients with appointment bookings, hospital information, emergency guidance, and healthcare services. Be empathetic, professional, and culturally sensitive to Ghanaian context.' },
             ...messages,
             userMessage
           ]
@@ -599,7 +902,7 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
   };
 
   return (
-    <div className="h-full flex flex-col relative overflow-hidden" style={{
+    <div className="h-full flex flex-col relative overflow-hidden pb-safe" style={{
       background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%)',
       backgroundSize: '400% 400%',
       animation: 'gradientShift 15s ease infinite'
@@ -612,18 +915,18 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
         <div className="absolute bottom-10 right-10 w-20 h-20 bg-cyan-500/10 rounded-full blur-xl animate-pulse" style={{animationDelay: '6s'}}></div>
       </div>
       {/* Enhanced Header with Glassmorphism Effect */}
-      <div className="flex items-center justify-between p-4 flex-shrink-0 backdrop-blur-md bg-white/10 border-b border-white/20 relative z-10">
+      <div className="flex items-center justify-between p-3 sm:p-4 flex-shrink-0 backdrop-blur-md bg-white/10 border-b border-white/20 relative z-10">
         <div className="flex items-center space-x-3">
-          {/* Enhanced Robot Avatar with Animation */}
-          <div className="w-8 h-8 bg-gradient-to-br from-white to-blue-100 rounded-full flex items-center justify-center shadow-lg ring-2 ring-blue-400/30 animate-pulse">
-            <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center relative">
-              <div className="w-4 h-4 bg-white rounded-full shadow-inner">
-                <div className="w-2 h-2 bg-blue-500 rounded-full absolute top-1 left-1 animate-ping"></div>
-              </div>
-            </div>
+          {/* Robot Image from Assets */}
+          <div className="w-8 h-8 flex items-center justify-center">
+            <img 
+              src={robotIcon}
+              alt="TeleKiosk AI Robot"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div className="flex flex-col">
-            <h2 className="text-xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">TeleKiosk AI</h2>
+            <h2 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">TeleKiosk AI</h2>
             <p className="text-xs text-blue-200/80">Smart Healthcare Assistant</p>
           </div>
           
@@ -670,7 +973,7 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col px-4 min-h-0">
+      <div className="flex-1 flex flex-col px-2 sm:px-4 min-h-0">
         {/* Enhanced Continuous Voice Mode Indicator with Glassmorphism */}
         {isContinuousVoiceMode && (
           <div className={`text-white p-4 rounded-xl mb-4 transition-all duration-500 backdrop-blur-lg border border-white/20 relative overflow-hidden ${
@@ -743,12 +1046,12 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
             </div>
             
             {/* Enhanced Action Buttons Grid with Glassmorphism */}
-            <div className="grid grid-cols-2 gap-3 max-w-md mx-auto flex-shrink-0">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-xs sm:max-w-md mx-auto flex-shrink-0">
               {quickActions.map((action, index) => (
                 <button
                   key={index}
                   onClick={action.action}
-                  className="group flex flex-col items-center justify-center p-4 bg-slate-700/40 hover:bg-slate-600/60 backdrop-blur-sm rounded-2xl border border-slate-500/30 hover:border-blue-400/50 transition-all duration-300 text-center min-h-[85px] shadow-lg hover:shadow-xl hover:shadow-blue-500/10 transform hover:scale-105 hover:-translate-y-1"
+                  className="group flex flex-col items-center justify-center p-3 sm:p-4 bg-slate-700/40 hover:bg-slate-600/60 backdrop-blur-sm rounded-2xl border border-slate-500/30 hover:border-blue-400/50 transition-all duration-300 text-center min-h-[75px] sm:min-h-[85px] shadow-lg hover:shadow-xl hover:shadow-blue-500/10 transform hover:scale-105 hover:-translate-y-1"
                 >
                   <div className={`w-10 h-10 ${action.bgColor} bg-gradient-to-br from-${action.bgColor.split('-')[1]}-400 to-${action.bgColor.split('-')[1]}-600 rounded-xl flex items-center justify-center mb-2 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110 ring-2 ring-${action.bgColor.split('-')[1]}-400/20`}>
                     <action.icon className="w-5 h-5 text-white" />
@@ -770,7 +1073,7 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
                 className={`flex mb-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] p-4 rounded-2xl shadow-lg backdrop-blur-sm border transition-all duration-300 hover:shadow-xl focus-within:ring-2 focus-within:ring-blue-400/50 ${
+                  className={`max-w-[90%] sm:max-w-[85%] p-3 sm:p-4 rounded-2xl shadow-lg backdrop-blur-sm border transition-all duration-300 hover:shadow-xl focus-within:ring-2 focus-within:ring-blue-400/50 ${
                     message.role === 'user'
                       ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white border-blue-400/30 shadow-blue-500/20'
                       : message.error
@@ -794,6 +1097,603 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
                       <Volume2 className="w-4 h-4 text-green-300 flex-shrink-0" title="Will be spoken" />
                     )}
                   </div>
+                  
+                  {/* Integrated Booking Steps */}
+                  {message.showIntegratedBookingStep && message.integratedBooking && (
+                    <div className="mt-4">
+                      {message.bookingStep === 1 && (
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-semibold text-white">Step 1: Select Specialty & Doctor</h4>
+                            <div className="bg-white/20 px-2 py-1 rounded text-xs">1/5</div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            {specialties.map(specialty => (
+                              <button
+                                key={specialty.id}
+                                onClick={() => {
+                                  updateIntegratedBookingData('specialty', specialty.id);
+                                  updateIntegratedBookingData('doctor', ''); // Reset doctor
+                                }}
+                                className={`p-3 rounded-xl border transition-all duration-200 text-left ${
+                                  integratedBookingData.specialty === specialty.id
+                                    ? 'border-white/60 bg-white/20 shadow-lg'
+                                    : 'border-white/30 bg-white/10 hover:bg-white/15'
+                                }`}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <span className="text-lg">{specialty.icon}</span>
+                                  <div>
+                                    <div className="font-semibold text-white text-sm">{specialty.name}</div>
+                                    <div className="text-xs text-white/80">{specialty.description}</div>
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                          
+                          {integratedBookingData.specialty && (
+                            <div className="mt-4 space-y-2">
+                              <h5 className="font-medium text-white">Available Doctors:</h5>
+                              <div className="space-y-2">
+                                {doctors.filter(doc => doc.specialty === integratedBookingData.specialty).map(doctor => (
+                                  <button
+                                    key={doctor.id}
+                                    onClick={() => updateIntegratedBookingData('doctor', doctor.id)}
+                                    className={`w-full p-3 rounded-lg border transition-all duration-200 text-left ${
+                                      integratedBookingData.doctor === doctor.id
+                                        ? 'border-white/60 bg-white/20'
+                                        : 'border-white/30 bg-white/10 hover:bg-white/15'
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      <span className="text-xl">{doctor.avatar}</span>
+                                      <div className="flex-1">
+                                        <div className="font-semibold text-white text-sm">{doctor.name}</div>
+                                        <div className="flex items-center gap-2 text-xs text-white/80">
+                                          <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                                          <span>{doctor.rating}</span>
+                                          <span>•</span>
+                                          <span>{doctor.experience}</span>
+                                        </div>
+                                        <div className="text-xs text-white/70 mt-1">{doctor.description}</div>
+                                      </div>
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {integratedBookingData.specialty && integratedBookingData.doctor && (
+                            <button
+                              onClick={proceedToNextBookingStep}
+                              className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                            >
+                              Continue to Date & Time Selection
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      
+                      {message.bookingStep === 2 && (
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-semibold text-white">Step 2: Select Date & Time</h4>
+                            <div className="bg-white/20 px-2 py-1 rounded text-xs">2/5</div>
+                          </div>
+                          
+                          <div className="space-y-4">
+                            <div>
+                              <h5 className="font-medium text-white mb-3">Choose Date:</h5>
+                              <div className="grid grid-cols-4 gap-2">
+                                {availableDates.slice(0, 8).map((date) => (
+                                  <button
+                                    key={date.date}
+                                    onClick={() => updateIntegratedBookingData('date', date.date)}
+                                    className={`p-2 rounded-lg text-center transition-all duration-200 text-xs ${
+                                      integratedBookingData.date === date.date
+                                        ? 'bg-green-600 text-white shadow-lg'
+                                        : 'bg-white/20 hover:bg-white/30 text-white'
+                                    }`}
+                                  >
+                                    <div className="text-xs opacity-80">{date.day}</div>
+                                    <div className="font-semibold">{date.dayNum}</div>
+                                    <div className="text-xs opacity-80">{date.month}</div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            {integratedBookingData.date && (
+                              <div>
+                                <h5 className="font-medium text-white mb-3">Choose Time:</h5>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {timeSlots.slice(0, 9).map((time) => (
+                                    <button
+                                      key={time}
+                                      onClick={() => updateIntegratedBookingData('time', time)}
+                                      className={`p-2 rounded-lg text-center transition-all duration-200 text-xs ${
+                                        integratedBookingData.time === time
+                                          ? 'bg-purple-600 text-white shadow-lg'
+                                          : 'bg-white/20 hover:bg-white/30 text-white'
+                                      }`}
+                                    >
+                                      {time}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                          
+                          {integratedBookingData.date && integratedBookingData.time && (
+                            <button
+                              onClick={proceedToNextBookingStep}
+                              className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                            >
+                              Continue to Patient Information
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      
+                      {message.bookingStep === 3 && (
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-semibold text-white">Step 3: Patient Information</h4>
+                            <div className="bg-white/20 px-2 py-1 rounded text-xs">3/5</div>
+                          </div>
+                          
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-white text-sm mb-2">Full Name *</label>
+                              <input
+                                type="text"
+                                value={integratedBookingData.patientName}
+                                onChange={(e) => updateIntegratedBookingData('patientName', e.target.value)}
+                                className="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                                placeholder="Enter your full name"
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-white text-sm mb-2">Email Address *</label>
+                              <input
+                                type="email"
+                                value={integratedBookingData.patientEmail}
+                                onChange={(e) => updateIntegratedBookingData('patientEmail', e.target.value)}
+                                className="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                                placeholder="Enter your email"
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-white text-sm mb-2">Phone Number *</label>
+                              <input
+                                type="tel"
+                                value={integratedBookingData.patientPhone}
+                                onChange={(e) => updateIntegratedBookingData('patientPhone', e.target.value)}
+                                className="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                                placeholder="Enter your phone number"
+                              />
+                            </div>
+                            
+                            <div>
+                              <label className="block text-white text-sm mb-2">Symptoms/Reason for Visit</label>
+                              <textarea
+                                value={integratedBookingData.symptoms}
+                                onChange={(e) => updateIntegratedBookingData('symptoms', e.target.value)}
+                                rows={3}
+                                className="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                                placeholder="Describe your symptoms or reason for the appointment"
+                              />
+                            </div>
+                          </div>
+                          
+                          {integratedBookingData.patientName && integratedBookingData.patientEmail && integratedBookingData.patientPhone && (
+                            <button
+                              onClick={proceedToNextBookingStep}
+                              className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                            >
+                              Continue to Review & Confirm
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      
+                      {message.bookingStep === 4 && (
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-semibold text-white">Step 4: Review & Confirm</h4>
+                            <div className="bg-white/20 px-2 py-1 rounded text-xs">4/5</div>
+                          </div>
+                          
+                          <div className="bg-white/20 rounded-lg p-4 space-y-3">
+                            <div className="flex justify-between items-center">
+                              <span className="text-white/80">Specialty:</span>
+                              <span className="text-white font-medium">
+                                {specialties.find(s => s.id === integratedBookingData.specialty)?.name}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-white/80">Doctor:</span>
+                              <span className="text-white font-medium">
+                                {doctors.find(d => d.id === integratedBookingData.doctor)?.name}
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-white/80">Date:</span>
+                              <span className="text-white font-medium">{integratedBookingData.date}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-white/80">Time:</span>
+                              <span className="text-white font-medium">{integratedBookingData.time}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-white/80">Patient:</span>
+                              <span className="text-white font-medium">{integratedBookingData.patientName}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-white/80">Contact:</span>
+                              <span className="text-white font-medium">{integratedBookingData.patientEmail}</span>
+                            </div>
+                          </div>
+                          
+                          <button
+                            onClick={handleIntegratedBookingSubmit}
+                            disabled={isBookingInProgress}
+                            className="w-full mt-4 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                          >
+                            {isBookingInProgress ? (
+                              <>
+                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                Confirming Booking...
+                              </>
+                            ) : (
+                              <>
+                                <Check className="w-5 h-5" />
+                                Confirm Booking
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      )}
+                      
+                      {message.bookingStep === 5 && message.bookingResult && (
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-semibold text-white">Step 5: Booking Complete</h4>
+                            <div className="bg-white/20 px-2 py-1 rounded text-xs">5/5</div>
+                          </div>
+                          
+                          {message.bookingResult.success ? (
+                            <div className="bg-green-600/80 rounded-lg p-4 space-y-3">
+                              <div className="flex items-center gap-2">
+                                <Check className="w-6 h-6 text-white" />
+                                <h5 className="font-semibold text-white">Booking Confirmed!</h5>
+                              </div>
+                              
+                              {message.bookingResult.meetingInfo && (
+                                <div className="space-y-2">
+                                  <p className="text-white text-sm">Meeting Link:</p>
+                                  <a
+                                    href={message.bookingResult.meetingInfo.meetingLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block w-full bg-white text-green-600 font-bold text-center py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors"
+                                  >
+                                    🎥 Join Video Consultation
+                                  </a>
+                                  <p className="text-white/80 text-xs text-center">
+                                    Meeting ID: {message.bookingResult.meetingInfo.meetingId}
+                                  </p>
+                                </div>
+                              )}
+                              
+                              <p className="text-white/90 text-sm">
+                                ✅ Confirmation email sent to {integratedBookingData.patientEmail}
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="bg-red-600/80 rounded-lg p-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <X className="w-6 h-6 text-white" />
+                                <h5 className="font-semibold text-white">Booking Failed</h5>
+                              </div>
+                              <p className="text-white/90 text-sm">
+                                {message.bookingResult.message || 'An error occurred. Please try again.'}
+                              </p>
+                              <button
+                                onClick={() => setIntegratedBookingStep(4)}
+                                className="mt-3 w-full bg-white text-red-600 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors"
+                              >
+                                Try Again
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Service-Specific Booking Components */}
+                  {message.showSpecialtySelection && message.serviceType === 'appointment' && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Select Medical Specialty:</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {specialties.map(specialty => (
+                          <button
+                            key={specialty.id}
+                            onClick={() => handleSpecialtySelect(specialty)}
+                            className="p-3 bg-gradient-to-r hover:scale-105 transition-all duration-200 rounded-xl border border-white/20 text-left hover:border-white/40"
+                            style={{ background: `linear-gradient(135deg, ${specialty.color.split(' ')[1]}, ${specialty.color.split(' ')[3]})` }}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{specialty.icon}</span>
+                              <div>
+                                <div className="font-semibold text-white text-sm">{specialty.name}</div>
+                                <div className="text-xs text-white/80">{specialty.description}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Quote Service Selection */}
+                  {message.showQuoteSelection && message.serviceType === 'quote' && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Select Medical Service for Pricing:</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { id: 'consultation', name: 'Consultation', icon: '👨‍⚕️', desc: 'Doctor consultation fees' },
+                          { id: 'surgery', name: 'Surgery', icon: '🏥', desc: 'Surgical procedure costs' },
+                          { id: 'diagnostic', name: 'Diagnostics', icon: '🔬', desc: 'Lab tests & imaging' },
+                          { id: 'treatment', name: 'Treatment', icon: '💊', desc: 'Therapy & medication' }
+                        ].map(service => (
+                          <button
+                            key={service.id}
+                            className="p-3 bg-green-600/80 hover:bg-green-600 rounded-xl border border-white/20 text-left hover:scale-105 transition-all"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{service.icon}</span>
+                              <div>
+                                <div className="font-semibold text-white text-sm">{service.name}</div>
+                                <div className="text-xs text-white/80">{service.desc}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Search Categories */}
+                  {message.showSearchCategories && message.serviceType === 'search' && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">What medical service can I help you find?</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { id: 'doctors', name: 'Find Doctors', icon: '👩‍⚕️', desc: 'Search specialists' },
+                          { id: 'services', name: 'Medical Services', icon: '🏥', desc: 'Available treatments' },
+                          { id: 'facilities', name: 'Facilities', icon: '🏢', desc: 'Hospital departments' },
+                          { id: 'health-info', name: 'Health Info', icon: '📊', desc: 'Medical guidance' }
+                        ].map(category => (
+                          <button
+                            key={category.id}
+                            className="p-3 bg-purple-600/80 hover:bg-purple-600 rounded-xl border border-white/20 text-left hover:scale-105 transition-all"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{category.icon}</span>
+                              <div>
+                                <div className="font-semibold text-white text-sm">{category.name}</div>
+                                <div className="text-xs text-white/80">{category.desc}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Call Types */}
+                  {message.showCallTypes && message.serviceType === 'call' && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Choose Your Telemedicine Option:</h4>
+                      <div className="space-y-2">
+                        {[
+                          { id: 'video', name: 'Video Consultation', icon: '📹', desc: 'Face-to-face online consultation', price: 'GHS 50' },
+                          { id: 'phone', name: 'Phone Consultation', icon: '📞', desc: 'Voice call with doctor', price: 'GHS 30' },
+                          { id: 'emergency', name: 'Emergency Call', icon: '🚨', desc: 'Urgent medical consultation', price: 'GHS 100' }
+                        ].map(callType => (
+                          <button
+                            key={callType.id}
+                            className="w-full p-4 bg-orange-600/80 hover:bg-orange-600 rounded-xl border border-white/20 text-left hover:scale-105 transition-all"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <span className="text-xl">{callType.icon}</span>
+                                <div>
+                                  <div className="font-semibold text-white">{callType.name}</div>
+                                  <div className="text-xs text-white/80">{callType.desc}</div>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="font-bold text-white">{callType.price}</div>
+                                <div className="text-xs text-white/80">30 mins</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Help Categories */}
+                  {message.showHelpCategories && message.serviceType === 'help' && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">What medical assistance do you need?</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { id: 'emergency', name: 'Emergency', icon: '🚨', desc: 'Urgent medical help' },
+                          { id: 'directions', name: 'Directions', icon: '🗺️', desc: 'Hospital navigation' },
+                          { id: 'insurance', name: 'Insurance', icon: '💳', desc: 'Coverage questions' },
+                          { id: 'general', name: 'General Info', icon: 'ℹ️', desc: 'Hospital information' }
+                        ].map(helpType => (
+                          <button
+                            key={helpType.id}
+                            className="p-3 bg-cyan-600/80 hover:bg-cyan-600 rounded-xl border border-white/20 text-left hover:scale-105 transition-all"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{helpType.icon}</span>
+                              <div>
+                                <div className="font-semibold text-white text-sm">{helpType.name}</div>
+                                <div className="text-xs text-white/80">{helpType.desc}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Trend Categories */}
+                  {message.showTrendCategories && message.serviceType === 'trends' && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Choose Health & Wellness Topic:</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { id: 'wellness', name: 'Wellness Tips', icon: '✨', desc: 'Daily health advice' },
+                          { id: 'nutrition', name: 'Nutrition', icon: '🥗', desc: 'Diet & healthy eating' },
+                          { id: 'fitness', name: 'Fitness', icon: '💪', desc: 'Exercise & activity' },
+                          { id: 'prevention', name: 'Prevention', icon: '🛡️', desc: 'Disease prevention' }
+                        ].map(trend => (
+                          <button
+                            key={trend.id}
+                            className="p-3 bg-red-600/80 hover:bg-red-600 rounded-xl border border-white/20 text-left hover:scale-105 transition-all"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{trend.icon}</span>
+                              <div>
+                                <div className="font-semibold text-white text-sm">{trend.name}</div>
+                                <div className="text-xs text-white/80">{trend.desc}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {message.showDoctorSelection && message.availableDoctors && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Choose Your Doctor:</h4>
+                      <div className="space-y-2">
+                        {message.availableDoctors.map(doctor => (
+                          <button
+                            key={doctor.id}
+                            onClick={() => handleDoctorSelect(doctor)}
+                            className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-xl border border-white/20 hover:border-white/40 transition-all duration-200 text-left"
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="text-2xl">{doctor.avatar}</span>
+                              <div className="flex-1">
+                                <div className="font-semibold text-white">{doctor.name}</div>
+                                <div className="flex items-center gap-2 text-sm text-white/80">
+                                  <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                                  <span>{doctor.rating}</span>
+                                  <span className="mx-1">•</span>
+                                  <span>{doctor.experience}</span>
+                                </div>
+                                <div className="text-xs text-white/70 mt-1">{doctor.description}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {message.showDateSelection && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Select Date:</h4>
+                      <div className="grid grid-cols-3 gap-2 max-h-32 overflow-y-auto">
+                        {availableDates.slice(0, 9).map((date, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleDateSelect(date)}
+                            className="p-3 bg-white/10 hover:bg-white/20 rounded-xl border border-white/20 hover:border-white/40 transition-all duration-200 text-center"
+                          >
+                            <div className="text-xs text-white/80">{date.day}</div>
+                            <div className="font-semibold text-white">{date.dayNum}</div>
+                            <div className="text-xs text-white/80">{date.month}</div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {message.showTimeSelection && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Choose Time:</h4>
+                      <div className="grid grid-cols-3 gap-2 max-h-32 overflow-y-auto">
+                        {timeSlots.map(time => (
+                          <button
+                            key={time}
+                            onClick={() => handleTimeSelect(time)}
+                            className="p-2 bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 hover:border-white/40 transition-all duration-200 text-center"
+                          >
+                            <div className="text-sm font-medium text-white">{time}</div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {message.showContactForm && (
+                    <div className="mt-4 space-y-3">
+                      <h4 className="font-semibold text-white mb-3">Contact Information:</h4>
+                      <div className="space-y-3">
+                        <input
+                          type="text"
+                          placeholder="Full Name"
+                          className="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                        />
+                        <input
+                          type="email"
+                          placeholder="Email Address"
+                          className="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                        />
+                        <input
+                          type="tel"
+                          placeholder="Phone Number"
+                          className="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-white/50"
+                        />
+                        <button
+                          className="w-full p-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors"
+                          onClick={() => {
+                            const confirmMessage = {
+                              role: 'assistant',
+                              content: `🎉 **Booking Confirmed!**\n\n📋 **Appointment Details:**\n• **Specialty:** ${selectedSpecialty?.name}\n• **Doctor:** ${selectedDoctor?.name}\n• **Date:** ${selectedDate?.day}, ${selectedDate?.month} ${selectedDate?.dayNum}\n• **Time:** ${selectedTime}\n\n✅ Your appointment has been successfully booked! You will receive a confirmation email shortly.\n\n📞 For any changes, please call: ${HOSPITAL_CONTACTS.appointments}`,
+                              timestamp: Date.now(),
+                              shouldSpeak: isContinuousVoiceMode,
+                              isBookingComplete: true
+                            };
+                            setMessages(prev => [...prev, confirmMessage]);
+                            setTimeout(() => {
+                              setShowQuickActions(true);
+                              setIsInBookingFlow(false);
+                            }, 3000);
+                          }}
+                        >
+                          Confirm Booking
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  
                   <div className="text-xs mt-3 opacity-80 flex items-center justify-between border-t border-white/10 pt-2">
                     <span className="flex items-center gap-1">
                       <div className="w-1.5 h-1.5 bg-current rounded-full animate-pulse"></div>
@@ -855,19 +1755,20 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
           </div>
         )}
 
-        {/* User-Friendly Input Area */}
-        <div className="flex-shrink-0 mt-3 pt-4 border-t border-slate-600/30 bg-slate-800/30 backdrop-blur-sm relative">
-          <form onSubmit={handleSubmit} className="flex items-center space-x-3 px-1">
+
+        {/* User-Friendly Input Area with Mobile-Optimized Spacing */}
+        <div className="flex-shrink-0 mt-4 pt-4 pb-6 sm:pb-4 border-t border-slate-600/30 bg-slate-800/30 backdrop-blur-sm relative">
+          <form onSubmit={handleSubmit} className="flex items-center space-x-2 sm:space-x-3 px-2 sm:px-1">
             <div className="flex-1 relative">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={isContinuousVoiceMode ? "🎤 Voice mode active - speak to chat" : "Questions about our services?"}
-                className={`w-full px-4 py-3.5 pr-12 rounded-xl border-2 focus:outline-none transition-all duration-200 text-base font-normal shadow-sm ${
+                className={`w-full px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl border-2 focus:outline-none transition-all duration-200 text-sm sm:text-base font-normal shadow-sm ${
                   isContinuousVoiceMode 
-                    ? 'bg-blue-50 border-blue-200 text-blue-700 placeholder-blue-500 cursor-not-allowed opacity-75' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 hover:border-gray-400 focus:shadow-lg'
+                    ? 'bg-blue-50 border-blue-200 text-blue-700 placeholder-blue-500 cursor-not-allowed opacity-75 pr-10 sm:pr-12' 
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 hover:border-gray-400 focus:shadow-lg pr-3 sm:pr-4'
                 }`}
                 disabled={isLoading || isContinuousVoiceMode}
                 autoComplete="off"
@@ -875,17 +1776,17 @@ const TeleKioskInterface = ({ onMinimize, onClose, isMinimized }) => {
                 aria-label="Type your message here"
                 tabIndex={isContinuousVoiceMode ? -1 : 0}
               />
-              {/* Input Icon */}
-              <div className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-colors pointer-events-none ${
-                isContinuousVoiceMode ? 'text-blue-500' : 'text-gray-400'
-              }`}>
-                {isContinuousVoiceMode ? <Mic className="w-5 h-5 animate-pulse" /> : <Send className="w-4 h-4" />}
-              </div>
+              {/* Voice Mode Icon Only */}
+              {isContinuousVoiceMode && (
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500 pointer-events-none">
+                  <Mic className="w-5 h-5 animate-pulse" />
+                </div>
+              )}
             </div>
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="p-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-xl transition-all duration-200 flex-shrink-0 shadow-lg hover:shadow-xl focus:ring-2 focus:ring-blue-300 focus:ring-offset-1"
+              className="p-3 sm:p-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-xl transition-all duration-200 flex-shrink-0 shadow-lg hover:shadow-xl focus:ring-2 focus:ring-blue-300 focus:ring-offset-1"
               aria-label="Send message"
               tabIndex={0}
             >

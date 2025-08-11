@@ -566,13 +566,13 @@ export const SIDEBAR_CATEGORIES = [
 export const RECENT_POSTS = [
   {
     id: "bank-hospital-launch",
-    title: "The Bank Hospital Launches State-of-the-art Call Center: A New Era of Exceptional Patient Services",
+    title: "TeleKiosk Hospital Launches State-of-the-art Call Center: A New Era of Exceptional Patient Services",
     date: "February 2, 2025",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=100&q=80"
   },
   {
     id: "bank-hospital-accreditation",
-    title: "The Bank Hospital Launches State-of-the-art Call Center: A New Era of Exceptional Patient Services ISO Accreditation",
+    title: "TeleKiosk Hospital Launches State-of-the-art Call Center: A New Era of Exceptional Patient Services ISO Accreditation",
     date: "February 4, 2025",
     image: "https://images.unsplash.com/photo-1559757175-c94f6b1d3c2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=100&q=80"
   },

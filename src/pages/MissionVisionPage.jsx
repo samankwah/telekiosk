@@ -37,7 +37,7 @@ function MissionVisionPage() {
           <div className="max-w-xl">
             {/* Main Headline Text */}
             <h1 className="text-base font-normal mb-8 leading-relaxed">
-              Our mission and vision guide everything we do at The Bank Hospital, 
+              Our mission and vision guide everything we do at TeleKiosk Hospital, 
               driving our commitment to excellence in healthcare.
             </h1>
 

@@ -309,15 +309,15 @@ const translations = {
     doctorsQualificationDesc: "Our doctors are highly qualified and have the experience to meet your medical needs.",
 
     // About Us Page
-    qualityHealthcareDesc: "The Bank Hospital provides quality healthcare driven by a strong, customer-centric focus.",
+    qualityHealthcareDesc: "TeleKiosk Hospital provides quality healthcare driven by a strong, customer-centric focus.",
     qualityPatientFocused: "QUALITY PATIENT-FOCUSED",
     healthcare: "HEALTH CARE",
-    bankHospitalDesc: "The Bank Hospital is a multi-disciplinary private healthcare facility focusing on the best possible clinical outcomes for our patients and their families.",
-    modernFacilitiesDesc: "With modern up to date facilities and state of the art equipment, The Bank Hospital offers a broad spectrum of expert medical care and services to meet the needs of the communities we serve, in Accra, Ghana and almost our continent.",
+    bankHospitalDesc: "TeleKiosk Hospital is a multi-disciplinary private healthcare facility focusing on the best possible clinical outcomes for our patients and their families.",
+    modernFacilitiesDesc: "With modern up to date facilities and state of the art equipment, TeleKiosk Hospital offers a broad spectrum of expert medical care and services to meet the needs of the communities we serve, in Accra, Ghana and almost our continent.",
     yourHealthPriority: "YOUR HEALTH IS OUR TOP PRIORITY. CLICK HERE TO",
     scheduleAppointment: "Schedule an Appointment",
     modernFacilitiesSubdesc: "Our modern, up-to-date facilities are tailored to provide the best outcomes for our patients and include:",
-    hospitalAtGlance: "The Bank Hospital at a glance",
+    hospitalAtGlance: "TeleKiosk Hospital at a glance",
     takeTourFacilities: "Take a quick tour of our Facilities",
     years: "Years",
     patientVisits: "Patient Visits",
@@ -340,7 +340,7 @@ const translations = {
     viewAllServices: "View All Services",
 
     // Mission Vision Page
-    missionVisionDesc: "Our mission and vision guide everything we do at The Bank Hospital, driving our commitment to excellence in healthcare.",
+    missionVisionDesc: "Our mission and vision guide everything we do at TeleKiosk Hospital, driving our commitment to excellence in healthcare.",
     ourMission: "OUR MISSION",
     ourVision: "OUR VISION",
     coreValue: "CORE VALUE",
