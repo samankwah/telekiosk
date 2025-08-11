@@ -1,3 +1,4 @@
+import React from 'react';
 import ImageCarousel from "../ui/ImageCarousel";
 import { HERO_CAROUSEL_IMAGES } from "../../constants/carouselImages";
 import { useLanguage } from "../../contexts/LanguageContext";

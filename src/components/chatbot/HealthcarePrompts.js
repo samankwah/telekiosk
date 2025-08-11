@@ -187,7 +187,9 @@ export const MULTILINGUAL_SUPPORT = {
     visitingHours: 'Visiting hours are Monday to Sunday, 8:00 AM to 8:00 PM. Emergency services are available 24/7.',
     location: 'We are located in the Central Business District of Accra, Ghana.',
     nhis: 'We accept National Health Insurance Scheme (NHIS) and private insurance.',
-    farewell: 'Thank you for choosing TeleKiosk Hospital. Take care and stay healthy!'
+    farewell: 'Thank you for choosing TeleKiosk Hospital. Take care and stay healthy!',
+    Send: 'Send',
+    placeholder: 'How can I help with your healthcare journey?'
   },
   tw: {
     name: 'Twi (Akan)',
@@ -198,7 +200,9 @@ export const MULTILINGUAL_SUPPORT = {
     visitingHours: 'Visiting hours yɛ Dwoada kɔsi Kwasiada, anɔpa 8:00 kɔsi anwummerɛ 8:00. Emergency services wɔ hɔ da biara.',
     location: 'Yɛwɔ Central Business District wɔ Nkran, Ghana.',
     nhis: 'Yɛgye National Health Insurance Scheme (NHIS) ne private insurance.',
-    farewell: 'Meda wo ase sɛ wo paw TeleKiosk Hospital. Hwɛ wo ho yie!'
+    farewell: 'Meda wo ase sɛ wo paw TeleKiosk Hospital. Hwɛ wo ho yie!',
+    Send: 'Soma',
+    placeholder: 'Ɛdeɛn na mɛtumi aboa wo wɔ wo apɔmuden mu?'
   },
   ga: {
     name: 'Ga',
@@ -209,7 +213,9 @@ export const MULTILINGUAL_SUPPORT = {
     visitingHours: 'Visiting times: Dwoada si Kwasiada, 8:00 anɔpa si 8:00 anwummerɛ. Emergency yɛ da biara.',
     location: 'Yɛle Central Business District Nkran, Ghana.',
     nhis: 'Yɛyɛ National Health Insurance (NHIS) kɛ private insurance.',
-    farewell: 'Yɛda wo ase TeleKiosk Hospital fɛɛ. Hwɛ wo ho yie!'
+    farewell: 'Yɛda wo ase TeleKiosk Hospital fɛɛ. Hwɛ wo ho yie!',
+    Send: 'Soma',
+    placeholder: 'Nɛ bɛɛ na matumi boa wo wɔ hospital?'
   },
   ew: {
     name: 'Ewe',
@@ -220,7 +226,9 @@ export const MULTILINGUAL_SUPPORT = {
     visitingHours: 'Visiting hours: Dzoɖagbe tso Kɔsiɖagbe, ŋdi 8:00 tso fiẽ 8:00. Emergency le ŋkeke ɖesiaɖe.',
     location: 'Míele Central Business District le Accra, Ghana.',
     nhis: 'Míexɔa National Health Insurance (NHIS) kple private insurance.',
-    farewell: 'Akpe na TeleKiosk Hospital tiatia. Kpɔ ɖokuiwò ɖa nyuie!'
+    farewell: 'Akpe na TeleKiosk Hospital tiatia. Kpɔ ɖokuiwò ɖa nyuie!',
+    Send: 'Dɔ',
+    placeholder: 'Nukae wòhiã be maɖo ɖe ŋu le hospital ŋu?'
   }
 };
 

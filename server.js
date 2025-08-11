@@ -7,11 +7,32 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+// Phase 4: Security imports
+import { 
+  chatRateLimit, 
+  emergencyRateLimit,
+  securityHeaders, 
+  validateChatInput, 
+  phiProtection,
+  validateEmergencyAlert,
+  securityErrorHandler,
+  corsOptions
+} from './src/middleware/securityMiddleware.js';
+
+import { setupGlobalErrorHandler } from './src/services/errorHandling.js';
+import { getConfig } from './src/config/production.js';
+
 // Load environment variables
 dotenv.config();
 
+// Setup global error handlers
+setupGlobalErrorHandler();
+
+// Get configuration based on environment
+const config = getConfig();
+
 const app = express();
-const PORT = process.env.PORT || 3003;
+const PORT = config.server.port;
 
 // Resend configuration
 const RESEND_CONFIG = {
@@ -23,17 +44,40 @@ const RESEND_CONFIG = {
   verifiedTestEmail: '0243999631a@gmail.com'
 };
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// Phase 4: Security Middleware - Applied in order
+app.use(securityHeaders); // Security headers first
+app.use(cors(corsOptions)); // Secure CORS configuration
+app.use(express.json({ limit: config.server.maxRequestSize })); // Limit request size
+app.use(phiProtection); // PHI detection and protection
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
-    service: 'TeleKiosk Email API',
+    service: 'TeleKiosk AI Assistant API',
     timestamp: new Date().toISOString()
   });
+});
+
+// Cache metrics endpoint
+app.get('/api/cache-metrics', async (req, res) => {
+  try {
+    const { getCacheMetrics } = await import('./src/services/cacheService.js');
+    const metrics = getCacheMetrics();
+    
+    res.json({
+      success: true,
+      metrics,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Cache metrics error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Unable to retrieve cache metrics',
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 // Handle CORS preflight requests
@@ -45,7 +89,7 @@ app.options('/api/chat', (req, res) => {
 });
 
 // Enhanced Chat API endpoint - Optimized for Assistant-UI integration
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chat', chatRateLimit, validateChatInput, async (req, res) => {
   const requestStart = Date.now();
   
   try {
@@ -56,6 +100,7 @@ app.post('/api/chat', async (req, res) => {
       max_tokens = 2000,
       allow_functions = true,
       client_type = 'unknown',
+      language = 'en', // Add language support
       ...options 
     } = req.body;
 
@@ -82,17 +127,19 @@ app.post('/api/chat', async (req, res) => {
       messageCount: messages.length,
       clientType: client_type,
       model: model,
+      language: language,
       lastMessage: messages[messages.length - 1]?.content?.slice(0, 50) + '...',
       headers: req.headers['x-client'] || 'unknown'
     });
 
-    // Enhanced OpenAI service call with better options
+    // Enhanced OpenAI service call with multilingual support
     const result = await generateChatCompletion(messages, {
       allowFunctions: allow_functions,
       model,
       temperature: parseFloat(temperature),
       maxTokens: parseInt(max_tokens),
       clientType: client_type,
+      language: language, // Pass language to OpenAI service
       requestId: `req_${Date.now()}`,
       ...options
     });
@@ -819,7 +866,7 @@ function getSpecialtyInfo(specialtyId) {
 }
 
 // Phase 3: Emergency Alert Notification Endpoint
-app.post('/api/emergency-alert', async (req, res) => {
+app.post('/api/emergency-alert', emergencyRateLimit, validateEmergencyAlert, async (req, res) => {
   try {
     const emergencyData = req.body;
     
@@ -868,7 +915,10 @@ app.post('/api/emergency-alert', async (req, res) => {
   }
 });
 
-// Error handling middleware
+// Phase 4: Security Error handling middleware
+app.use(securityErrorHandler);
+
+// General error handling middleware
 app.use((error, req, res, next) => {
   console.error('Server error:', error);
   res.status(500).json({
@@ -878,10 +928,13 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Start server
+// Start server with security logging
 app.listen(PORT, () => {
-  console.log(`🚀 TeleKiosk Email Server running on http://localhost:${PORT}`);
+  console.log(`🚀 TeleKiosk Secure Server running on http://localhost:${PORT}`);
   console.log(`📧 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`🔒 Security: ${config.security.enablePHIDetection ? 'PHI Detection ON' : 'PHI Detection OFF'}`);
+  console.log(`🛡️ Rate Limiting: ${config.security.rateLimitMax} requests per ${config.security.rateLimitWindow/60000} minutes`);
+  console.log(`🌐 CORS Origins: ${config.security.corsOrigins.length} allowed origins`);
 });
 
 export default app;

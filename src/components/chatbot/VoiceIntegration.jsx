@@ -185,10 +185,10 @@ export const VoiceIntegration = ({ onTranscription, disabled = false }) => {
       <button
         onClick={toggleListening}
         disabled={disabled}
-        className={`p-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
+        className={`p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
           isListening 
             ? 'bg-red-500 text-white animate-pulse shadow-lg' 
-            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            : 'bg-slate-600/60 text-white hover:bg-slate-500/60'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         title={isListening ? 'Stop listening' : 'Start voice input'}
         aria-label={isListening ? 'Stop listening' : 'Start voice input'}
@@ -200,10 +200,10 @@ export const VoiceIntegration = ({ onTranscription, disabled = false }) => {
       <button
         onClick={isSpeaking ? stopSpeaking : () => speakText(VOICE_RESPONSES.WELCOME_VOICE)}
         disabled={disabled}
-        className={`p-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
+        className={`p-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
           isSpeaking 
             ? 'bg-blue-500 text-white animate-pulse' 
-            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            : 'bg-slate-600/60 text-white hover:bg-slate-500/60'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         title={isSpeaking ? 'Stop speaking' : 'Test voice output'}
         aria-label={isSpeaking ? 'Stop speaking' : 'Test voice output'}
@@ -213,13 +213,13 @@ export const VoiceIntegration = ({ onTranscription, disabled = false }) => {
 
       {/* Status Indicators */}
       {isListening && (
-        <span className="text-xs text-red-600 animate-pulse">
+        <span className="text-xs text-red-400 animate-pulse">
           Listening...
         </span>
       )}
       
       {isSpeaking && (
-        <span className="text-xs text-blue-600 animate-pulse">
+        <span className="text-xs text-blue-400 animate-pulse">
           Speaking...
         </span>
       )}

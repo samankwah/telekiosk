@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Intersection Observer hook for scroll-triggered animations
 export function useScrollAnimation(threshold = 0.1) {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 
 function MapModal({ isOpen, onClose }) {

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { useScrollAnimation, useStaggeredAnimation } from '../../hooks/useScrollAnimation';

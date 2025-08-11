@@ -1,10 +1,9 @@
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
 import ScrollToTop from './components/ui/ScrollToTop';
 import ScrollToTopButton from './components/ui/ScrollToTopButton';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { LoadingSpinner } from './components/ui/AnimationComponents.jsx';
-import { ChatAssistant } from './components/chatbot/ChatAssistant';
 import { ChatAssistantUI } from './components/chatbot/ChatAssistantUI';
 import './App.css';
 
@@ -78,7 +77,7 @@ function App() {
             </Suspense>
             
             <ScrollToTopButton />
-            {/* Phase 1 Assistant-UI Implementation */}
+            {/* Enhanced ChatAssistant UI with multilingual support */}
             <ChatAssistantUI />
           </Router>
     </LanguageProvider>

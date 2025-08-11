@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { useRealTime, useAppointmentUpdates, useNotifications } from '../services/realTimeService';
 import { LoadingSpinner } from '../components/ui/AnimationComponents.jsx';

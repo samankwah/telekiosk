@@ -36,7 +36,9 @@
       "WebFetch(domain:docs.assistant-ui.com)",
       "WebFetch(domain:www.assistant-ui.com)",
       "Bash(timeout:*)",
-      "Bash(touch:*)"
+      "Bash(touch:*)",
+      "Bash(chmod:*)",
+      "WebFetch(domain:ui.assistant.dev)"
     ],
     "deny": []
   }

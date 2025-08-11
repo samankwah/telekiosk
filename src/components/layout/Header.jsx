@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
+import robotIcon from '../../assets/chat2.png';
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -227,8 +228,12 @@ function Header() {
             className="flex items-center cursor-pointer hover:opacity-80 transition-opacity"
             onClick={() => navigate('/')}
           >
-            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-red-600 rounded-full flex items-center justify-center mr-2 sm:mr-3">
-              <span className="text-white font-bold text-lg sm:text-xl md:text-2xl">H</span>
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mr-2 sm:mr-3 flex items-center justify-center">
+              <img 
+                src={robotIcon}
+                alt="TeleKiosk AI Assistant"
+                className="w-full h-full object-contain"
+              />
             </div>
             <div>
               <div className="text-base sm:text-lg md:text-xl font-bold text-gray-900 leading-tight">{t('hospitalName')}</div>
@@ -278,8 +283,12 @@ function Header() {
                   closeMenu();
                 }}
               >
-                <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-lg">H</span>
+                <div className="w-12 h-12 mr-3 flex items-center justify-center">
+                  <img 
+                    src={robotIcon}
+                    alt="TeleKiosk AI Assistant"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <div className="font-bold text-gray-900">{t('hospitalName')}</div>

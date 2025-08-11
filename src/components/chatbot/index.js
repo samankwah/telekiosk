@@ -3,16 +3,16 @@
 // Phase 1: Foundation Setup (Complete)
 export { ChatAssistantUI } from './ChatAssistantUI';
 export { AssistantUIChat } from './AssistantUIChat';
+export { TeleBotUI } from './TeleBotUI.jsx'; // New TeleKiosk-style UI
 export { AssistantRuntimeProvider } from './runtime/AssistantRuntimeProvider';
 
 // Phase 2: Core AI Integration (Complete)
 export { EmergencyDetection } from './EmergencyDetection.jsx';
 
 // Phase 3: Advanced Features (Complete)
-export { MultilingualSupport, LanguageProvider, useLanguage } from './MultilingualSupport.jsx';
-export { VoiceRealtimeAPI } from './VoiceRealtimeAPI.jsx';
-export { AdvancedAnalytics } from './AdvancedAnalytics.jsx';
-export { PerformanceOptimizer, PerformanceMonitor } from './PerformanceOptimizer.jsx';
+export { LanguageProvider, useLanguage, LanguageSelector, AutoLanguageDetector, LanguageSwitchNotification } from './LanguageSupport.jsx';
+export { AnalyticsDashboard } from './AnalyticsDashboard.jsx';
+// Note: VoiceRealtimeAPI and other advanced features will be implemented in future updates
 
 // Healthcare Configuration & Prompts
 export * from './HealthcarePrompts.js';
