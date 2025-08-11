@@ -38,7 +38,8 @@
       "Bash(timeout:*)",
       "Bash(touch:*)",
       "Bash(chmod:*)",
-      "WebFetch(domain:ui.assistant.dev)"
+      "WebFetch(domain:ui.assistant.dev)",
+      "Bash(git rm:*)"
     ],
     "deny": []
   }
