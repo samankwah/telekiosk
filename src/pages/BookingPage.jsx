@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useTitleContext } from "../contexts/TitleContext";
 
 function BookingPage() {
   const [selectedCategory, setSelectedCategory] = useState("ALL_CATEGORIES");
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const { setPageInfo } = useTitleContext();
+
+  useEffect(() => {
+    setPageInfo({
+      title: 'Book Appointment',
+      description: 'Schedule your medical appointment with our expert doctors. Browse available specialists and book your preferred time slot.',
+      breadcrumbs: [{ label: 'Home', path: '/' }, { label: 'Book Appointment' }]
+    });
+  }, [setPageInfo]);
 
   const doctors = [
     {

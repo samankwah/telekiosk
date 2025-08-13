@@ -154,11 +154,11 @@ function BookNowPage() {
   };
 
   const renderStepIndicator = () => (
-    <div className="flex items-center justify-center mb-8">
+    <div className="flex items-center justify-center mb-4 sm:mb-8 px-2">
       {[1, 2, 3, 4, 5].map((step) => (
         <div key={step} className="flex items-center">
           <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
+            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold transition-all duration-300 ${
               step <= currentStep
                 ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
                 : 'bg-gray-200 text-gray-500'
@@ -168,7 +168,7 @@ function BookNowPage() {
           </div>
           {step < 5 && (
             <div
-              className={`w-12 h-1 mx-2 rounded transition-all duration-300 ${
+              className={`w-6 sm:w-12 h-1 mx-1 sm:mx-2 rounded transition-all duration-300 ${
                 step < currentStep ? 'bg-gradient-to-r from-blue-500 to-purple-600' : 'bg-gray-200'
               }`}
             />
@@ -179,15 +179,15 @@ function BookNowPage() {
   );
 
   const renderSpecialtyStep = () => (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
           {t('chooseSpecialty')}
         </h2>
-        <p className="text-gray-600">{t('selectSpecialtyDesc')}</p>
+        <p className="text-gray-600 text-sm sm:text-base">{t('selectSpecialtyDesc')}</p>
       </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
         {specialties.map((specialty) => (
           <button
             key={specialty.id}
@@ -195,41 +195,41 @@ function BookNowPage() {
               updateBookingData('specialty', specialty.id);
               updateBookingData('doctor', ''); // Reset doctor selection
             }}
-            className={`p-6 rounded-2xl border-2 transition-all duration-300 hover:scale-105 ${
+            className={`p-3 sm:p-6 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 hover:scale-105 ${
               bookingData.specialty === specialty.id
                 ? 'border-blue-500 shadow-xl bg-gradient-to-br from-blue-50 to-purple-50'
                 : 'border-gray-200 hover:border-gray-300 hover:shadow-lg'
             }`}
           >
-            <div className={`w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r ${specialty.color} flex items-center justify-center text-2xl`}>
+            <div className={`w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-3 rounded-full bg-gradient-to-r ${specialty.color} flex items-center justify-center text-xl sm:text-2xl`}>
               {specialty.icon}
             </div>
-            <h3 className="font-semibold text-gray-800">{t(specialty.id)}</h3>
+            <h3 className="font-semibold text-gray-800 text-sm sm:text-base">{t(specialty.id)}</h3>
           </button>
         ))}
       </div>
 
       {bookingData.specialty && (
-        <div className="mt-8 space-y-4">
-          <h3 className="text-xl font-semibold text-gray-800">{t('availableDoctors')}</h3>
-          <div className="grid gap-4">
+        <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-800">{t('availableDoctors')}</h3>
+          <div className="grid gap-3 sm:gap-4">
             {filteredDoctors.map((doctor) => (
               <button
                 key={doctor.id}
                 onClick={() => updateBookingData('doctor', doctor.id)}
-                className={`p-4 rounded-xl border-2 transition-all duration-300 flex items-center space-x-4 ${
+                className={`p-3 sm:p-4 rounded-xl border-2 transition-all duration-300 flex items-center space-x-3 sm:space-x-4 ${
                   bookingData.doctor === doctor.id
                     ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 shadow-lg'
                     : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
                 }`}
               >
-                <div className="text-4xl">{doctor.avatar}</div>
+                <div className="text-2xl sm:text-4xl">{doctor.avatar}</div>
                 <div className="flex-1 text-left">
-                  <h4 className="font-semibold text-gray-800">{doctor.name}</h4>
-                  <p className="text-sm text-gray-600">{doctor.experience} • ⭐ {doctor.rating}</p>
+                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">{doctor.name}</h4>
+                  <p className="text-xs sm:text-sm text-gray-600">{doctor.experience} • ⭐ {doctor.rating}</p>
                 </div>
                 <div className="text-blue-500">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -242,30 +242,30 @@ function BookNowPage() {
   );
 
   const renderDateTimeStep = () => (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
+        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
           {t('pickTime')}
         </h2>
-        <p className="text-gray-600">{t('chooseDateTimeDesc')}</p>
+        <p className="text-gray-600 text-sm sm:text-base">{t('chooseDateTimeDesc')}</p>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('availableDates')}</h3>
-          <div className="grid grid-cols-7 gap-2">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">{t('availableDates')}</h3>
+          <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 sm:gap-2">
             {availableDates.map((dateObj) => (
               <button
                 key={dateObj.date}
                 onClick={() => updateBookingData('date', dateObj.date)}
-                className={`p-3 rounded-xl text-center transition-all duration-300 ${
+                className={`p-2 sm:p-3 rounded-lg sm:rounded-xl text-center transition-all duration-300 ${
                   bookingData.date === dateObj.date
                     ? 'bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 hover:bg-gray-200 hover:scale-105'
                 }`}
               >
                 <div className="text-xs text-gray-500">{dateObj.day}</div>
-                <div className="font-semibold">{dateObj.dayNum}</div>
+                <div className="font-semibold text-sm sm:text-base">{dateObj.dayNum}</div>
                 <div className="text-xs">{dateObj.month}</div>
               </button>
             ))}
@@ -274,13 +274,13 @@ function BookNowPage() {
 
         {bookingData.date && (
           <div className="animate-fade-in">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('availableTimeSlots')}</h3>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">{t('availableTimeSlots')}</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
               {timeSlots.map((time) => (
                 <button
                   key={time}
                   onClick={() => updateBookingData('time', time)}
-                  className={`p-3 rounded-lg font-medium transition-all duration-300 ${
+                  className={`p-2 sm:p-3 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${
                     bookingData.time === time
                       ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105'
                       : 'bg-white border border-gray-200 text-gray-700 hover:border-purple-300 hover:shadow-md hover:scale-105'
@@ -297,22 +297,22 @@ function BookNowPage() {
   );
 
   const renderPatientInfoStep = () => (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
           {t('tellUsAboutYou')}
         </h2>
-        <p className="text-gray-600">{t('basicInfoDesc')}</p>
+        <p className="text-gray-600 text-sm sm:text-base">{t('basicInfoDesc')}</p>
       </div>
 
-      <div className="max-w-md mx-auto space-y-4">
+      <div className="max-w-md mx-auto space-y-3 sm:space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">{t('fullNameLabel')}</label>
           <input
             type="text"
             value={bookingData.patientName}
             onChange={(e) => updateBookingData('patientName', e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+            className="w-full p-3 sm:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
             placeholder={t('enterFullName')}
           />
         </div>
@@ -323,7 +323,7 @@ function BookNowPage() {
             type="email"
             value={bookingData.patientEmail}
             onChange={(e) => updateBookingData('patientEmail', e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+            className="w-full p-3 sm:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
             placeholder={t('enterEmail')}
           />
         </div>
@@ -334,7 +334,7 @@ function BookNowPage() {
             type="tel"
             value={bookingData.patientPhone}
             onChange={(e) => updateBookingData('patientPhone', e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+            className="w-full p-3 sm:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
             placeholder={t('enterPhone')}
           />
         </div>
@@ -345,7 +345,7 @@ function BookNowPage() {
             value={bookingData.symptoms}
             onChange={(e) => updateBookingData('symptoms', e.target.value)}
             rows={4}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+            className="w-full p-3 sm:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
             placeholder={t('describeSymptomsPlaceholder')}
           />
         </div>
@@ -359,51 +359,51 @@ function BookNowPage() {
     const selectedDateObj = availableDates.find(d => d.date === bookingData.date);
 
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         <div className="text-center">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-2">
             {t('almostThere')}
           </h2>
-          <p className="text-gray-600">{t('reviewBookingDesc')}</p>
+          <p className="text-gray-600 text-sm sm:text-base">{t('reviewBookingDesc')}</p>
         </div>
 
-        <div className="max-w-lg mx-auto bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-200">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('bookingSummary')}</h3>
+        <div className="max-w-lg mx-auto bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-200">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">{t('bookingSummary')}</h3>
           
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">{t('specialty')}</span>
-              <div className="flex items-center space-x-2">
-                <span>{selectedSpecialty?.icon}</span>
-                <span className="font-medium">{t(selectedSpecialty?.id)}</span>
+              <span className="text-gray-600 text-sm sm:text-base">{t('specialty')}</span>
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <span className="text-sm sm:text-base">{selectedSpecialty?.icon}</span>
+                <span className="font-medium text-sm sm:text-base">{t(selectedSpecialty?.id)}</span>
               </div>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">{t('doctor')}</span>
-              <span className="font-medium">{selectedDoctor?.name}</span>
+              <span className="text-gray-600 text-sm sm:text-base">{t('doctor')}</span>
+              <span className="font-medium text-sm sm:text-base">{selectedDoctor?.name}</span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">{t('date')}</span>
-              <span className="font-medium">
+              <span className="text-gray-600 text-sm sm:text-base">{t('date')}</span>
+              <span className="font-medium text-sm sm:text-base">
                 {selectedDateObj?.day}, {selectedDateObj?.month} {selectedDateObj?.dayNum}
               </span>
             </div>
 
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('time')}</span>
-              <span className="font-medium">{bookingData.time}</span>
+              <span className="font-medium text-sm sm:text-base">{bookingData.time}</span>
             </div>
 
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('patient')}</span>
-              <span className="font-medium">{bookingData.patientName}</span>
+              <span className="font-medium text-sm sm:text-base">{bookingData.patientName}</span>
             </div>
 
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{t('contact')}</span>
-              <span className="font-medium">{bookingData.patientEmail}</span>
+              <span className="font-medium text-sm sm:text-base">{bookingData.patientEmail}</span>
             </div>
           </div>
 
@@ -412,7 +412,7 @@ function BookNowPage() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              <span className="font-medium">{t('videoConsultationLinkInfo')}</span>
+              <span className="font-medium text-sm sm:text-base">{t('videoConsultationLinkInfo')}</span>
             </div>
           </div>
         </div>
@@ -686,69 +686,69 @@ function BookNowPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 pb-safe">
       {/* Header */}
       <div className="bg-white shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">T</span>
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-sm sm:text-base">T</span>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800">{t('hospitalName')}</h1>
-                <p className="text-sm text-gray-600">{t('onlineVideoConsultation')}</p>
+                <h1 className="text-lg sm:text-xl font-bold text-gray-800">{t('hospitalName')}</h1>
+                <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">{t('onlineVideoConsultation')}</p>
               </div>
             </div>
             <button
               onClick={() => navigate('/booking')}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors"
+              className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-gray-800 transition-colors text-sm sm:text-base"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              <span>{t('back')}</span>
+              <span className="hidden sm:inline">{t('back')}</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {renderStepIndicator()}
         
-        <div className="bg-white rounded-3xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-8">
           {renderStep()}
           
           {/* Navigation Buttons */}
-          <div className="flex justify-between items-center mt-8">
+          <div className="flex justify-between items-center mt-6 sm:mt-8 gap-2 sm:gap-4">
             <button
               onClick={prevStep}
               disabled={currentStep === 1}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base ${
                 currentStep === 1
                   ? 'text-gray-400 cursor-not-allowed'
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
               }`}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              <span>{t('previous')}</span>
+              <span className="hidden sm:inline">{t('previous')}</span>
             </button>
 
             {currentStep < 4 ? (
               <button
                 onClick={nextStep}
                 disabled={!canProceed()}
-                className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+                className={`px-6 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base ${
                   canProceed()
                     ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:shadow-lg hover:scale-105'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
                 <span>{t('continue')}</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -756,7 +756,7 @@ function BookNowPage() {
               <button
                 onClick={handleBooking}
                 disabled={isBooking}
-                className={`px-8 py-3 font-semibold rounded-xl transition-all duration-300 flex items-center space-x-2 ${
+                className={`px-6 sm:px-8 py-2 sm:py-3 font-semibold rounded-lg sm:rounded-xl transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base ${
                   isBooking
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-gradient-to-r from-green-500 to-teal-600 text-white hover:shadow-lg hover:scale-105'
