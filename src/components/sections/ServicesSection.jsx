@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { useScrollAnimation, useStaggeredAnimation } from '../../hooks/useScrollAnimation';
+import { SERVICES_SECTION_IMAGE } from '../../constants/carouselImages';
 
 function ServicesSection() {
   const { t } = useLanguage();
@@ -261,10 +262,22 @@ function ServicesSection() {
 
           {/* Right Side - Medical Professional Image */}
           <div className="lg:col-span-2 mt-6 sm:mt-8 lg:mt-0">
-            <div className="bg-gray-300 h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[500px] min-h-[200px] rounded-lg flex items-center justify-center">
-              <span className="text-gray-500 text-xs sm:text-sm md:text-base lg:text-lg text-center px-3 sm:px-4">
-                {t('medicalProfessionalImage')}
-              </span>
+            <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[500px] min-h-[200px] rounded-lg overflow-hidden shadow-lg group">
+              {SERVICES_SECTION_IMAGE.src ? (
+                <img
+                  src={SERVICES_SECTION_IMAGE.src}
+                  alt={SERVICES_SECTION_IMAGE.alt}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              ) : (
+                <div className="bg-gray-300 h-full flex items-center justify-center">
+                  <span className="text-gray-500 text-xs sm:text-sm md:text-base lg:text-lg text-center px-3 sm:px-4">
+                    {SERVICES_SECTION_IMAGE.placeholder}
+                  </span>
+                </div>
+              )}
+              {/* Subtle overlay for better text contrast if needed */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           </div>
         </div>

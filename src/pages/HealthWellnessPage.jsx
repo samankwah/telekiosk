@@ -11,6 +11,7 @@ import {
   HEALTH_CATEGORIES,
 } from "../constants/healthWellnessData";
 import { useLanguage } from "../contexts/LanguageContext";
+import { HEALTH_WELLNESS_HERO_IMAGE, HEALTH_CATEGORY_IMAGES } from "../constants/carouselImages";
 
 function HealthWellnessPage() {
   const { t } = useLanguage();
@@ -37,19 +38,25 @@ function HealthWellnessPage() {
       <Header />
 
       {/* Hero Section */}
-      <div className="relative text-white py-16">
+      <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 text-white py-16 overflow-hidden">
         {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80')",
-          }}
-        ></div>
-        {/* Dark Navy Blue Overlay */}
-        <div className="absolute inset-0 bg-blue-900 opacity-85"></div>
+        <div className="absolute right-0 top-0 w-1/2 h-full">
+          <div className="relative w-full h-full">
+            <img
+              src={HEALTH_WELLNESS_HERO_IMAGE.src}
+              alt={HEALTH_WELLNESS_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <div className="flex items-left justify-between">
             {/* Title on the left */}
             <div className="flex-1">
@@ -118,9 +125,7 @@ function HealthWellnessPage() {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={`https://images.unsplash.com/photo-${getImageId(
-                      tip.category
-                    )}?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80`}
+                    src={HEALTH_CATEGORY_IMAGES[tip.category] || HEALTH_CATEGORY_IMAGES.default}
                     alt={tip.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -190,22 +195,6 @@ function HealthWellnessPage() {
       <ScrollToTopButton />
     </div>
   );
-}
-
-// Helper function to get appropriate image IDs for different categories
-function getImageId(category) {
-  const imageMap = {
-    Nutrition: "1490645935967-0c32266fe5b8",
-    Neurology: "1559757175-5398ef5fa0e6",
-    "Emergency Care": "1576671081837-a4e2f3d6ac11",
-    "Women's Health": "1559757175-c94f6b1d3c2f",
-    "Natural Remedies": "1506905925346-21bda4d32df4",
-    "Public Health": "1584820927896-6a23c1c2a9e8",
-    "Mental Health": "1544947950-fa07a98d237f",
-    Fitness: "1571019613454-1cb2f99b2d8b",
-  };
-
-  return imageMap[category] || "1559757148-5c350d0d3c56";
 }
 
 export default HealthWellnessPage;

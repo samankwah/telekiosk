@@ -6,6 +6,7 @@ import InfoBar from "../components/sections/InfoBar";
 import { NewsListSkeleton } from "../components/ui/SkeletonLoader";
 import { useLoading } from "../hooks/useLoading";
 import { useLanguage } from "../contexts/LanguageContext";
+import { NEWS_EVENTS_IMAGES } from "../constants/carouselImages";
 
 function AllNewsEventsPage() {
   const { t } = useLanguage();
@@ -17,42 +18,42 @@ function AllNewsEventsPage() {
     {
       id: 1,
       title: t('news1Title'),
-      image: "/src/assets/images/news1.jpg",
+      image: NEWS_EVENTS_IMAGES[0].src,
       date: "March 15, 2024",
       category: t('laboratory')
     },
     {
       id: 2,
       title: t('news2Title'),
-      image: "/src/assets/images/news2.jpg",
+      image: NEWS_EVENTS_IMAGES[1].src,
       date: "March 10, 2024",
       category: t('technology')
     },
     {
       id: 3,
       title: t('news3Title'),
-      image: "/src/assets/images/news3.jpg",
+      image: NEWS_EVENTS_IMAGES[2].src,
       date: "March 5, 2024",
       category: t('events')
     },
     {
       id: 4,
       title: t('news4Title'),
-      image: "/src/assets/images/news4.jpg",
+      image: NEWS_EVENTS_IMAGES[3].src,
       date: "February 28, 2024",
       category: t('wellness')
     },
     {
       id: 5,
       title: t('news5Title'),
-      image: "/src/assets/images/news5.jpg",
+      image: NEWS_EVENTS_IMAGES[4].src,
       date: "February 20, 2024",
       category: t('community')
     },
     {
       id: 6,
       title: t('news6Title'),
-      image: "/src/assets/images/news6.jpg",
+      image: NEWS_EVENTS_IMAGES[5].src,
       date: "February 15, 2024",
       category: t('accreditation')
     }
@@ -66,7 +67,7 @@ function AllNewsEventsPage() {
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 text-white relative overflow-hidden">
         {/* Background Image - Medical Professional */}
         <div className="absolute right-0 top-0 w-1/2 h-full">
-          <div className="w-full h-full bg-gradient-to-l from-slate-700 to-transparent">
+          <div className="relative w-full h-full">
             <div className="w-full h-full flex items-center justify-start pl-8 opacity-30">
               <div className="text-left text-white/60">
                 <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center mb-4">
@@ -76,6 +77,12 @@ function AllNewsEventsPage() {
                 <p className="text-sm">Up to date information related to our services and your health</p>
               </div>
             </div>
+
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
           </div>
         </div>
 

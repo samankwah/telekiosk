@@ -9,7 +9,7 @@ function HeroSection() {
   const [heroRef, isHeroVisible] = useScrollAnimation(0.2);
 
   return (
-    <div className="relative min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:h-[450px] bg-white overflow-hidden">
+    <div className="relative min-h-[400px] sm:min-h-[450px] md:min-h-[500px] lg:h-[500px] bg-white">
       {/* Mobile: Full Background Carousel */}
       <div className="lg:hidden absolute inset-0">
         <ImageCarousel images={HERO_CAROUSEL_IMAGES} interval={4000} />
@@ -26,7 +26,7 @@ function HeroSection() {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full min-h-[350px] sm:min-h-[400px] md:min-h-[450px] lg:min-h-[450px] flex items-center">
+      <div className="relative z-10 h-full min-h-[400px] sm:min-h-[450px] md:min-h-[500px] lg:min-h-[500px] flex items-center">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0">
             {/* Empty space for image on desktop */}

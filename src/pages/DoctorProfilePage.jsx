@@ -4,6 +4,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import InfoBar from "../components/sections/InfoBar";
 import { useLanguage } from "../contexts/LanguageContext";
+import { DOCTORS_PAGE_IMAGES, DOCTORS_PAGE_HERO_IMAGE } from "../constants/carouselImages";
 
 function DoctorProfilePage() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Senior Consultant",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor1.jpg",
+      image: DOCTORS_PAGE_IMAGES[0].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -31,7 +32,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Deputy Medical Director",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor2.jpg",
+      image: DOCTORS_PAGE_IMAGES[1].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -43,7 +44,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Senior Family Physician",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor3.jpg",
+      image: DOCTORS_PAGE_IMAGES[2].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -55,7 +56,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Public Health Specialist",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor4.jpg",
+      image: DOCTORS_PAGE_IMAGES[3].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -67,7 +68,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Consultant Physician",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor5.jpg",
+      image: DOCTORS_PAGE_IMAGES[4].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -79,7 +80,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Senior Surgeon",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor6.jpg",
+      image: DOCTORS_PAGE_IMAGES[5].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -91,7 +92,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Consultant Cardiologist",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor7.jpg",
+      image: DOCTORS_PAGE_IMAGES[6].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -103,7 +104,7 @@ function DoctorProfilePage() {
       status: "Full time",
       designation: "Senior Consultant",
       clinicDays: "Monday to Friday",
-      image: "/src/assets/images/doctor8.jpg",
+      image: DOCTORS_PAGE_IMAGES[7].src,
       areasOfInterest:
         "My main interest is to see a patient-centred healthcare system that meets patient expectations and provides good experiences for them. I enjoy doing research in clinical settings to support evidence-based practice in our local context. I also like teaching and mentoring.",
     },
@@ -134,8 +135,25 @@ function DoctorProfilePage() {
       <Header />
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-900 to-blue-700 py-16">
-        <div className="container mx-auto px-4">
+      <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 py-16 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute right-0 top-0 w-1/2 h-full">
+          <div className="relative w-full h-full">
+            <img
+              src={DOCTORS_PAGE_HERO_IMAGE.src}
+              alt={DOCTORS_PAGE_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-left text-white max-w-2xl">
             <h1 className="text-xl md:text-2xl lg:text-base font-bold mb-4 leading-tight">
               Our team of first-class medical professionals focuses on
@@ -177,9 +195,9 @@ function DoctorProfilePage() {
               <img
                 src={doctor.image}
                 alt={doctor.name}
-                className="w-full h-96 object-cover rounded-lg"
+                className="w-full h-96 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
                 onError={(e) => {
-                  e.target.src = "/src/assets/images/doctor-placeholder.jpg";
+                  e.target.src = DOCTORS_PAGE_IMAGES[0].src;
                 }}
               />
             </div>

@@ -4,6 +4,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import InfoBar from "../components/sections/InfoBar";
+import { CONTACT_HERO_IMAGE } from "../constants/carouselImages";
 
 function ContactUsPage() {
   const { t } = useLanguage();
@@ -37,21 +38,21 @@ function ContactUsPage() {
 
       {/* Hero Section - Hand with Glowing Sphere and Contact Icons */}
       <section className="bg-gradient-to-r from-slate-800 via-slate-800 to-slate-900 text-white relative overflow-hidden h-64">
-        {/* Background Image Placeholder */}
+        {/* Background Image */}
         <div className="absolute inset-0">
-          <div className="w-full h-full bg-gradient-to-r from-slate-800 via-slate-800 to-slate-900 flex items-center justify-center">
-            <div className="text-center text-white/40">
-              <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                <span className="text-2xl">🌐</span>
-              </div>
-              <p className="text-sm">
-                Add contact-hero-background.jpg to assets/images/
-              </p>
-              <p className="text-xs">(Hand holding glowing digital sphere)</p>
-            </div>
+          <div className="relative w-full h-full">
+            <img
+              src={CONTACT_HERO_IMAGE.src}
+              alt={CONTACT_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
           </div>
-          {/* Uncomment and add your background image path below */}
-          {/* <img src="/src/assets/images/contact-hero-background.jpg" alt="Contact Us Background" className="w-full h-full object-cover" /> */}
         </div>
 
         {/* Communication Icons Overlay */}

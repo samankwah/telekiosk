@@ -4,6 +4,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import InfoBar from "../components/sections/InfoBar";
 import { useLanguage } from "../contexts/LanguageContext";
+import { DOCTORS_PAGE_IMAGES, DOCTORS_PAGE_HERO_IMAGE } from "../constants/carouselImages";
 
 function DoctorsPage() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function DoctorsPage() {
       id: 1,
       name: "Dr Charlotte Osafo",
       specialty: "Nephrologist",
-      image: "/src/assets/images/doctor1.jpg",
+      image: DOCTORS_PAGE_IMAGES[0].src,
       qualifications: "MBBS, MD",
       specialtyDetail: "Kidney and Urinary System Specialist",
     },
@@ -22,7 +23,7 @@ function DoctorsPage() {
       id: 2,
       name: "Dr. Gloria Akosua Ansa",
       specialty: "Deputy Medical Director",
-      image: "/src/assets/images/doctor2.jpg",
+      image: DOCTORS_PAGE_IMAGES[1].src,
       qualifications: "MBChB, MBA, PhD",
       specialtyDetail: "Public Health, Health Services Management",
     },
@@ -30,7 +31,7 @@ function DoctorsPage() {
       id: 3,
       name: "Dr Saeed Jibreal",
       specialty: "Family Physician",
-      image: "/src/assets/images/doctor3.jpg",
+      image: DOCTORS_PAGE_IMAGES[2].src,
       qualifications: "MBBS, MRCGP",
       specialtyDetail: "General Practice and Family Medicine",
     },
@@ -38,7 +39,7 @@ function DoctorsPage() {
       id: 4,
       name: "Dr. Emmanuel Asanso-Mensah",
       specialty: "EMR - Public Health",
-      image: "/src/assets/images/doctor4.jpg",
+      image: DOCTORS_PAGE_IMAGES[3].src,
       qualifications: "MBChB, MPH",
       specialtyDetail: "Public Health and Preventive Medicine",
     },
@@ -46,7 +47,7 @@ function DoctorsPage() {
       id: 5,
       name: "Dr. Mohamed Hafez Sbbawek",
       specialty: "Specialist",
-      image: "/src/assets/images/doctor5.jpg",
+      image: DOCTORS_PAGE_IMAGES[4].src,
       qualifications: "MBBS, MD",
       specialtyDetail: "Internal Medicine",
     },
@@ -54,7 +55,7 @@ function DoctorsPage() {
       id: 6,
       name: "Dr. Vincent Acorlor",
       specialty: "Specialist",
-      image: "/src/assets/images/doctor6.jpg",
+      image: DOCTORS_PAGE_IMAGES[5].src,
       qualifications: "MBBS, FRCS",
       specialtyDetail: "General Surgery",
     },
@@ -62,7 +63,7 @@ function DoctorsPage() {
       id: 7,
       name: "Dr Solomon Brookman",
       specialty: "Specialist",
-      image: "/src/assets/images/doctor7.jpg",
+      image: DOCTORS_PAGE_IMAGES[6].src,
       qualifications: "MBBS, MD",
       specialtyDetail: "Cardiology",
     },
@@ -70,7 +71,7 @@ function DoctorsPage() {
       id: 8,
       name: "Dr. Kofo Adesu-Kubi",
       specialty: "Specialist",
-      image: "/src/assets/images/doctor8.jpg",
+      image: DOCTORS_PAGE_IMAGES[7].src,
       qualifications: "MBBS, FRCOG",
       specialtyDetail: "Obstetrics and Gynecology",
     },
@@ -81,8 +82,25 @@ function DoctorsPage() {
       <Header />
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-900 to-blue-700 py-16">
-        <div className="container mx-auto px-4">
+      <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 py-16 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute right-0 top-0 w-1/2 h-full">
+          <div className="relative w-full h-full">
+            <img
+              src={DOCTORS_PAGE_HERO_IMAGE.src}
+              alt={DOCTORS_PAGE_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-left text-white max-w-2xl">
             <h1 className="text-xl md:text-2xl lg:text-base font-bold mb-4 leading-tight">
               {t('doctorsHeroTitle')}
@@ -109,13 +127,13 @@ function DoctorsPage() {
               key={doctor.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden"
             >
-              <div className="relative">
+              <div className="relative group">
                 <img
                   src={doctor.image}
                   alt={doctor.name}
-                  className="w-full h-80 object-cover"
+                  className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-105"
                   onError={(e) => {
-                    e.target.src = "/src/assets/images/doctor-placeholder.jpg";
+                    e.target.src = DOCTORS_PAGE_IMAGES[0].src;
                   }}
                 />
                 {/* Overlay buttons */}

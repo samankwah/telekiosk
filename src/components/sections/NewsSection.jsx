@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import { NEWS_EVENTS_IMAGES } from '../../constants/carouselImages';
 
 function NewsSection() {
   const { t } = useLanguage();
@@ -9,17 +10,17 @@ function NewsSection() {
     {
       dateKey: "news1Date",
       titleKey: "news1Title",
-      image: "/src/assets/images/news1.jpg",
+      image: NEWS_EVENTS_IMAGES[0].src,
     },
     {
       dateKey: "news2Date",
       titleKey: "news2Title",
-      image: "/src/assets/images/news2.jpg",
+      image: NEWS_EVENTS_IMAGES[1].src,
     },
     {
       dateKey: "news3Date",
       titleKey: "news3Title",
-      image: "/src/assets/images/news3.jpg",
+      image: NEWS_EVENTS_IMAGES[2].src,
     },
   ];
 

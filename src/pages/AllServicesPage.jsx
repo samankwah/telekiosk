@@ -4,6 +4,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import InfoBar from "../components/sections/InfoBar";
 import { useLanguage } from "../contexts/LanguageContext";
+import { ALL_SERVICES_HERO_IMAGE } from "../constants/carouselImages";
 
 function AllServicesPage() {
   const { t } = useLanguage();
@@ -145,16 +146,25 @@ function AllServicesPage() {
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 text-white relative overflow-hidden">
         {/* Background Image - Medical Professional */}
         <div className="absolute right-0 top-0 w-1/2 h-full">
-          <div className="w-full h-full bg-gradient-to-l from-slate-700 to-transparent">
-            <div className="w-full h-full flex items-center justify-center opacity-30">
-              <div className="text-center text-white/60">
-                <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">🏥</span>
-                </div>
-                <p className="font-semibold text-lg">Medical Services</p>
-                <p className="text-sm">Comprehensive healthcare directory</p>
-              </div>
-            </div>
+          <div className="relative w-full h-full">
+            <img
+              src={ALL_SERVICES_HERO_IMAGE.src}
+              alt={ALL_SERVICES_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            {/* Top edge fade */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+
+            {/* Bottom edge fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+
+            {/* Left edge fade */}
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+
+            {/* Right edge fade */}
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
           </div>
         </div>
 

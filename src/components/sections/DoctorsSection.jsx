@@ -1,38 +1,31 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { DOCTORS_SECTION_BG, DOCTOR_IMAGES } from "../../constants/carouselImages";
 
 function DoctorsSection() {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const doctors = [
-    {
-      nameKey: "drCharlotte",
-      image: "/src/assets/images/doctor1.jpg",
-    },
-    {
-      nameKey: "drSaeed",
-      image: "/src/assets/images/doctor2.jpg",
-    },
-    {
-      nameKey: "drEmmanuel",
-      image: "/src/assets/images/doctor3.jpg",
-    },
-  ];
 
   return (
     <section className="py-8 sm:py-12 lg:py-16 bg-gray-50">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
         {/* Left Side - Background Image */}
         <div className="relative min-h-[300px] sm:min-h-[400px] lg:min-h-[600px]">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-r-[30px] sm:rounded-r-[45px] lg:rounded-r-[60px]"
-            style={{
-              backgroundImage: "url('/src/assets/images/doctors-bg.jpg')",
-            }}
-          >
+          <div className="absolute inset-0 rounded-r-[30px] sm:rounded-r-[45px] lg:rounded-r-[60px] overflow-hidden">
+            {DOCTORS_SECTION_BG.src ? (
+              <img
+                src={DOCTORS_SECTION_BG.src}
+                alt={DOCTORS_SECTION_BG.alt}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                <span className="text-gray-500">{DOCTORS_SECTION_BG.placeholder}</span>
+              </div>
+            )}
             {/* Blue overlay */}
-            <div className="absolute inset-0 bg-blue-900/60 rounded-tr-[30px] sm:rounded-tr-[45px] lg:rounded-tr-[60px]"></div>
+            <div className="absolute inset-0 bg-blue-900/60"></div>
           </div>
         </div>
 
@@ -54,19 +47,25 @@ function DoctorsSection() {
 
             {/* Doctors Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
-              {doctors.map((doctor, index) => (
+              {DOCTOR_IMAGES.map((doctor, index) => (
                 <div
                   key={index}
-                  className="min-w-4xl bg-white rounded-bl-3xl rounded-tr-3xl shadow-lg p-4 sm:p-6 text-center flex flex-col items-center justify-center"
+                  className="min-w-4xl bg-white rounded-bl-3xl rounded-tr-3xl shadow-lg p-4 sm:p-6 text-center flex flex-col items-center justify-center group hover:shadow-xl transition-all duration-300"
                 >
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto mb-2 sm:mb-3">
-                    <img
-                      src={doctor.image}
-                      alt={t(doctor.nameKey)}
-                      className="w-full h-full rounded-full object-cover border-2 border-orange-200"
-                    />
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto mb-2 sm:mb-3 overflow-hidden rounded-full">
+                    {doctor.src ? (
+                      <img
+                        src={doctor.src}
+                        alt={doctor.alt}
+                        className="w-full h-full object-cover border-2 border-orange-200 group-hover:scale-110 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-300 border-2 border-orange-200 flex items-center justify-center">
+                        <span className="text-xs text-gray-500">No Image</span>
+                      </div>
+                    )}
                   </div>
-                  <h3 className="font-semibold text-gray-900 text-xs sm:text-sm lg:text-base leading-tight">
+                  <h3 className="font-semibold text-gray-900 text-xs sm:text-sm lg:text-base leading-tight group-hover:text-orange-600 transition-colors duration-300">
                     {t(doctor.nameKey)}
                   </h3>
                 </div>

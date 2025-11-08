@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { ABOUT_VIDEO_ID, VIDEO_CONFIG } from "../../constants/videoConfig";
 
 function AboutSection() {
   const { t } = useLanguage();
@@ -207,24 +208,23 @@ function AboutSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             {/* Left Side - Video Tour */}
             <div className="space-y-4 sm:space-y-6">
-              <div className="relative bg-gray-900 rounded-lg overflow-hidden aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-purple-900/80 flex items-center justify-center">
-                  <div className="text-center text-white px-4">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                      <svg
-                        className="w-6 h-6 sm:w-8 sm:h-8"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-200 text-sm sm:text-base">{t("videoTourSoon")}</p>
-                  </div>
-                </div>
-                <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 text-white text-xs sm:text-sm">
-                  {t("videoTimestamp") || "0:02 / 5:15"}
-                </div>
+              <div className="relative bg-gray-900 rounded-lg overflow-hidden aspect-video shadow-lg">
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${ABOUT_VIDEO_ID}?${new URLSearchParams({
+                    autoplay: VIDEO_CONFIG.autoplay ? '1' : '0',
+                    mute: VIDEO_CONFIG.mute ? '1' : '0',
+                    loop: VIDEO_CONFIG.loop ? '1' : '0',
+                    playlist: ABOUT_VIDEO_ID, // Required for loop to work
+                    controls: VIDEO_CONFIG.controls ? '1' : '0',
+                    modestbranding: VIDEO_CONFIG.modestbranding ? '1' : '0',
+                    rel: VIDEO_CONFIG.rel.toString(),
+                  }).toString()}`}
+                  title="Hospital Video Tour"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
 
               <div className="bg-blue-50 rounded-lg p-4 sm:p-6 border-l-4 border-orange-400">

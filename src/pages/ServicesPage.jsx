@@ -6,6 +6,10 @@ import InfoBar from "../components/sections/InfoBar";
 import { ServiceDetailSkeleton } from "../components/ui/SkeletonLoader";
 import { useLoading } from "../hooks/useLoading";
 import { useLanguage } from "../contexts/LanguageContext";
+import {
+  SERVICE_DETAIL_HERO_IMAGE,
+  SERVICE_DETAIL_IMAGES
+} from "../constants/carouselImages";
 
 function ServicesPage() {
   const { t } = useLanguage();
@@ -226,6 +230,9 @@ function ServicesPage() {
   // Get current service data (default to cardiology if no service specified)
   const currentService = servicesData[serviceId] || servicesData.cardiology;
 
+  // Get current service images (default to cardiology if no service specified)
+  const currentServiceImages = SERVICE_DETAIL_IMAGES[serviceId] || SERVICE_DETAIL_IMAGES.cardiology;
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -234,17 +241,18 @@ function ServicesPage() {
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 text-white relative overflow-hidden">
         {/* Background Image - Medical Professional */}
         <div className="absolute right-0 top-0 w-1/2 h-full">
-          <div className="w-full h-full bg-gradient-to-l from-slate-700 to-transparent">
-            {/* Image placeholder */}
-            <div className="w-full h-full flex items-center justify-center opacity-30">
-              <div className="text-center text-white/60">
-                <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">👩‍⚕️🔬</span>
-                </div>
-                <p className="font-semibold text-lg">{t('medicalProfessional')}</p>
-                <p className="text-sm">{t('medicalResearchCare')}</p>
-              </div>
-            </div>
+          <div className="relative w-full h-full">
+            <img
+              src={SERVICE_DETAIL_HERO_IMAGE.src}
+              alt={SERVICE_DETAIL_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
           </div>
         </div>
 
@@ -365,16 +373,12 @@ function ServicesPage() {
             <div className="space-y-6">
               <div className="relative">
                 <div className="bg-gray-100 h-80 rounded-lg overflow-hidden shadow-lg">
-                  {/* Hospital corridor image */}
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
-                    <div className="text-center text-gray-500">
-                      <div className="w-20 h-20 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-3xl">🏥</span>
-                      </div>
-                      <p className="font-semibold text-lg">{t('hospitalCorridor')}</p>
-                      <p className="text-sm">{t('cleanModernFacility')}</p>
-                    </div>
-                  </div>
+                  {/* Service facility image */}
+                  <img
+                    src={currentServiceImages.facility.src}
+                    alt={currentServiceImages.facility.alt}
+                    className="w-full h-full object-cover"
+                  />
 
                   {/* Jordan Department Sign */}
                   <div className="absolute top-6 left-6">
@@ -436,17 +440,11 @@ function ServicesPage() {
               {/* Left Side - Service Image */}
               <div>
                 <div className="bg-white rounded-lg overflow-hidden shadow-xl border-4 border-white">
-                  <div className="h-96 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                    <div className="text-center text-gray-500">
-                      <div className="w-20 h-20 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-3xl">{currentService.image}</span>
-                      </div>
-                      <p className="font-semibold text-lg">{currentService.name} Unit</p>
-                      <p className="text-sm">
-                        {currentService.imageDescription}
-                      </p>
-                    </div>
-                  </div>
+                  <img
+                    src={SERVICE_EQUIPMENT_IMAGE.src}
+                    alt={SERVICE_EQUIPMENT_IMAGE.alt}
+                    className="w-full h-96 object-cover"
+                  />
                 </div>
               </div>
 
@@ -507,20 +505,12 @@ function ServicesPage() {
                 {/* Thick Orange Vertical Line */}
                 <div className="absolute left-0 top-0 w-2 h-full bg-orange-500 z-10"></div>
 
-                <div className="bg-gradient-to-br from-blue-400 to-blue-600 relative">
-                  <div className="h-96 flex items-center justify-center p-8">
-                    <div className="text-center text-white">
-                      <div className="w-24 h-24 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span className="text-4xl">🩺</span>
-                      </div>
-                      <p className="font-semibold text-xl">
-                        {t('professionalStethoscope')}
-                      </p>
-                      <p className="text-blue-100 mt-2">
-                        {t('cardiacAssessmentTool')}
-                      </p>
-                    </div>
-                  </div>
+                <div className="relative">
+                  <img
+                    src={STETHOSCOPE_IMAGE.src}
+                    alt={STETHOSCOPE_IMAGE.alt}
+                    className="w-full h-96 object-cover"
+                  />
 
                   {/* Thick Orange Horizontal Line at Bottom */}
                   <div className="absolute bottom-0 left-0 right-0 h-2 bg-orange-500"></div>

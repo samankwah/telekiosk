@@ -4,6 +4,12 @@ import { useLanguage } from "../contexts/LanguageContext";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import InfoBar from "../components/sections/InfoBar";
+import {
+  ABOUT_PAGE_HERO_IMAGE,
+  MISSION_TECHNOLOGY_IMAGE,
+  VISION_STRATEGY_IMAGE,
+  CORE_VALUES_TEAMWORK_IMAGE
+} from "../constants/carouselImages";
 
 function MissionVisionPage() {
   const { t } = useLanguage();
@@ -17,19 +23,18 @@ function MissionVisionPage() {
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 text-white relative overflow-hidden">
         {/* Background Image - Baby with Stethoscope */}
         <div className="absolute right-0 top-0 w-1/2 h-full">
-          <div className="w-full h-full bg-gradient-to-l from-slate-700 to-transparent">
-            {/* Image placeholder */}
-            <div className="w-full h-full flex items-center justify-center opacity-30">
-              <div className="text-center text-white/60">
-                <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">👶🩺</span>
-                </div>
-                <p className="font-semibold text-lg">Baby with Stethoscope</p>
-                <p className="text-sm">Add baby-stethoscope.jpg to assets/images/</p>
-              </div>
-            </div>
-            {/* Uncomment and add your image path below */}
-            {/* <img src="/src/assets/images/baby-stethoscope.jpg" alt="Baby with Stethoscope" className="w-full h-full object-cover opacity-30" /> */}
+          <div className="relative w-full h-full">
+            <img
+              src={ABOUT_PAGE_HERO_IMAGE.src}
+              alt={ABOUT_PAGE_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
           </div>
         </div>
 
@@ -110,37 +115,11 @@ function MissionVisionPage() {
             {/* Left Side - Mission Image */}
             <div>
               <div className="rounded-lg overflow-hidden shadow-lg">
-                {/* Replace with actual mission/technology image */}
-                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 h-80 w-full flex items-center justify-center relative">
-                  <div className="text-center text-gray-500">
-                    <div className="w-20 h-20 bg-cyan-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-3xl">🏥</span>
-                    </div>
-                    <p className="font-semibold">Digital Healthcare Technology</p>
-                    <p className="text-sm">Add mission-technology.jpg to assets/images/</p>
-                  </div>
-                  
-                  {/* Digital interface overlay elements */}
-                  <div className="absolute top-4 left-4 w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center">
-                    <svg className="w-8 h-8 text-cyan-600" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
-                    </svg>
-                  </div>
-                  
-                  <div className="absolute top-4 right-4 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59z"/>
-                    </svg>
-                  </div>
-                  
-                  <div className="absolute bottom-4 left-4 w-14 h-14 bg-white/20 rounded flex items-center justify-center">
-                    <svg className="w-7 h-7 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 7C14.65 7 14.32 7.09 14.04 7.28L12 9.5L9.96 7.28C9.68 7.09 9.35 7 9 7L3 7V9L8.5 9L12 12.5L15.5 9L21 9Z"/>
-                    </svg>
-                  </div>
-                </div>
-                {/* Uncomment and add your mission image path below */}
-                {/* <img src="/src/assets/images/mission-technology.jpg" alt="Our Mission - Digital Healthcare" className="w-full h-80 object-cover" /> */}
+                <img
+                  src={MISSION_TECHNOLOGY_IMAGE.src}
+                  alt={MISSION_TECHNOLOGY_IMAGE.alt}
+                  className="w-full h-80 object-cover"
+                />
               </div>
             </div>
 
@@ -195,18 +174,11 @@ function MissionVisionPage() {
                 
                 {/* Image container */}
                 <div className="bg-white shadow-lg ml-4">
-                  {/* Replace with actual vision image */}
-                  <div className="h-80 w-full flex items-center justify-center bg-gray-100">
-                    <div className="text-center text-gray-500">
-                      <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-2xl">🔍</span>
-                      </div>
-                      <p className="font-semibold">Magnifying Glass over VISION blocks</p>
-                      <p className="text-sm">Add vision-magnifying-glass.jpg to assets/images/</p>
-                    </div>
-                  </div>
-                  {/* Uncomment and add your vision image path below */}
-                  {/* <img src="/src/assets/images/vision-magnifying-glass.jpg" alt="Our Vision" className="w-full h-80 object-cover" /> */}
+                  <img
+                    src={VISION_STRATEGY_IMAGE.src}
+                    alt={VISION_STRATEGY_IMAGE.alt}
+                    className="w-full h-80 object-cover"
+                  />
                 </div>
                 
                 {/* Blue bottom border - extended width, thicker */}
@@ -233,18 +205,11 @@ function MissionVisionPage() {
                 
                 {/* Image container */}
                 <div className="bg-white shadow-lg ml-4">
-                  {/* Replace with actual core values image */}
-                  <div className="h-80 w-full flex items-center justify-center bg-blue-50">
-                    <div className="text-center text-gray-500">
-                      <div className="w-16 h-16 bg-orange-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-2xl">🤝</span>
-                      </div>
-                      <p className="font-semibold">Doctors Shaking Hands</p>
-                      <p className="text-sm">Add doctors-handshake.jpg to assets/images/</p>
-                    </div>
-                  </div>
-                  {/* Uncomment and add your core values image path below */}
-                  {/* <img src="/src/assets/images/doctors-handshake.jpg" alt="Core Values" className="w-full h-80 object-cover" /> */}
+                  <img
+                    src={CORE_VALUES_TEAMWORK_IMAGE.src}
+                    alt={CORE_VALUES_TEAMWORK_IMAGE.alt}
+                    className="w-full h-80 object-cover"
+                  />
                 </div>
                 
                 {/* Blue bottom border - extended width, thicker */}

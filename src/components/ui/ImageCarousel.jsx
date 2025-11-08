@@ -26,7 +26,7 @@ function ImageCarousel({ images, interval = 5000 }) {
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden rounded-lg">
       {/* Images */}
       <div className="relative w-full h-full">
         {images.map((image, index) => (
@@ -51,9 +51,21 @@ function ImageCarousel({ images, interval = 5000 }) {
         ))}
       </div>
 
+      {/* Soft Edge Fade Effect - Vignette Style */}
+      {/* Top edge fade */}
+      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white via-white/50 to-transparent pointer-events-none"></div>
+
+      {/* Bottom edge fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none"></div>
+
+      {/* Left edge fade */}
+      <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-white via-white/50 to-transparent pointer-events-none"></div>
+
+      {/* Right edge fade */}
+      <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-white via-white/50 to-transparent pointer-events-none"></div>
 
       {/* Gradient Overlay for better text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/20 pointer-events-none"></div>
     </div>
   );
 }

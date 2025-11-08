@@ -4,6 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import InfoBar from '../components/sections/InfoBar';
+import { VISITING_TIMES_HERO_IMAGE } from '../constants/carouselImages';
 
 function VisitingTimesPage() {
   const navigate = useNavigate();
@@ -85,6 +86,23 @@ function VisitingTimesPage() {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 text-white relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute right-0 top-0 w-1/2 h-full">
+          <div className="relative w-full h-full">
+            <img
+              src={VISITING_TIMES_HERO_IMAGE.src}
+              alt={VISITING_TIMES_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 py-16 relative z-10">
           <div className="max-w-xl">
             <h1 className="text-4xl font-bold mb-6">

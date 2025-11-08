@@ -81,14 +81,14 @@ function NavigationButtons() {
   ];
 
   return (
-    <div className="bg-white py-6 sm:py-8 md:py-10 lg:py-12">
+    <div className="bg-white py-3 sm:py-4 md:py-5 lg:py-6">
       <div className="max-w-7xl mx-auto px-3 sm:px-4">
         <div className="grid grid-cols-3 gap-0 divide-x divide-blue-400">
           {navigationItems.map((item, index) => (
             <div
               key={index}
               ref={setNavRef(index)}
-              className={`flex items-center justify-center py-3 sm:py-4 md:py-6 lg:py-8 hover:bg-gray-50 cursor-pointer transition-all duration-300 touch-manipulation hover:scale-105 active:scale-95 ${
+              className={`flex items-center justify-center py-2 sm:py-2 md:py-3 lg:py-4 hover:bg-gray-50 cursor-pointer transition-all duration-300 touch-manipulation hover:scale-105 active:scale-95 ${
                 visibleNavItems.has(index) ? 'animate-fadeInUp opacity-100' : 'opacity-0 translate-y-4'
               }`}
               onClick={item.action}

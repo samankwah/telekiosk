@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTitleContext } from "../contexts/TitleContext";
+import { BOOKING_DOCTOR_IMAGES } from "../constants/carouselImages";
 
 function BookingPage() {
   const [selectedCategory, setSelectedCategory] = useState("ALL_CATEGORIES");
@@ -9,6 +10,21 @@ function BookingPage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const { setPageInfo } = useTitleContext();
+
+  // Helper function to get doctor image based on category
+  const getDoctorImage = (category) => {
+    const categoryMap = {
+      "CLINIC - CARDIOLOGIST": "cardiologist",
+      "CLINIC - PEDIATRICIAN": "pediatrician",
+      "CLINIC - DERMATOLOGIST": "dermatologist",
+      "CLINIC - NEUROLOGIST": "neurologist",
+      "CLINIC - ORTHOPEDIC": "orthopedic",
+      "EMERGENCY - GENERAL": "emergency"
+    };
+
+    const specialtyKey = categoryMap[category] || "general";
+    return BOOKING_DOCTOR_IMAGES[specialtyKey];
+  };
 
   useEffect(() => {
     setPageInfo({
@@ -295,14 +311,12 @@ function BookingPage() {
                 <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow">
                   {/* Doctor Avatar */}
                   <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 bg-gray-400 rounded-full flex items-center justify-center">
-                      <svg
-                        className="w-10 h-10 text-gray-300"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                      </svg>
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200">
+                      <img
+                        src={getDoctorImage(doctor.category)}
+                        alt={doctor.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
 
@@ -376,14 +390,12 @@ function BookingPage() {
                 {/* Doctor Avatar - Separate box centered on the left */}
                 <div className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10">
                   <div className="bg-white rounded-lg shadow-md p-3 lg:p-4 border border-gray-200">
-                    <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gray-400 rounded-full flex items-center justify-center">
-                      <svg
-                        className="w-8 h-8 lg:w-12 lg:h-12 text-gray-300"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                      </svg>
+                    <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full overflow-hidden border-2 border-gray-200">
+                      <img
+                        src={getDoctorImage(doctor.category)}
+                        alt={doctor.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
                 </div>

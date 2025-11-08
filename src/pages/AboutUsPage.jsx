@@ -4,6 +4,13 @@ import { useLanguage } from "../contexts/LanguageContext";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import InfoBar from "../components/sections/InfoBar";
+import { ABOUT_VIDEO_ID, VIDEO_CONFIG } from "../constants/videoConfig";
+import {
+  ABOUT_PAGE_HERO_IMAGE,
+  ABOUT_FACILITIES_IMAGE,
+  ABOUT_SPECIALISTS_IMAGE,
+  ABOUT_ALLIED_HEALTH_IMAGE
+} from "../constants/carouselImages";
 
 function AboutUsPage() {
   const { t } = useLanguage();
@@ -79,19 +86,25 @@ function AboutUsPage() {
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 text-white relative overflow-hidden">
         {/* Background Image - Baby with Stethoscope */}
         <div className="absolute right-0 top-0 w-1/2 h-full">
-          <div className="w-full h-full bg-gradient-to-l from-slate-700 to-transparent">
-            {/* Image placeholder */}
-            <div className="w-full h-full flex items-center justify-center opacity-30">
-              <div className="text-center text-white/60">
-                <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">👶🩺</span>
-                </div>
-                <p className="font-semibold text-lg">Baby with Stethoscope</p>
-                <p className="text-sm">Add baby-stethoscope.jpg to assets/images/</p>
-              </div>
-            </div>
-            {/* Uncomment and add your image path below */}
-            {/* <img src="/src/assets/images/baby-stethoscope.jpg" alt="Baby with Stethoscope" className="w-full h-full object-cover opacity-30" /> */}
+          <div className="relative w-full h-full">
+            <img
+              src={ABOUT_PAGE_HERO_IMAGE.src}
+              alt={ABOUT_PAGE_HERO_IMAGE.alt}
+              className="w-full h-full object-cover opacity-30"
+            />
+
+            {/* Edge Fade Effect - Vignette Style */}
+            {/* Top edge fade */}
+            <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+
+            {/* Bottom edge fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+
+            {/* Left edge fade */}
+            <div className="absolute top-0 bottom-0 left-0 w-20 bg-gradient-to-r from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
+
+            {/* Right edge fade */}
+            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-slate-900 via-slate-900/50 to-transparent pointer-events-none"></div>
           </div>
         </div>
 
@@ -169,36 +182,23 @@ function AboutUsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Left Side - Video */}
             <div className="space-y-6">
-              <div className="relative bg-black rounded-lg overflow-hidden aspect-video">
-                {/* YouTube Video Embed Placeholder */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-900/80 to-blue-900/80 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg
-                        className="w-8 h-8"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <p className="text-gray-200">
-                      {t('hospitalAtGlance')}
-                    </p>
-                  </div>
-                </div>
-
-                {/* YouTube Branding */}
-                <div className="absolute bottom-4 right-4">
-                  <div className="bg-black/80 px-2 py-1 rounded text-white text-sm flex items-center space-x-1">
-                    <div className="w-6 h-4 bg-red-600 rounded-sm flex items-center justify-center">
-                      <svg className="w-3 h-3" fill="white" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                    <span>YouTube</span>
-                  </div>
-                </div>
+              <div className="relative bg-gray-900 rounded-lg overflow-hidden aspect-video shadow-lg">
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${ABOUT_VIDEO_ID}?${new URLSearchParams({
+                    autoplay: VIDEO_CONFIG.autoplay ? '1' : '0',
+                    mute: VIDEO_CONFIG.mute ? '1' : '0',
+                    loop: VIDEO_CONFIG.loop ? '1' : '0',
+                    playlist: ABOUT_VIDEO_ID,
+                    controls: VIDEO_CONFIG.controls ? '1' : '0',
+                    modestbranding: VIDEO_CONFIG.modestbranding ? '1' : '0',
+                    rel: VIDEO_CONFIG.rel.toString(),
+                  }).toString()}`}
+                  title="Hospital Video Tour"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
 
               {/* Take a Tour Button */}
@@ -363,20 +363,11 @@ function AboutUsPage() {
             {/* Left Side - Hospital Interior Image */}
             <div>
               <div className="rounded-lg overflow-hidden shadow-2xl">
-                {/* Replace with your actual hospital lobby image */}
-                <div className="bg-gradient-to-br from-slate-200 to-slate-300 h-[450px] w-full flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <div className="w-20 h-20 bg-gray-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <span className="text-3xl">🏥</span>
-                    </div>
-                    <p className="font-semibold">Modern Hospital Interior</p>
-                    <p className="text-sm">
-                      Add hospital-interior.jpg to assets/images/
-                    </p>
-                  </div>
-                </div>
-                {/* Uncomment and add your interior image path below */}
-                {/* <img src="/src/assets/images/hospital-interior.jpg" alt="Hospital Interior" className="w-full h-[450px] object-cover" /> */}
+                <img
+                  src={ABOUT_FACILITIES_IMAGE.src}
+                  alt={ABOUT_FACILITIES_IMAGE.alt}
+                  className="w-full h-[450px] object-cover"
+                />
               </div>
             </div>
 
@@ -567,20 +558,11 @@ function AboutUsPage() {
 
                 {/* Image container */}
                 <div className="bg-white shadow-lg ml-4">
-                  {/* Replace with actual doctor image */}
-                  <div className="h-80 w-full flex items-center justify-center bg-gray-100">
-                    <div className="text-center text-gray-500">
-                      <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-2xl">👩‍⚕️</span>
-                      </div>
-                      <p className="font-semibold">Female Doctor Waving</p>
-                      <p className="text-sm">
-                        Add doctor-waving.jpg to assets/images/
-                      </p>
-                    </div>
-                  </div>
-                  {/* Uncomment and add your doctor image path below */}
-                  {/* <img src="/src/assets/images/doctor-waving.jpg" alt="Our Specialists" className="w-full h-80 object-cover" /> */}
+                  <img
+                    src={ABOUT_SPECIALISTS_IMAGE.src}
+                    alt={ABOUT_SPECIALISTS_IMAGE.alt}
+                    className="w-full h-80 object-cover"
+                  />
                 </div>
 
                 {/* Blue bottom border - extended width, thicker */}
@@ -610,22 +592,11 @@ function AboutUsPage() {
 
                 {/* Image container */}
                 <div className="bg-white shadow-lg ml-4">
-                  {/* Replace with actual health services image */}
-                  <div className="h-80 w-full flex items-center justify-center bg-blue-50">
-                    <div className="text-center text-gray-500">
-                      <div className="w-16 h-16 bg-orange-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-2xl">🩺</span>
-                      </div>
-                      <p className="font-semibold">
-                        Wooden Family Figures & Stethoscope
-                      </p>
-                      <p className="text-sm">
-                        Add family-health.jpg to assets/images/
-                      </p>
-                    </div>
-                  </div>
-                  {/* Uncomment and add your health services image path below */}
-                  {/* <img src="/src/assets/images/family-health.jpg" alt="Allied Health Services" className="w-full h-80 object-cover" /> */}
+                  <img
+                    src={ABOUT_ALLIED_HEALTH_IMAGE.src}
+                    alt={ABOUT_ALLIED_HEALTH_IMAGE.alt}
+                    className="w-full h-80 object-cover"
+                  />
                 </div>
 
                 {/* Blue bottom border - extended width, thicker */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { FACILITIES_BG_IMAGE } from "../../constants/carouselImages";
 
 function FacilitiesSection() {
   const { t } = useLanguage();
@@ -246,12 +247,13 @@ function FacilitiesSection() {
         {/* Facilities Container */}
         <div className="relative rounded-tr-[30px] rounded-bl-[30px] sm:rounded-tr-[45px] sm:rounded-bl-[45px] lg:rounded-tr-[60px] lg:rounded-bl-[60px] p-4 sm:p-6 lg:p-8 overflow-hidden">
           {/* Background Image */}
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: "url('/src/assets/images/facilities-bg.jpg')",
-            }}
-          ></div>
+          <div className="absolute inset-0">
+            <img
+              src={FACILITIES_BG_IMAGE.src}
+              alt={FACILITIES_BG_IMAGE.alt}
+              className="w-full h-full object-cover"
+            />
+          </div>
 
           {/* Dark Overlay */}
           <div className="absolute inset-0 bg-slate-900/85"></div>

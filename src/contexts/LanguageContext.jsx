@@ -14,10 +14,10 @@ const translations = {
   en: {
     // Top Info Bar
     location: "Block F6, Shippi Road, Cantonments, Accra",
-    phone: "0302 739 373",
+    phone: "0333 733 333",
     email: "info@telekiosk.com",
     emergency: "24/7 Emergency",
-    emergencyPhone: "0599 211 311",
+    emergencyPhone: "0244 111 111",
     language: "English",
 
     // Header
@@ -41,7 +41,7 @@ const translations = {
     allEnquiries: "For all enquiries & assistance",
     forReferrals: "For Referrals",
     feelFreeContact: "Feel Free to Contact Us",
-    referralPhone: "025 796 2450",
+    referralPhone: "024 411 1111",
 
     // Hero Section
     heroTitle: "PROVIDING THE BEST MEDICAL CARE",
@@ -61,7 +61,7 @@ const translations = {
     hours24: "24 Hours / 7 Days",
     opdNote: "OPD Specialists consultation is based on appointment",
     copyright: "© 2025 TeleKiosk | All Rights Reserved.",
-    siteBy: "Site By: Technofy™",
+    siteBy: "Site By: ByteShift™",
     team: "Team",
     newsArticles: "News Articles",
     missionVision: "Mission & Vision",
@@ -186,7 +186,8 @@ const translations = {
 
     // Visiting Times Page
     visitingTimesTitle: "Visiting Times & Meal Service",
-    visitingTimesDesc: "Please review our visiting hours and meal service times to plan your visit accordingly. These schedules help us provide the best care for our patients.",
+    visitingTimesDesc:
+      "Please review our visiting hours and meal service times to plan your visit accordingly. These schedules help us provide the best care for our patients.",
     backToHome: "Back to Home",
     vvipUnit: "VVIP Unit",
     paediatricUnit: "Paediatric Unit",
@@ -203,10 +204,14 @@ const translations = {
     lunch: "Lunch:",
     dinner: "Dinner:",
     bedtimeSnacks: "Bedtime Snacks:",
-    specialArrangementsNote: "Special arrangements can be made with the unit manager",
-    ageRestrictionNote: "Special permission is required for visitors under the age of 12",
-    fatherVisitNote: "Father is allowed to visit at any time within the specified visiting period",
-    partnerSleepNote: "Partners are only allowed to sleep over when clients are admitted to the executive ward",
+    specialArrangementsNote:
+      "Special arrangements can be made with the unit manager",
+    ageRestrictionNote:
+      "Special permission is required for visitors under the age of 12",
+    fatherVisitNote:
+      "Father is allowed to visit at any time within the specified visiting period",
+    partnerSleepNote:
+      "Partners are only allowed to sleep over when clients are admitted to the executive ward",
 
     // Contact Us Page
     contactUsTitle: "CONTACT US",
@@ -216,7 +221,7 @@ const translations = {
     phonePlaceholder: "+233 XX XXX XXXX",
     messagePlaceholder: "A short description of your enquiry",
     nameLabel: "Name*",
-    emailLabel: "Email*", 
+    emailLabel: "Email*",
     phoneLabel: "Phone*",
     enquiryLabel: "Enquiry",
     messageLabel: "Message",
@@ -227,7 +232,8 @@ const translations = {
     emergencyServices: "Emergency Services",
     billingInsurance: "Billing & Insurance",
     feedbackComplaints: "Feedback & Complaints",
-    thankYouMessage: "Thank you for your enquiry. We will get back to you soon!",
+    thankYouMessage:
+      "Thank you for your enquiry. We will get back to you soon!",
     generalEnquiriesCall: "For General Enquiries Call us on",
     referralsCall: "For Referrals Call us on",
     emergencyCall: "For Emergency Call us on",
@@ -239,9 +245,11 @@ const translations = {
     pickTime: "Pick Your Perfect Time",
     tellUsAboutYou: "Tell Us About Yourself",
     almostThere: "Almost There! 🎉",
-    selectSpecialtyDesc: "Select the medical specialty you need consultation for",
+    selectSpecialtyDesc:
+      "Select the medical specialty you need consultation for",
     chooseDateTimeDesc: "Choose a date and time that works best for you",
-    basicInfoDesc: "We need some basic information to prepare for your consultation",
+    basicInfoDesc:
+      "We need some basic information to prepare for your consultation",
     reviewBookingDesc: "Please review your booking details before confirming",
     dermatology: "Dermatology",
     availableDoctors: "Available Doctors",
@@ -254,7 +262,8 @@ const translations = {
     enterFullName: "Enter your full name",
     enterEmail: "Enter your email",
     enterPhone: "Enter your phone number",
-    describeSymptomsPlaceholder: "Briefly describe your symptoms or reason for consultation",
+    describeSymptomsPlaceholder:
+      "Briefly describe your symptoms or reason for consultation",
     bookingSummary: "Booking Summary",
     specialty: "Specialty:",
     doctor: "Doctor:",
@@ -263,7 +272,8 @@ const translations = {
     patient: "Patient:",
     contact: "Contact:",
     bookingConfirmed: "Booking Confirmed! 🎉",
-    consultationScheduled: "Your video consultation has been successfully scheduled",
+    consultationScheduled:
+      "Your video consultation has been successfully scheduled",
     bookingFailed: "Booking Failed",
     meetingInviteSent: "📧 Meeting Invite Sent!",
     emailSentTo: "Email sent to:",
@@ -278,7 +288,8 @@ const translations = {
     tryAgain: "Try Again",
     backToDoctors: "Back to Doctors",
     onlineVideoConsultation: "Online Video Consultation",
-    videoConsultationLinkInfo: "Video consultation link will be sent to your email",
+    videoConsultationLinkInfo:
+      "Video consultation link will be sent to your email",
     checkEmailDetails: "Check your email for the complete meeting details",
     joinMeetingEarly: "Join the meeting 5 minutes early",
     addAppointmentCalendar: "Add the appointment to your calendar",
@@ -304,19 +315,25 @@ const translations = {
     referralSubmittedSuccess: "Referral request submitted successfully!",
 
     // Doctors Page
-    doctorsHeroTitle: "Our team of first-class medical professionals focus on individual care and quality treatment for all.",
+    doctorsHeroTitle:
+      "Our team of first-class medical professionals focus on individual care and quality treatment for all.",
     ourDoctors: "OUR DOCTORS",
-    doctorsQualificationDesc: "Our doctors are highly qualified and have the experience to meet your medical needs.",
+    doctorsQualificationDesc:
+      "Our doctors are highly qualified and have the experience to meet your medical needs.",
 
     // About Us Page
-    qualityHealthcareDesc: "TeleKiosk Hospital provides quality healthcare driven by a strong, customer-centric focus.",
+    qualityHealthcareDesc:
+      "TeleKiosk Hospital provides quality healthcare driven by a strong, customer-centric focus.",
     qualityPatientFocused: "QUALITY PATIENT-FOCUSED",
     healthcare: "HEALTH CARE",
-    bankHospitalDesc: "TeleKiosk Hospital is a multi-disciplinary private healthcare facility focusing on the best possible clinical outcomes for our patients and their families.",
-    modernFacilitiesDesc: "With modern up to date facilities and state of the art equipment, TeleKiosk Hospital offers a broad spectrum of expert medical care and services to meet the needs of the communities we serve, in Accra, Ghana and almost our continent.",
+    bankHospitalDesc:
+      "TeleKiosk Hospital is a multi-disciplinary private healthcare facility focusing on the best possible clinical outcomes for our patients and their families.",
+    modernFacilitiesDesc:
+      "With modern up to date facilities and state of the art equipment, TeleKiosk Hospital offers a broad spectrum of expert medical care and services to meet the needs of the communities we serve, in Accra, Ghana and almost our continent.",
     yourHealthPriority: "YOUR HEALTH IS OUR TOP PRIORITY. CLICK HERE TO",
     scheduleAppointment: "Schedule an Appointment",
-    modernFacilitiesSubdesc: "Our modern, up-to-date facilities are tailored to provide the best outcomes for our patients and include:",
+    modernFacilitiesSubdesc:
+      "Our modern, up-to-date facilities are tailored to provide the best outcomes for our patients and include:",
     hospitalAtGlance: "TeleKiosk Hospital at a glance",
     takeTourFacilities: "Take a quick tour of our Facilities",
     years: "Years",
@@ -324,27 +341,35 @@ const translations = {
     annually: "Annually",
     medical: "Medical",
     assistanceAvailable: "Assistance available",
-    generalWards: "Comfortable, air conditioned general wards and executive suites",
-    pediatricWard: "A bright, child-friendly pediatric ward creates a welcoming environment for kids",
+    generalWards:
+      "Comfortable, air conditioned general wards and executive suites",
+    pediatricWard:
+      "A bright, child-friendly pediatric ward creates a welcoming environment for kids",
     maternityUnit: "Safe, secure maternity unit, nursery and neonatal ICU",
-    diagnosticCenters: "Full equipped diagnostic and treatment centers designed for patients provide a comfortable and innovative environment",
+    diagnosticCenters:
+      "Full equipped diagnostic and treatment centers designed for patients provide a comfortable and innovative environment",
     outpatientDept: "Well appointed, fully equipped Outpatient Department",
     emergencyUnit: "24/7 Emergency unit and ambulance service",
-    exploreFacilities: "Take a moment to explore all of our facilities and discover how we can meet your needs.",
+    exploreFacilities:
+      "Take a moment to explore all of our facilities and discover how we can meet your needs.",
     viewFacilities: "View our Facilities",
     ourSpecialists: "OUR SPECIALISTS",
-    specialistsDesc: "Our highly skilled and experienced medical specialists offer a comprehensive range of specialties to ensure your health and wellbeing – for both inpatients and outpatients.",
+    specialistsDesc:
+      "Our highly skilled and experienced medical specialists offer a comprehensive range of specialties to ensure your health and wellbeing – for both inpatients and outpatients.",
     alliedHealthServices: "ALLIED HEALTH SERVICES",
-    alliedHealthDesc: "Our allied health services provide a range of complementary medical services to ensure your health and wellbeing.",
+    alliedHealthDesc:
+      "Our allied health services provide a range of complementary medical services to ensure your health and wellbeing.",
     viewAllSpecialists: "View All Specialists",
     viewAllServices: "View All Services",
 
     // Mission Vision Page
-    missionVisionDesc: "Our mission and vision guide everything we do at TeleKiosk Hospital, driving our commitment to excellence in healthcare.",
+    missionVisionDesc:
+      "Our mission and vision guide everything we do at TeleKiosk Hospital, driving our commitment to excellence in healthcare.",
     ourMission: "OUR MISSION",
     ourVision: "OUR VISION",
     coreValue: "CORE VALUE",
-    missionStatement: "To deliver quality, client-focused healthcare through the provision of a comprehensive range of timely services rendered with professionalism.",
+    missionStatement:
+      "To deliver quality, client-focused healthcare through the provision of a comprehensive range of timely services rendered with professionalism.",
     visionStatement: "To become the healthcare provider of choice.",
     compassion: "Compassion",
     teamwork: "Teamwork",
@@ -353,7 +378,8 @@ const translations = {
     professionalism: "Professionalism",
 
     // Doctor Profile Page
-    doctorTeamDesc: "Our team of first-class medical professionals focuses on individual care and quality treatment of all.",
+    doctorTeamDesc:
+      "Our team of first-class medical professionals focuses on individual care and quality treatment of all.",
     goBack: "Go Back",
     qualifications: "Qualifications:",
     specialtyLabel: "Specialty:",
@@ -365,7 +391,8 @@ const translations = {
     profile: "Profile",
 
     // Doctors Page
-    doctorsDesc: "Our doctors are highly qualified and have the experience to meet your medical needs.",
+    doctorsDesc:
+      "Our doctors are highly qualified and have the experience to meet your medical needs.",
     schedule: "Schedule:",
     status: "Status:",
     available: "Available",
@@ -375,7 +402,8 @@ const translations = {
     // Booking Page
     websiteUrl: "www.telekiosk.com",
     developBy: "Develop by Technofy™",
-    browserNoSupport: "Your browser does not support iframes. Please visit Google Maps directly.",
+    browserNoSupport:
+      "Your browser does not support iframes. Please visit Google Maps directly.",
 
     // Map Modal
     hospitalLocation: "Hospital Location",
@@ -394,10 +422,9 @@ const translations = {
     visitingTimesMenu: "Visiting Times",
     contactUsMenu: "Contact Us",
 
-
     // Time ranges for visiting times
     vvipMorning: "6:30 AM – 7:30 AM",
-    vvipAfternoon: "12:00 PM – 1:00 PM", 
+    vvipAfternoon: "12:00 PM – 1:00 PM",
     vvipEvening: "6:30 PM – 7:30 PM",
     paediatricMorning: "10:30 AM – 12:30 PM",
     paediatricEvening: "4:30 PM – 6:30 PM",
@@ -419,13 +446,14 @@ const translations = {
     lunchTime: "12:00 PM – 1:00 PM",
     dinnerTime: "5:30 PM – 7:00 PM",
     bedtimeSnacksTime: "8:00 PM – 9:00 PM",
-    
+
     // About Section specific
     openingHoursTime: "7 AM – 7 PM",
     videoTimestamp: "0:02 / 5:15",
 
     // Health & Wellness Page
-    healthWellnessSubtitle: "Up to date information related to our services and your health",
+    healthWellnessSubtitle:
+      "Up to date information related to our services and your health",
     articleNotFound: "Article Not Found",
     backToHealthWellness: "Back to Health & Wellness",
     backToHealthWellnessTips: "Back to Health & Wellness Tips",
@@ -434,7 +462,8 @@ const translations = {
 
     // Map Modal
     hospitalLocationMap: "Hospital Location Map",
-    browserNotSupport: "Your browser does not support iframes. Please visit Google Maps directly.",
+    browserNotSupport:
+      "Your browser does not support iframes. Please visit Google Maps directly.",
     address: "Address",
 
     // Scroll to Top
@@ -446,11 +475,12 @@ const translations = {
     surgery: "Surgery",
 
     // All Pages
-    facilitiesHeroText: "Up-to-date and well equipped, our facilities are tailored to provide the best possible medical care for our patients",
+    facilitiesHeroText:
+      "Up-to-date and well equipped, our facilities are tailored to provide the best possible medical care for our patients",
     healthServices: "Health Services",
 
     // News Categories
-    technology: "Technology", 
+    technology: "Technology",
     events: "Events",
     wellness: "Wellness",
     community: "Community",
@@ -461,7 +491,7 @@ const translations = {
     // Health & Wellness Categories
     allTopics: "All Topics",
     nutrition: "Nutrition",
-    mentalHealth: "Mental Health", 
+    mentalHealth: "Mental Health",
     fitness: "Fitness",
     emergencyCare: "Emergency Care",
     womensHealth: "Women's Health",
@@ -486,7 +516,7 @@ const translations = {
 
     // Time Related
     today: "Today",
-    yesterday: "Yesterday", 
+    yesterday: "Yesterday",
     tomorrow: "Tomorrow",
     thisWeek: "This week",
     thisMonth: "This month",
@@ -496,7 +526,7 @@ const translations = {
     covid19: "COVID-19",
     doctorsSpotlight: "Doctors Spotlight",
     healthArticles: "Health Articles",
-    news: "News", 
+    news: "News",
     pressReleases: "Press Releases",
 
     // Services Page - Missing translations
@@ -519,14 +549,18 @@ const translations = {
     searchArticles: "Search articles...",
     searchNews: "Search news and events...",
 
-
     // Cardiology Service Content
     cardiologyName: "CARDIOLOGY",
-    cardiologyDescription: "Cardiovascular diseases are the leading cause of death globally, taking an estimated 17.9 million lives each year. 9 of of the world's death from cardiovascular diseases occur in low- and middle-income countries of which Ghana is inclusive. People in low-middle income countries often do not have the benefit of integrated primary health care programmes for early detection and treatment of people with cardiovascular disease risk factors.",
-    cardiologyExtendedDescription: "As a result, people in these countries die early from cardiovascular diseases often in their most productive years.",
-    cardiologyAim: "Improve cardiovascular care and save lives of Ghanaians with Atherosclerotic cardiovascular diseases such as coronary artery disease.",
-    cardiologyOutcome: "Save and improve the lives of patients with cardiovascular diseases.",
-    cardiologyImageDescription: "CT Scanner Room - Advanced cardiac imaging equipment",
+    cardiologyDescription:
+      "Cardiovascular diseases are the leading cause of death globally, taking an estimated 17.9 million lives each year. 9 of of the world's death from cardiovascular diseases occur in low- and middle-income countries of which Ghana is inclusive. People in low-middle income countries often do not have the benefit of integrated primary health care programmes for early detection and treatment of people with cardiovascular disease risk factors.",
+    cardiologyExtendedDescription:
+      "As a result, people in these countries die early from cardiovascular diseases often in their most productive years.",
+    cardiologyAim:
+      "Improve cardiovascular care and save lives of Ghanaians with Atherosclerotic cardiovascular diseases such as coronary artery disease.",
+    cardiologyOutcome:
+      "Save and improve the lives of patients with cardiovascular diseases.",
+    cardiologyImageDescription:
+      "CT Scanner Room - Advanced cardiac imaging equipment",
   },
 
   tw: {
@@ -657,7 +691,8 @@ const translations = {
 
     // Visiting Times Page
     visitingTimesTitle: "Nsrahwɛ Mmerɛ ne Aduane Ɛmmerɛ",
-    visitingTimesDesc: "Yɛsrɛ wo hwɛ yɛn nsrahwɛ mmerɛ ne aduane ɛmmerɛ na woayɛ wo nsrahwɛ ho nhyehyɛeɛ. Saa nhyehyɛeɛ yi boa yɛn ma yɛde ayaresa pa ma yɛn amanfoɔ.",
+    visitingTimesDesc:
+      "Yɛsrɛ wo hwɛ yɛn nsrahwɛ mmerɛ ne aduane ɛmmerɛ na woayɛ wo nsrahwɛ ho nhyehyɛeɛ. Saa nhyehyɛeɛ yi boa yɛn ma yɛde ayaresa pa ma yɛn amanfoɔ.",
     backToHome: "San Kɔ Efi",
     vvipUnit: "VVIP Beaeɛ",
     paediatricUnit: "Mmofra Beaeɛ",
@@ -675,9 +710,12 @@ const translations = {
     dinner: "Anwummer Aduane:",
     bedtimeSnacks: "Nna Mmerɛ Aduane:",
     specialArrangementsNote: "Wɔbɛtumi ayɛ nhyehyɛeɛ soronko ne beaeɛ panin no",
-    ageRestrictionNote: "Ɛho hia sɛ wɔma kwan ma nsrahwɛfoɔ a wɔn mfeɛ nnuru 12",
-    fatherVisitNote: "Agya bɛtumi akɔsra bere biara wɔ nsrahwɛ mmerɛ a wɔahyɛ no mu",
-    partnerSleepNote: "Hokafoɔ tumi da hɔ sɛ ɛte sɛ amanfoɔ no wɔ adwumayɛbea panin mu nko ara",
+    ageRestrictionNote:
+      "Ɛho hia sɛ wɔma kwan ma nsrahwɛfoɔ a wɔn mfeɛ nnuru 12",
+    fatherVisitNote:
+      "Agya bɛtumi akɔsra bere biara wɔ nsrahwɛ mmerɛ a wɔahyɛ no mu",
+    partnerSleepNote:
+      "Hokafoɔ tumi da hɔ sɛ ɛte sɛ amanfoɔ no wɔ adwumayɛbea panin mu nko ara",
 
     // Contact Us Page
     contactUsTitle: "FRƐ YƐN",
@@ -749,7 +787,8 @@ const translations = {
     tryAgain: "San Sɔ Hwɛ",
     backToDoctors: "San Kɔ Nnuruyɛfoɔ Nkyɛn",
     onlineVideoConsultation: "Intanɛt So Video Akyerɛkyerɛ",
-    videoConsultationLinkInfo: "Video akyerɛkyerɛ link no wɔbɛsoma akɔ wo email mu",
+    videoConsultationLinkInfo:
+      "Video akyerɛkyerɛ link no wɔbɛsoma akɔ wo email mu",
     checkEmailDetails: "Hwɛ wo email mu ma nhyiam no ho nsɛm mua",
     joinMeetingEarly: "Kɔ nhyiam no mu ntɛm simma 5 ansa",
     addAppointmentCalendar: "Fa nhyiam no kɔ wo kalenda mu",
@@ -775,19 +814,25 @@ const translations = {
     referralSubmittedSuccess: "Tumi krataa adesrɛ a wɔasoma yie!",
 
     // Doctors Page
-    doctorsHeroTitle: "Yɛn nnuruyɛfoɔ soronko kuw de wɔn adwene si ankorankoro hwɛ ne ayaresa pa so ma obiara",
+    doctorsHeroTitle:
+      "Yɛn nnuruyɛfoɔ soronko kuw de wɔn adwene si ankorankoro hwɛ ne ayaresa pa so ma obiara",
     ourDoctors: "YƐN NNURUYƐFOƆ",
-    doctorsQualificationDesc: "Yɛn nnuruyɛfoɔ wɔ abasobɔde kɛseɛ na wɔwɔ osuahu a ɛbɛtumi ayɛ wo ayaresa ahiadeɛ.",
+    doctorsQualificationDesc:
+      "Yɛn nnuruyɛfoɔ wɔ abasobɔde kɛseɛ na wɔwɔ osuahu a ɛbɛtumi ayɛ wo ayaresa ahiadeɛ.",
 
-    // About Us Page  
-    qualityHealthcareDesc: "The Bank Ayaresabea de ayaresa pa a ɛgyina amanfoɔ so rema.",
+    // About Us Page
+    qualityHealthcareDesc:
+      "The Bank Ayaresabea de ayaresa pa a ɛgyina amanfoɔ so rema.",
     qualityPatientFocused: "AYARESA PA A ƐSI AMANFOƆ",
     healthcare: "AKWAHOSAN SO",
-    bankHospitalDesc: "The Bank Ayaresabea yɛ ayaresabea soronko a ɛde n'adwene si ayaresa pa a ɛyɛ ma amanfoɔ ne wɔn mmusua so.",
-    modernFacilitiesDesc: "Ɛnam mfiri foforo ne mmeae pa so no, The Bank Ayaresabea de ayaresa pa ahodoɔ pii ma mpɔtam a yɛsom wɔn wɔ Nkran, Ghana ne yɛn asaase yi so nyinaa.",
+    bankHospitalDesc:
+      "The Bank Ayaresabea yɛ ayaresabea soronko a ɛde n'adwene si ayaresa pa a ɛyɛ ma amanfoɔ ne wɔn mmusua so.",
+    modernFacilitiesDesc:
+      "Ɛnam mfiri foforo ne mmeae pa so no, The Bank Ayaresabea de ayaresa pa ahodoɔ pii ma mpɔtam a yɛsom wɔn wɔ Nkran, Ghana ne yɛn asaase yi so nyinaa.",
     yourHealthPriority: "WO AKWAHOSAN YƐ ADEƐ TITIRE MA YƐN. KLIK HA",
     scheduleAppointment: "Hyɛ Nhyiam",
-    modernFacilitiesSubdesc: "Yɛn mfiri foforo ne mmeae a wɔasiesie ayɛ ma ayaresa pa ma yɛn amanfoɔ ne:",
+    modernFacilitiesSubdesc:
+      "Yɛn mfiri foforo ne mmeae a wɔasiesie ayɛ ma ayaresa pa ma yɛn amanfoɔ ne:",
     hospitalAtGlance: "The Bank Ayaresabea mfaatuo",
     takeTourFacilities: "Yɛ yɛn mmeae no mu akwantu tiawa bi",
     years: "Mfeɛ",
@@ -797,16 +842,21 @@ const translations = {
     assistanceAvailable: "Mmoa wɔ hɔ",
     generalWards: "Mpɔn a ɛyɛ fɛ, mframa a ɛhyɛ mu ne adwumayɛfoɔ aban",
     pediatricWard: "Mmofra ayaresadan a ɛyɛ fɛ na ɛyɛ mmofra dɛ",
-    maternityUnit: "Awowuo dan a ɛyɛ ban, mmofra hwɛso ne mmofra intensive care",
-    diagnosticCenters: "Nhwehwɛmu ne ayaresa mmeae a wɔasiesie ama amanfoɔ anya ahotɔ",
+    maternityUnit:
+      "Awowuo dan a ɛyɛ ban, mmofra hwɛso ne mmofra intensive care",
+    diagnosticCenters:
+      "Nhwehwɛmu ne ayaresa mmeae a wɔasiesie ama amanfoɔ anya ahotɔ",
     outpatientDept: "Outpatient Department a wɔasiesie ayɛ",
     emergencyUnit: "Ntɛm ayaresa ne ambulance nnwuma 24/7",
-    exploreFacilities: "Fa berɛ kakra hwɛ yɛn mmeae nyinaa na hu sɛnea yɛbɛtumi aboa wo.",
+    exploreFacilities:
+      "Fa berɛ kakra hwɛ yɛn mmeae nyinaa na hu sɛnea yɛbɛtumi aboa wo.",
     viewFacilities: "Hwɛ Yɛn Mmeae",
     ourSpecialists: "YƐN NNURUYƐFOƆ",
-    specialistsDesc: "Yɛn nnuruyɛfoɔ a wɔwɔ nimdeɛ ne osuahu de ayaresa ahodoɔ pii ma wo akwahosan ne wo yiyediɛ – ma wɔn a wɔtra hɔ ne wɔn a wɔba ara.",
+    specialistsDesc:
+      "Yɛn nnuruyɛfoɔ a wɔwɔ nimdeɛ ne osuahu de ayaresa ahodoɔ pii ma wo akwahosan ne wo yiyediɛ – ma wɔn a wɔtra hɔ ne wɔn a wɔba ara.",
     alliedHealthServices: "AKWAHOSAN MMOA NNWUMA",
-    alliedHealthDesc: "Yɛn akwahosan mmoa nnwuma de ayaresa nnwuma foforɔ pii ma wo akwahosan ne wo yiyediɛ.",
+    alliedHealthDesc:
+      "Yɛn akwahosan mmoa nnwuma de ayaresa nnwuma foforɔ pii ma wo akwahosan ne wo yiyediɛ.",
     viewAllSpecialists: "Hwɛ Nnuruyɛfoɔ Nyinaa",
     viewAllServices: "Hwɛ Nnwuma Nyinaa",
     viewOurFacilities: "Hwɛ Yɛn Mmeae",
@@ -816,11 +866,13 @@ const translations = {
     medicalAssistance: "Ayaresa",
 
     // Mission Vision Page
-    missionVisionDesc: "Yɛn botaeɛ ne yɛn anidaso kyerɛ deɛ yɛyɛ biara wɔ The Bank Ayaresabea, na ɛkanyan yɛn sɛ yɛnyɛ ayaresa pa.",
+    missionVisionDesc:
+      "Yɛn botaeɛ ne yɛn anidaso kyerɛ deɛ yɛyɛ biara wɔ The Bank Ayaresabea, na ɛkanyan yɛn sɛ yɛnyɛ ayaresa pa.",
     ourMission: "YƐN BOTAEƐ",
     ourVision: "YƐN ANIDASO",
     coreValue: "GYINAPƐN BOƆ",
-    missionStatement: "Sɛ yɛde ayaresa pa, amanfoɔ-a-ɛsi-wɔn-so nnwuma ma ɛnam nnwuma ahodoɔ pii a yɛyɛ no amammere mu so.",
+    missionStatement:
+      "Sɛ yɛde ayaresa pa, amanfoɔ-a-ɛsi-wɔn-so nnwuma ma ɛnam nnwuma ahodoɔ pii a yɛyɛ no amammere mu so.",
     visionStatement: "Sɛ yɛbɛyɛ ayaresa pa a nnipa paw no.",
     compassion: "Ayamhyehyeɛ",
     teamwork: "Kuo mu Adwuma",
@@ -829,7 +881,8 @@ const translations = {
     professionalism: "Adwuma Pa",
 
     // Doctor Profile Page
-    doctorTeamDesc: "Yɛn nnuruyɛfoɔ a wɔwɔ suban pa de wɔn adwene si ankorankoro hwɛ ne ayaresa pa so ma obiara.",
+    doctorTeamDesc:
+      "Yɛn nnuruyɛfoɔ a wɔwɔ suban pa de wɔn adwene si ankorankoro hwɛ ne ayaresa pa so ma obiara.",
     goBack: "San Kɔ",
     qualifications: "Adesua:",
     specialtyLabel: "Ayaresa Soronko:",
@@ -841,7 +894,8 @@ const translations = {
     profile: "Ho Nsɛm",
 
     // Doctors Page
-    doctorsDesc: "Yɛn nnuruyɛfoɔ wɔ adesua pa na wɔwɔ osuahu a ɛbɛboa wo ayaresa.",
+    doctorsDesc:
+      "Yɛn nnuruyɛfoɔ wɔ adesua pa na wɔwɔ osuahu a ɛbɛboa wo ayaresa.",
     schedule: "Nhyehyɛeɛ:",
     status: "Tebea:",
     available: "Ɔwɔ Hɔ",
@@ -851,7 +905,8 @@ const translations = {
     // Booking Page
     websiteUrl: "www.telekiosk.com",
     developBy: "Technofy™ na ɛyɛeɛ",
-    browserNoSupport: "Wo browser nnyae iframe. Yɛsrɛ wo kɔ Google Maps ncua so.",
+    browserNoSupport:
+      "Wo browser nnyae iframe. Yɛsrɛ wo kɔ Google Maps ncua so.",
 
     // Map Modal
     hospitalLocation: "Ayaresabea Beaeɛ",
@@ -870,11 +925,10 @@ const translations = {
     visitingTimesMenu: "Nsrahwɛ Mmerɛ",
     contactUsMenu: "Frɛ Yɛn",
 
-
     // Time ranges for visiting times
     vvipMorning: "6:30 AM – 7:30 AM",
     vvipAfternoon: "12:00 PM – 1:00 PM",
-    vvipEvening: "6:30 PM – 7:30 PM", 
+    vvipEvening: "6:30 PM – 7:30 PM",
     paediatricMorning: "10:30 AM – 12:30 PM",
     paediatricEvening: "4:30 PM – 6:30 PM",
     icuMorning: "10:30 AM – 11:30 AM",
@@ -895,7 +949,7 @@ const translations = {
     lunchTime: "12:00 PM – 1:00 PM",
     dinnerTime: "5:30 PM – 7:00 PM",
     bedtimeSnacksTime: "8:00 PM – 9:00 PM",
-    
+
     // About Section specific
     openingHoursTime: "7 AM – 7 PM",
     videoTimestamp: "0:02 / 5:15",
@@ -910,7 +964,8 @@ const translations = {
 
     // Map Modal (Twi)
     hospitalLocationMap: "Ayaresabea Beaeɛ Map",
-    browserNotSupport: "Wo browser nnyae iframe. Yɛsrɛ wo kɔ Google Maps ncua so.",
+    browserNotSupport:
+      "Wo browser nnyae iframe. Yɛsrɛ wo kɔ Google Maps ncua so.",
     address: "Beaeɛ",
 
     // Scroll to Top (Twi)
@@ -922,19 +977,21 @@ const translations = {
     surgery: "Oprehyɛn",
 
     // All Pages (Twi)
-    facilitiesHeroText: "Mfiri foforo ne beaeɛ a ɛyɛ fɛ a wɔasiesie ama yɛn amanfoɔ anya ayaresa pa",
+    facilitiesHeroText:
+      "Mfiri foforo ne beaeɛ a ɛyɛ fɛ a wɔasiesie ama yɛn amanfoɔ anya ayaresa pa",
     healthServices: "Akwahosan Nnwuma",
 
     // News Categories (Twi)
-    technology: "Mfiri Foforɔ", 
+    technology: "Mfiri Foforɔ",
     events: "Dwumadie",
     wellness: "Asomdwoeɛ",
     community: "Mpɔtam",
     accreditation: "Abasobɔdeɛ",
 
     // News Titles (Twi)
-    news1Title: "The Bank Ayaresabea Nhwehwɛmu Bɛɛ ayɛ Ghana Soronko Nhwehwɛmu a Ɛdi Kan a Ɔnyaa ISO Abasobɔdeɛ",
-    news2Title: "The Bank Ayaresabea de Frɛfrɛ Bɛɛ Foforɔ Reba: Ɔsom Pa Foforɔ", 
+    news1Title:
+      "The Bank Ayaresabea Nhwehwɛmu Bɛɛ ayɛ Ghana Soronko Nhwehwɛmu a Ɛdi Kan a Ɔnyaa ISO Abasobɔdeɛ",
+    news2Title: "The Bank Ayaresabea de Frɛfrɛ Bɛɛ Foforɔ Reba: Ɔsom Pa Foforɔ",
     news3Title: "The Bank Ayaresabea Di Amanfoɔ Som Nnawɔtwe 2024 Afahyɛ",
     news4Title: "The Bank Ayaresabea Asomdwoeɛ Bɛɛ a Wɔde Baeɛ no Afahyɛ",
     news5Title: "Makola Nsrahwɛ Amanebɔ",
@@ -943,7 +1000,7 @@ const translations = {
     // Health & Wellness Categories (Twi)
     allTopics: "Nsɛm Nyinaa",
     nutrition: "Aduane",
-    mentalHealth: "Adwene Akwahosan", 
+    mentalHealth: "Adwene Akwahosan",
     fitness: "Apɔmuden",
     emergencyCare: "Amanehunu Ayaresa",
     womensHealth: "Mmaa Akwahosan",
@@ -968,7 +1025,7 @@ const translations = {
 
     // Time Related (Twi)
     today: "Ɛnnɛ",
-    yesterday: "Nnɛra", 
+    yesterday: "Nnɛra",
     tomorrow: "Ɔkyena",
     thisWeek: "Saa dapɛn yi",
     thisMonth: "Saa ɔsram yi",
@@ -978,7 +1035,7 @@ const translations = {
     covid19: "COVID-19",
     doctorsSpotlight: "Nnuruyɛfoɔ Kanea",
     healthArticles: "Akwahosan Krataa",
-    news: "Nsɛm", 
+    news: "Nsɛm",
     pressReleases: "Nsɛm Krataa",
 
     // Services Page - Twi translations
@@ -1001,12 +1058,14 @@ const translations = {
     searchArticles: "Hwehwɛ krataa...",
     searchNews: "Hwehwɛ nsɛm ne amammere...",
 
-
     // Cardiology Service Content - Twi
     cardiologyName: "AKOMA AYARESA",
-    cardiologyDescription: "Akoma yadeɛ na ɛkum nkurɔfoɔ pii wɔ wiase nyinaa, na ɛkum nkurɔfoɔ bɛyɛ ɔpepem 17.9 afeɛ biara. Wiase amaneɛ 9 mu 9 firi akoma yadeɛ ba aman a wɔnyɛ adefoɔ mu te sɛ Ghana. Nkurɔfoɔ a wɔwɔ aman a wɔnyɛ adefoɔ mu no ntaa nnya akwahosan nhyehyɛeɛ pa a ɛbɛboa wɔn ahu akoma yadeɛ ntɛm.",
-    cardiologyExtendedDescription: "Eyi nti, nkurɔfoɔ a wɔwɔ aman yi mu no wu ntɛm firi akoma yadeɛ mu wɔ wɔn mfeɛ a wɔyɛ adwuma pa mu.",
-    cardiologyAim: "Yɛn botaeɛ ne sɛ yɛbɛma Ghanaman akoma ayaresa atu mpɔn na yɛagye wɔn a wɔwɔ akoma yadeɛ no nkwa.",
+    cardiologyDescription:
+      "Akoma yadeɛ na ɛkum nkurɔfoɔ pii wɔ wiase nyinaa, na ɛkum nkurɔfoɔ bɛyɛ ɔpepem 17.9 afeɛ biara. Wiase amaneɛ 9 mu 9 firi akoma yadeɛ ba aman a wɔnyɛ adefoɔ mu te sɛ Ghana. Nkurɔfoɔ a wɔwɔ aman a wɔnyɛ adefoɔ mu no ntaa nnya akwahosan nhyehyɛeɛ pa a ɛbɛboa wɔn ahu akoma yadeɛ ntɛm.",
+    cardiologyExtendedDescription:
+      "Eyi nti, nkurɔfoɔ a wɔwɔ aman yi mu no wu ntɛm firi akoma yadeɛ mu wɔ wɔn mfeɛ a wɔyɛ adwuma pa mu.",
+    cardiologyAim:
+      "Yɛn botaeɛ ne sɛ yɛbɛma Ghanaman akoma ayaresa atu mpɔn na yɛagye wɔn a wɔwɔ akoma yadeɛ no nkwa.",
     cardiologyOutcome: "Gye akoma yadeɛfoɔ nkwa na ma wɔn asetena nyɛ yie.",
     cardiologyImageDescription: "CT Scanner Dan - Akoma nhwehwɛmu mfiri foforo",
   },
@@ -1132,14 +1191,15 @@ const translations = {
     viewAll: "Kpɛ Kɛɛ Lɛ",
 
     // Common
- 
+
     bookNow: "Wɔ Fɛɛ",
     callNow: "Frɛ Fɛɛ",
     getStarted: "Shishi",
 
     // Visiting Times Page
     visitingTimesTitle: "Nlɛɛ Mli Ni Amami Mli",
-    visitingTimesDesc: "Yɛ srɛ wo kpɛ ni nlɛɛ mli ni amami mli ma a wɔ wo nlɛɛ nhyehyɛeɛ. Saa nhyehyɛeɛ lɛ boa ni ma ni ayɔɔlɔ pa kɛ ni mi lɛ.",
+    visitingTimesDesc:
+      "Yɛ srɛ wo kpɛ ni nlɛɛ mli ni amami mli ma a wɔ wo nlɛɛ nhyehyɛeɛ. Saa nhyehyɛeɛ lɛ boa ni ma ni ayɔɔlɔ pa kɛ ni mi lɛ.",
     backToHome: "San Kɔ Fie",
     vvipUnit: "VVIP Bɛɛ",
     paediatricUnit: "Vi Lɛ Bɛɛ",
@@ -1156,10 +1216,14 @@ const translations = {
     lunch: "Awiabli Amami:",
     dinner: "Fie Kɔɔ Amami:",
     bedtimeSnacks: "Nɔ Mli Amami:",
-    specialArrangementsNote: "Wɔ bɛ tumi ayɛ nhyehyɛeɛ sɔrɔɔŋkɔ kɛ bɛɛ panin no",
-    ageRestrictionNote: "Ɛ ho hia sɛ wɔ ma kwan ma nlɛɛ mi lɛ a wɔn afe nn uru 12",
-    fatherVisitNote: "Papa bɛ tumi akɔ nlɛɛ mli biara wɔ nlɛɛ mli a wɔ ahyɛ no mu",
-    partnerSleepNote: "Hoka mi lɛ tumi nɔ hɔ sɛ ɛ te sɛ amanfoɔ no wɔ adwuma bɛɛ panin mu nko ara",
+    specialArrangementsNote:
+      "Wɔ bɛ tumi ayɛ nhyehyɛeɛ sɔrɔɔŋkɔ kɛ bɛɛ panin no",
+    ageRestrictionNote:
+      "Ɛ ho hia sɛ wɔ ma kwan ma nlɛɛ mi lɛ a wɔn afe nn uru 12",
+    fatherVisitNote:
+      "Papa bɛ tumi akɔ nlɛɛ mli biara wɔ nlɛɛ mli a wɔ ahyɛ no mu",
+    partnerSleepNote:
+      "Hoka mi lɛ tumi nɔ hɔ sɛ ɛ te sɛ amanfoɔ no wɔ adwuma bɛɛ panin mu nko ara",
 
     // Contact Us Page
     contactUsTitle: "FRƐ NI",
@@ -1182,7 +1246,7 @@ const translations = {
     feedbackComplaints: "Adwenkyerɛ Ni Anwiintoɔ",
     thankYouMessage: "Ni da a ase wɔ a bisa ho! Ni bɛ san aba a nkyɛn ntɛm so!",
     generalEnquiriesCall: "Bisa Sɔrɔɔŋkɔ ho no frɛ ni wɔ",
-    referralsCall: "Tumi Krataa ho no frɛ ni wɔ",  
+    referralsCall: "Tumi Krataa ho no frɛ ni wɔ",
     emergencyCall: "Gbejɛ ho no frɛ ni wɔ",
     openingHoursLabel: "Jei Mli: Dzu Tsɛɛ – Kɔɔbli Tsɛɛ: 8:00 am - 7:00 pm",
     emergency24Hours: "Gbejɛ: Awumɔɔ 24 / Tsɛɛ 7",
@@ -1231,7 +1295,8 @@ const translations = {
     tryAgain: "San Sɔ Kpɛ",
     backToDoctors: "San Kɔ Ayɔɔlɔ Nuu Lɛ Nkyɛn",
     onlineVideoConsultation: "Online Video Akyerɛkyerɛ",
-    videoConsultationLinkInfo: "Video akyerɛkyerɛ link no wɔ bɛ soma akɔ a email mu",
+    videoConsultationLinkInfo:
+      "Video akyerɛkyerɛ link no wɔ bɛ soma akɔ a email mu",
     checkEmailDetails: "Kpɛ a email mu ma nhyiam no ho nsɛm mua",
     joinMeetingEarly: "Kɔ nhyiam no mu ntɛm minute 5 ansa",
     addAppointmentCalendar: "Fa nhyiam no kɔ a calendar mu",
@@ -1257,38 +1322,48 @@ const translations = {
     referralSubmittedSuccess: "Tumi krataa adesrɛ a wɔ soma yie!",
 
     // Doctors Page
-    doctorsHeroTitle: "Ni ayɔɔlɔ nuu tɛɛ lɛ kuw de wɔn adwene si ankorankoro hwɛ ni ayɔɔlɔ pa so ma kɛɛ nii",
+    doctorsHeroTitle:
+      "Ni ayɔɔlɔ nuu tɛɛ lɛ kuw de wɔn adwene si ankorankoro hwɛ ni ayɔɔlɔ pa so ma kɛɛ nii",
     ourDoctors: "NI AYƆƆLƆ NUU LƐ",
-    doctorsQualificationDesc: "Ni ayɔɔlɔ nuu lɛ wɔ abasobɔde kɛseɛ ni wɔ wɔ suahu a ɛ bɛ tumi yɛ a ayɔɔlɔ hiadeɛ.",
+    doctorsQualificationDesc:
+      "Ni ayɔɔlɔ nuu lɛ wɔ abasobɔde kɛseɛ ni wɔ wɔ suahu a ɛ bɛ tumi yɛ a ayɔɔlɔ hiadeɛ.",
 
     // About Us Page
-    qualityHealthcareDesc: "The Bank Ayɔɔlɔ Jɛɛ de ayɔɔlɔ pa a ɛ gyina mi lɛ so rema.",
+    qualityHealthcareDesc:
+      "The Bank Ayɔɔlɔ Jɛɛ de ayɔɔlɔ pa a ɛ gyina mi lɛ so rema.",
     qualityPatientFocused: "AYƆƆLƆ PA A ƐSI MI LƐ",
     healthcare: "AYƆƆLƆ SO",
-    bankHospitalDesc: "The Bank Ayɔɔlɔ Jɛɛ yɛ ayɔɔlɔ jɛɛ sɔrɔɔŋkɔ a ɛ de n'adwene si ayɔɔlɔ pa a ɛ yɛ ma mi lɛ kɛ wɔn mmusua so.",
-    modernFacilitiesDesc: "Ɛ nam mɛɛni foforɔ ni bɛɛ pa so no, The Bank Ayɔɔlɔ Jɛɛ de ayɔɔlɔ pa ahodoɔ pii ma mpɔtam a ni som wɔn wɔ Nkran, Ghana ni ni asaase yi so nyinaa.",
+    bankHospitalDesc:
+      "The Bank Ayɔɔlɔ Jɛɛ yɛ ayɔɔlɔ jɛɛ sɔrɔɔŋkɔ a ɛ de n'adwene si ayɔɔlɔ pa a ɛ yɛ ma mi lɛ kɛ wɔn mmusua so.",
+    modernFacilitiesDesc:
+      "Ɛ nam mɛɛni foforɔ ni bɛɛ pa so no, The Bank Ayɔɔlɔ Jɛɛ de ayɔɔlɔ pa ahodoɔ pii ma mpɔtam a ni som wɔn wɔ Nkran, Ghana ni ni asaase yi so nyinaa.",
     yourHealthPriority: "A AYƆƆLƆ YƐ ADEƐ TITIRE MA NI. KLIK HA",
     scheduleAppointment: "Wɔ Nhyiam",
-    modernFacilitiesSubdesc: "Ni mɛɛni foforɔ ni bɛɛ a wɔ siesie ayɛ ma ayɔɔlɔ pa ma ni mi lɛ ni:",
+    modernFacilitiesSubdesc:
+      "Ni mɛɛni foforɔ ni bɛɛ a wɔ siesie ayɛ ma ayɔɔlɔ pa ma ni mi lɛ ni:",
     hospitalAtGlance: "The Bank Ayɔɔlɔ Jɛɛ mɛlɛ",
     takeTourFacilities: "Yɛ ni bɛɛ lɛ mu akwantuo tiaa bi",
     years: "Mfeɛ",
-    patientVisits: "Mi Lɛ Nsrakɛ",  
+    patientVisits: "Mi Lɛ Nsrakɛ",
     annually: "Afe Biara",
     medical: "Ayɔɔlɔ",
     assistanceAvailable: "Mmoa wɔ hɔ",
     generalWards: "Bɛɛ a ɛ yɛ fɛ, mframa a ɛ hyɛ mu ni adwumayɛ mi aban",
     pediatricWard: "Mmɔfrɔ ayɔɔlɔ dan a ɛ yɛ fɛ ni ɛ yɛ mmɔfrɔ dɛ",
     maternityUnit: "Mmaa dan a ɛ yɛ ban, mmɔfrɔ hwɛso ni mmɔfrɔ intensive care",
-    diagnosticCenters: "Nhwehwɛmu ni ayɔɔlɔ bɛɛ a wɔ siesie ama mi lɛ anya ahotɔ",
+    diagnosticCenters:
+      "Nhwehwɛmu ni ayɔɔlɔ bɛɛ a wɔ siesie ama mi lɛ anya ahotɔ",
     outpatientDept: "Outpatient Department a wɔ siesie ayɛ",
     emergencyUnit: "Ntɛm ayɔɔlɔ ni ambulance nnwuma 24/7",
-    exploreFacilities: "Fa berɛ kakra hwɛ ni bɛɛ nyinaa ni hu sɛnea ni bɛ tumi boa a.",
+    exploreFacilities:
+      "Fa berɛ kakra hwɛ ni bɛɛ nyinaa ni hu sɛnea ni bɛ tumi boa a.",
     viewFacilities: "Hwɛ Ni Bɛɛ Lɛ",
     ourSpecialists: "NI AYƆƆLƆ NUU LƐ",
-    specialistsDesc: "Ni ayɔɔlɔ nuu lɛ a wɔ wɔ nimdeɛ ni osuahu de ayɔɔlɔ ahodoɔ pii ma a ayɔɔlɔ ni a yiye diɛ – ma wɔn a wɔ tra hɔ ni wɔn a wɔ ba ara.",
+    specialistsDesc:
+      "Ni ayɔɔlɔ nuu lɛ a wɔ wɔ nimdeɛ ni osuahu de ayɔɔlɔ ahodoɔ pii ma a ayɔɔlɔ ni a yiye diɛ – ma wɔn a wɔ tra hɔ ni wɔn a wɔ ba ara.",
     alliedHealthServices: "AYƆƆLƆ MMOA ŊMAMI",
-    alliedHealthDesc: "Ni ayɔɔlɔ mmoa ŋmami de ayɔɔlɔ ŋmami foforɔ pii ma a ayɔɔlɔ ni a yiye diɛ.",
+    alliedHealthDesc:
+      "Ni ayɔɔlɔ mmoa ŋmami de ayɔɔlɔ ŋmami foforɔ pii ma a ayɔɔlɔ ni a yiye diɛ.",
     viewAllSpecialists: "Kpɛ Ayɔɔlɔ Nuu Lɛ Nyinaa",
     viewAllServices: "Kpɛ Ŋmami Nyinaa",
     viewOurFacilities: "Kpɛ Ni Bɛɛ Lɛ",
@@ -1298,11 +1373,13 @@ const translations = {
     medicalAssistance: "Ayɔɔlɔ",
 
     // Mission Vision Page
-    missionVisionDesc: "Ni botaeɛ ni ni anidaso kyerɛ deɛ ni yɛ biara wɔ The Bank Ayɔɔlɔ Jɛɛ, na ɛ kanyan ni sɛ ni nyɛ ayɔɔlɔ pa.",
+    missionVisionDesc:
+      "Ni botaeɛ ni ni anidaso kyerɛ deɛ ni yɛ biara wɔ The Bank Ayɔɔlɔ Jɛɛ, na ɛ kanyan ni sɛ ni nyɛ ayɔɔlɔ pa.",
     ourMission: "NI BOTAEƐ",
     ourVision: "NI ANIDASO",
     coreValue: "GYINAPƐN BOƆ",
-    missionStatement: "Sɛ ni de ayɔɔlɔ pa, mi lɛ-a-ɛ-si-wɔn-so ŋmami ma ɛ nam ŋmami ahodoɔ pii a ni yɛ no amammli mu so.",
+    missionStatement:
+      "Sɛ ni de ayɔɔlɔ pa, mi lɛ-a-ɛ-si-wɔn-so ŋmami ma ɛ nam ŋmami ahodoɔ pii a ni yɛ no amammli mu so.",
     visionStatement: "Sɛ ni bɛ yɛ ayɔɔlɔ pa a nnipa paw no.",
     compassion: "Ayamhyehyeɛ",
     teamwork: "Kuo mu Ŋmaa",
@@ -1311,7 +1388,8 @@ const translations = {
     professionalism: "Ŋmaa Pa",
 
     // Doctor Profile Page
-    doctorTeamDesc: "Ni ayɔɔlɔ nuu lɛ a wɔ wɔ suban pa de wɔn adwene si ankorankoro kpɛ ni ayɔɔlɔ pa so ma obiara.",
+    doctorTeamDesc:
+      "Ni ayɔɔlɔ nuu lɛ a wɔ wɔ suban pa de wɔn adwene si ankorankoro kpɛ ni ayɔɔlɔ pa so ma obiara.",
     goBack: "San Kɔ",
     qualifications: "Adesua:",
     specialtyLabel: "Ayɔɔlɔ Sɔrɔɔŋkɔ:",
@@ -1323,7 +1401,8 @@ const translations = {
     profile: "Ho Nsɛm",
 
     // Doctors Page
-    doctorsDesc: "Ni ayɔɔlɔ nuu lɛ wɔ adesua pa na wɔ wɔ osuahu a ɛ bɛ boa a ayɔɔlɔ.",
+    doctorsDesc:
+      "Ni ayɔɔlɔ nuu lɛ wɔ adesua pa na wɔ wɔ osuahu a ɛ bɛ boa a ayɔɔlɔ.",
     schedule: "Nhyehyɛeɛ:",
     status: "Tebea:",
     available: "Ɔ wɔ Hɔ",
@@ -1333,7 +1412,8 @@ const translations = {
     // Booking Page
     websiteUrl: "www.telekiosk.com",
     developBy: "Technofy™ na ɛ yɛ eɛ",
-    browserNoSupport: "A browser nnyae iframe. Yɛ srɛ a kɔ Google Maps ncua so.",
+    browserNoSupport:
+      "A browser nnyae iframe. Yɛ srɛ a kɔ Google Maps ncua so.",
 
     // Map Modal
     hospitalLocation: "Ayɔɔlɔ Jɛɛ Bɛɛ",
@@ -1351,7 +1431,6 @@ const translations = {
     healthWellnessTipsMenu: "Ayɔɔlɔ Ni Ayɔɔlɔ mami Akwɛɛ",
     visitingTimesMenu: "Nlɛɛ Mli",
     contactUsMenu: "Frɛ Ni",
-
 
     // Time ranges for visiting times
     vvipMorning: "6:30 AM – 7:30 AM",
@@ -1377,7 +1456,7 @@ const translations = {
     lunchTime: "12:00 PM – 1:00 PM",
     dinnerTime: "5:30 PM – 7:00 PM",
     bedtimeSnacksTime: "8:00 PM – 9:00 PM",
-    
+
     // About Section specific
     openingHoursTime: "7 AM – 7 PM",
     videoTimestamp: "0:02 / 5:15",
@@ -1392,7 +1471,8 @@ const translations = {
 
     // Map Modal (Ga)
     hospitalLocationMap: "Ayɔɔlɔ Jɛɛ Bɛɛ Map",
-    browserNotSupport: "A browser nnyae iframe. Yɛ srɛ a kɔ Google Maps ncua so.",
+    browserNotSupport:
+      "A browser nnyae iframe. Yɛ srɛ a kɔ Google Maps ncua so.",
     address: "Bɛɛ",
 
     // Scroll to Top (Ga)
@@ -1404,19 +1484,21 @@ const translations = {
     surgery: "Oprehyɛn",
 
     // All Pages (Ga)
-    facilitiesHeroText: "Mɛɛni foforɔ lɛ kɛ bɛɛ a ɛ yɛ fɛ a wɔ siesie ama ni mi lɛ anya ayɔɔlɔ pa",
+    facilitiesHeroText:
+      "Mɛɛni foforɔ lɛ kɛ bɛɛ a ɛ yɛ fɛ a wɔ siesie ama ni mi lɛ anya ayɔɔlɔ pa",
     healthServices: "Ayɔɔlɔ Ŋmami",
 
     // News Categories (Ga)
-    technology: "Mɛɛni Foforɔ", 
+    technology: "Mɛɛni Foforɔ",
     events: "Amami",
     wellness: "Asomdwoeɛ",
     community: "Mantsɛmi",
     accreditation: "Akɔɔnɔ",
 
     // News Titles (Ga)
-    news1Title: "The Bank Ayɔɔlɔ Jɛɛ Nhwehwɛmu Bɛɛ ayɛ Ghana Sɔrɔɔŋkɔ Nhwehwɛmu a Ɛdi Kan a Ɔnyaa ISO Akɔɔnɔ",
-    news2Title: "The Bank Ayɔɔlɔ Jɛɛ de Frɛfrɛ Bɛɛ Foforɔ Reba: Ɔsom Pa Foforɔ", 
+    news1Title:
+      "The Bank Ayɔɔlɔ Jɛɛ Nhwehwɛmu Bɛɛ ayɛ Ghana Sɔrɔɔŋkɔ Nhwehwɛmu a Ɛdi Kan a Ɔnyaa ISO Akɔɔnɔ",
+    news2Title: "The Bank Ayɔɔlɔ Jɛɛ de Frɛfrɛ Bɛɛ Foforɔ Reba: Ɔsom Pa Foforɔ",
     news3Title: "The Bank Ayɔɔlɔ Jɛɛ Di Mi lɛ Som Tsɛɛ 2024 Afahyɛ",
     news4Title: "The Bank Ayɔɔlɔ Jɛɛ Asomdwoeɛ Bɛɛ a Wɔde Baeɛ no Afahyɛ",
     news5Title: "Makola Nlɛɛ Amanebɔ",
@@ -1425,7 +1507,7 @@ const translations = {
     // Health & Wellness Categories (Ga)
     allTopics: "Shisemi Kɛɛ Lɛ",
     nutrition: "Amami",
-    mentalHealth: "Ni Ayɔɔlɔ", 
+    mentalHealth: "Ni Ayɔɔlɔ",
     fitness: "Apɔmuden",
     emergencyCare: "Gbejɛ Kɛɛ Ayɔɔlɔ",
     womensHealth: "Nyɔnmɔ lɛ Ayɔɔlɔ",
@@ -1450,7 +1532,7 @@ const translations = {
 
     // Time Related (Ga)
     today: "Lɛɛ",
-    yesterday: "Lɛba", 
+    yesterday: "Lɛba",
     tomorrow: "Ɔkyena",
     thisWeek: "Saa tsɛɛ yi",
     thisMonth: "Saa ɔfaŋ yi",
@@ -1460,7 +1542,7 @@ const translations = {
     covid19: "COVID-19",
     doctorsSpotlight: "Ayɔɔlɔ Nuu lɛ Kanea",
     healthArticles: "Ayɔɔlɔ Krataa",
-    news: "Shisemi", 
+    news: "Shisemi",
     pressReleases: "Shisemi Krataa",
 
     // Services Page - Ga translations
@@ -1483,12 +1565,14 @@ const translations = {
     searchArticles: "Kpɛɛ krataa...",
     searchNews: "Kpɛɛ shisemi ni amami...",
 
-
     // Cardiology Service Content - Ga
     cardiologyName: "AKOMA AYƆƆLƆ",
-    cardiologyDescription: "Akoma yawo na ɛ kum nuu pii wɔ wiase nyinaa, na ɛ kum nuu bɛyɛ ɔpepem 17.9 afeɛ biara. Wiase amaneɛ 9 mu 9 firi akoma yawo ba aman a wɔ nyɛ adefoɔ mu te sɛ Ghana. Nuu a wɔ wɔ aman a wɔ nyɛ adefoɔ mu no ntaa nnya ayɔɔlɔ nhyehyɛeɛ pa a ɛ bɛ boa wɔn ahu akoma yawo ntɛm.",
-    cardiologyExtendedDescription: "Eyi nti, nuu a wɔ wɔ aman yi mu no wu ntɛm firi akoma yawo mu wɔ wɔn mfeɛ a wɔ yɛ adwuma pa mu.",
-    cardiologyAim: "Ni botaeɛ ne sɛ ni bɛ ma Ghanaman akoma ayɔɔlɔ atu mpɔn na ni agye wɔn a wɔ wɔ akoma yawo no nkwa.",
+    cardiologyDescription:
+      "Akoma yawo na ɛ kum nuu pii wɔ wiase nyinaa, na ɛ kum nuu bɛyɛ ɔpepem 17.9 afeɛ biara. Wiase amaneɛ 9 mu 9 firi akoma yawo ba aman a wɔ nyɛ adefoɔ mu te sɛ Ghana. Nuu a wɔ wɔ aman a wɔ nyɛ adefoɔ mu no ntaa nnya ayɔɔlɔ nhyehyɛeɛ pa a ɛ bɛ boa wɔn ahu akoma yawo ntɛm.",
+    cardiologyExtendedDescription:
+      "Eyi nti, nuu a wɔ wɔ aman yi mu no wu ntɛm firi akoma yawo mu wɔ wɔn mfeɛ a wɔ yɛ adwuma pa mu.",
+    cardiologyAim:
+      "Ni botaeɛ ne sɛ ni bɛ ma Ghanaman akoma ayɔɔlɔ atu mpɔn na ni agye wɔn a wɔ wɔ akoma yawo no nkwa.",
     cardiologyOutcome: "Gye akoma yawo foɔ nkwa na ma wɔn asetena nyɛ yie.",
     cardiologyImageDescription: "CT Scanner Dan - Akoma nhwehwɛmu mfiri foforo",
   },
