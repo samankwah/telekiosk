@@ -441,8 +441,8 @@ function ServicesPage() {
               <div>
                 <div className="bg-white rounded-lg overflow-hidden shadow-xl border-4 border-white">
                   <img
-                    src={SERVICE_EQUIPMENT_IMAGE.src}
-                    alt={SERVICE_EQUIPMENT_IMAGE.alt}
+                    src={currentServiceImages.equipment.src}
+                    alt={currentServiceImages.equipment.alt}
                     className="w-full h-96 object-cover"
                   />
                 </div>
@@ -507,8 +507,8 @@ function ServicesPage() {
 
                 <div className="relative">
                   <img
-                    src={STETHOSCOPE_IMAGE.src}
-                    alt={STETHOSCOPE_IMAGE.alt}
+                    src={currentServiceImages.support.src}
+                    alt={currentServiceImages.support.alt}
                     className="w-full h-96 object-cover"
                   />
 

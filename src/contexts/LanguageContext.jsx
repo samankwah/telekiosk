@@ -13,7 +13,7 @@ export const useLanguage = () => {
 const translations = {
   en: {
     // Top Info Bar
-    location: "Block F6, Shippi Road, Cantonments, Accra",
+    location: "Block 7, Mboumu Street, Akweteyman, Accra",
     phone: "0333 733 333",
     email: "info@telekiosk.com",
     emergency: "24/7 Emergency",
